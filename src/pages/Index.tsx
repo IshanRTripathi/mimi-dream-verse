@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import ThemeToggle from "@/components/ThemeToggle";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import AccessibilityToggle from "@/components/AccessibilityToggle";
+import GoogleFormsSetup from "@/components/GoogleFormsSetup";
 
 const Index = () => {
   return (
@@ -36,6 +37,20 @@ const Index = () => {
       {/* Main Content with better spacing */}
       <main className="relative pt-16 sm:pt-20 md:pt-24">
         <Hero />
+        
+        {/* Google Forms Setup Section */}
+        <section className="py-16 px-6">
+          <div className="container mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-4">📊 Setup Google Sheets Integration</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Configure your waitlist to automatically save signups to Google Sheets
+              </p>
+            </div>
+            <GoogleFormsSetup />
+          </div>
+        </section>
+        
         <Features />
         <HowItWorks />
         <Testimonials />

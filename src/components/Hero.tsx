@@ -1,7 +1,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Play, Pause, Heart, Star } from "lucide-react";
+import PersonalizedToggle from "./PersonalizedToggle";
 
 const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,6 +41,11 @@ const Hero = () => {
             and beautiful custom illustrations that make every bedtime magical ✨
           </p>
 
+          {/* Personalized Toggle Section */}
+          <div className="mb-12">
+            <PersonalizedToggle />
+          </div>
+
           {/* Voice Demo Section */}
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 shadow-xl border border-purple-100 dark:border-gray-700 max-w-2xl mx-auto">
             <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
@@ -67,9 +74,9 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl transform hover:scale-105 transition-all duration-200">
+            <MagneticButton className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl">
               Create Your First Story ✨
-            </Button>
+            </MagneticButton>
             <Button variant="outline" className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-200">
               Watch Demo 📱
             </Button>

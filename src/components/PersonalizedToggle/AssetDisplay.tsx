@@ -20,8 +20,6 @@ export const AssetDisplay = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   
   console.log('AssetDisplay rendering with imageSrc:', imageSrc);
-  console.log('Full image URL will be:', window.location.origin + imageSrc);
-  console.log('Checking if file exists at:', imageSrc);
   
   const handleImageLoad = () => {
     console.log('✅ Image loaded successfully:', imageSrc);
@@ -31,18 +29,8 @@ export const AssetDisplay = ({
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     console.error('❌ Image failed to load:', imageSrc, e);
-    console.error('❌ Error details:', e.currentTarget.src);
     setImageError(true);
     setImageLoaded(false);
-    
-    // Try alternative paths
-    const alternativePaths = [
-      imageSrc.replace('/normalasset.jpg', '/assets/featureImages/normalasset.jpg'),
-      imageSrc.replace('/personalisedasset.jpg', '/assets/featureImages/personalisedasset.jpg'),
-      'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop'
-    ];
-    
-    console.log('🔍 Alternative paths to try:', alternativePaths);
   };
 
   return (
@@ -53,12 +41,6 @@ export const AssetDisplay = ({
             <div className="text-4xl mb-2">🖼️</div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Image not found
-            </p>
-            <p className="text-xs text-gray-500 mt-1 break-all">
-              Path: {imageSrc}
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              Check: public{imageSrc} exists?
             </p>
           </div>
         ) : (

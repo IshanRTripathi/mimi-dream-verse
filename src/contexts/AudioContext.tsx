@@ -36,7 +36,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
   const currentTrackRef = useRef<string>('');
-  const activeAudioRefs = useRef<HTMLAudioElement[]>([]);
+  const activeStoryAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize audio files
   React.useEffect(() => {
@@ -44,7 +44,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     const uiSounds: { [key: string]: HTMLAudioElement } = {};
     Object.entries(audioConfig.ui_sounds).forEach(([key, path]) => {
       const audio = new Audio(path);
-      audio.volume = volume;
+      audio.volume = volume * 0.5; // UI sounds are quieter
       uiSounds[key] = audio;
     });
 
@@ -56,10 +56,10 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
         audio.pause();
         audio.src = '';
       });
-      activeAudioRefs.current.forEach(audio => {
-        audio.pause();
-        audio.src = '';
-      });
+      if (activeStoryAudioRef.current) {
+        activeStoryAudioRef.current.pause();
+        activeStoryAudioRef.current = null;
+      }
       if (backgroundMusicRef.current) {
         backgroundMusicRef.current.pause();
         backgroundMusicRef.current = null;
@@ -70,31 +70,31 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   // Update volume when it changes
   React.useEffect(() => {
     Object.values(audioRefs.current).forEach(audio => {
-      audio.volume = volume;
+      audio.volume = volume * 0.5; // UI sounds remain quieter
     });
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.volume = volume;
     }
-    activeAudioRefs.current.forEach(audio => {
-      audio.volume = volume;
-    });
+    if (activeStoryAudioRef.current) {
+      activeStoryAudioRef.current.volume = volume;
+    }
   }, [volume]);
 
   const stopAllAudio = () => {
-    // Stop all active audio except background music
-    activeAudioRefs.current.forEach(audio => {
-      audio.pause();
-    });
-    activeAudioRefs.current = [];
+    // Stop story audio only, not background music
+    if (activeStoryAudioRef.current) {
+      activeStoryAudioRef.current.pause();
+      activeStoryAudioRef.current = null;
+    }
   };
 
   const playSound = (soundType: 'pop' | 'click' | 'success' | 'hover') => {
     const audio = audioRefs.current[soundType];
     if (audio) {
-      // Stop any previous instance of this sound
+      // Don't interfere with background music
       audio.currentTime = 0;
       audio.play().catch(error => {
-        console.log('Audio play prevented:', error);
+        console.log('UI sound play prevented:', error);
       });
     }
   };
@@ -106,12 +106,12 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     
     if (!track) return;
 
-    if (backgroundMusicRef.current && currentTrackRef.current === track.name) {
-      backgroundMusicRef.current.play().catch(console.log);
-      setIsBackgroundMusicPlaying(true);
+    // If same track is already playing, just resume it
+    if (backgroundMusicRef.current && currentTrackRef.current === track.name && !backgroundMusicRef.current.paused) {
       return;
     }
 
+    // If we have a different track or stopped track, start fresh
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.pause();
     }
@@ -126,6 +126,10 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }).catch(error => {
       console.log('Background music play prevented:', error);
     });
+
+    backgroundMusicRef.current.onended = () => {
+      setIsBackgroundMusicPlaying(false);
+    };
   };
 
   const stopBackgroundMusic = () => {
@@ -137,7 +141,10 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
   const playStoryAudio = (type: 'personalized' | 'ai_narrator', variant?: string) => {
     // Stop any currently playing story audio
-    stopAllAudio();
+    if (activeStoryAudioRef.current) {
+      activeStoryAudioRef.current.pause();
+      activeStoryAudioRef.current = null;
+    }
 
     let audioPath: string;
     
@@ -153,15 +160,12 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
     const audio = new Audio(audioPath);
     audio.volume = volume;
+    activeStoryAudioRef.current = audio;
     
-    // Add to active audio list
-    activeAudioRefs.current.push(audio);
-    
-    // Remove from active list when ended
+    // Clean up reference when audio ends
     audio.onended = () => {
-      const index = activeAudioRefs.current.indexOf(audio);
-      if (index > -1) {
-        activeAudioRefs.current.splice(index, 1);
+      if (activeStoryAudioRef.current === audio) {
+        activeStoryAudioRef.current = null;
       }
     };
     
@@ -171,11 +175,8 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   const playAmbientSound = (type: 'forest' | 'ocean' | 'magical' | 'garden') => {
     const audioPath = audioConfig.ambient_sounds[type];
     const audio = new Audio(audioPath);
-    audio.volume = volume * 0.5; // Ambient sounds are quieter
+    audio.volume = volume * 0.3; // Ambient sounds are quieter
     audio.loop = true;
-    
-    // Add to active audio list
-    activeAudioRefs.current.push(audio);
     
     audio.play().catch(console.log);
   };

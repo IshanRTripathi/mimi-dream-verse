@@ -15,10 +15,14 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
     stopBackgroundMusic, 
     setVolume, 
     volume, 
-    isBackgroundMusicPlaying 
+    isBackgroundMusicPlaying,
+    playSound
   } = useAudio();
 
   const toggleMusic = () => {
+    // Play a subtle UI sound for this specific action
+    playSound('pop');
+    
     if (isBackgroundMusicPlaying) {
       stopBackgroundMusic();
     } else {

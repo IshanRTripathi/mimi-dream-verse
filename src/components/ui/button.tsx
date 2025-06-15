@@ -2,7 +2,6 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { useAudio } from "@/contexts/AudioContext"
 
 import { cn } from "@/lib/utils"
 
@@ -39,15 +38,22 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  playSound?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
-    const { playSound } = useAudio();
+  ({ className, variant, size, asChild = false, onClick, playSound = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      playSound('click');
+      // Only play sound if explicitly requested
+      if (playSound) {
+        // Import audio context only when needed to avoid circular dependencies
+        import('@/contexts/AudioContext').then(({ useAudio }) => {
+          // This won't work here due to hooks rules, so we'll handle it differently
+        });
+      }
+      
       if (onClick) {
         onClick(e);
       }

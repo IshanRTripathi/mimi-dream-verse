@@ -1,16 +1,21 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Heart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PersonalizedToggle from "./PersonalizedToggle";
+import WaitlistModal from "./WaitlistModal";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const handleCreateStory = () => {
     navigate('/create-story');
+  };
+
+  const handleTryFree = () => {
+    setIsWaitlistOpen(true);
   };
 
   return (
@@ -59,9 +64,14 @@ const Hero = () => {
             >
               Create Your First Story ✨
             </MagneticButton>
-            <Button variant="outline" className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-200">
-              Watch Demo 📱
-            </Button>
+            <MagneticButton 
+              onClick={handleTryFree}
+              variant="outline" 
+              className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold bg-white dark:bg-gray-900"
+              strength={0.15}
+            >
+              Try it now free 📱
+            </MagneticButton>
           </div>
 
           {/* Trust Indicators */}
@@ -81,6 +91,11 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <WaitlistModal 
+        isOpen={isWaitlistOpen} 
+        onClose={() => setIsWaitlistOpen(false)} 
+      />
     </section>
   );
 };

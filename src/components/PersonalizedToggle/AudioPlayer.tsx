@@ -2,7 +2,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
-import { loadAudioConfig } from '@/utils/configLoader';
+
+// Import audio files directly
+import normalTone from '@/assets/audio/normaltone.mp3';
+import realisticTone from '@/assets/audio/realistictone.mp3';
 
 interface AudioPlayerProps {
   audioType: 'normal' | 'personalized';
@@ -29,7 +32,6 @@ export const AudioPlayer = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
-  const audioConfig = loadAudioConfig();
 
   // Stop audio when shouldStop prop changes to true
   useEffect(() => {
@@ -60,13 +62,10 @@ export const AudioPlayer = ({
     setError(null);
     setIsLoading(true);
 
-    // Determine the correct audio path
-    const audioPath = audioType === 'personalized' 
-      ? audioConfig.story_audio.personalized.mom_voice
-      : audioConfig.story_audio.ai_narrator.default;
+    // Use imported audio files
+    const audioSrc = audioType === 'personalized' ? realisticTone : normalTone;
 
-    console.log('🎵 Attempting to load audio from:', audioPath);
-    console.log('🎵 Full URL will be:', window.location.origin + audioPath);
+    console.log('🎵 Attempting to load audio:', audioType);
     
     try {
       const audio = new Audio();
@@ -108,7 +107,7 @@ export const AudioPlayer = ({
       audio.addEventListener('error', (e) => {
         console.error('❌ Audio loading error:', e);
         console.error('❌ Audio error details:', audio.error);
-        setError(`Failed to load audio from: ${audioPath}`);
+        setError(`Failed to load audio`);
         setIsPlaying(false);
         setIsLoading(false);
         currentAudioRef.current = null;
@@ -116,11 +115,11 @@ export const AudioPlayer = ({
       });
 
       // Set audio properties
-      audio.volume = audioConfig.volume_levels.narration;
+      audio.volume = 0.5; // Default narration volume
       audio.preload = 'metadata';
       
       // Set the source and start loading
-      audio.src = audioPath;
+      audio.src = audioSrc;
       audio.load();
       
     } catch (error) {
@@ -160,7 +159,6 @@ export const AudioPlayer = ({
       {error && (
         <div className="text-center">
           <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
-          <p className="text-xs text-gray-500 mt-1">Please check that audio files are in the public folder</p>
         </div>
       )}
 

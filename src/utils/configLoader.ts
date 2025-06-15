@@ -18,6 +18,16 @@ export interface FeatureConfig {
   imageAlt: string;
 }
 
+export interface InteractiveFeatureConfig {
+  title: string;
+  description: string;
+  images: {
+    primary: string;
+    secondary: string;
+  };
+  theme: "accessibility" | "emotional" | "imagination" | "building";
+}
+
 export interface StepConfig {
   step: string;
   title: string;
@@ -53,6 +63,11 @@ export interface WaitlistConfig {
 export const loadFeatures = (): FeatureConfig[] => {
   const data = yaml.load(featuresYaml) as { features: FeatureConfig[] };
   return data.features;
+};
+
+export const loadInteractiveFeatures = (): InteractiveFeatureConfig[] => {
+  const data = yaml.load(featuresYaml) as { interactive_features: InteractiveFeatureConfig[] };
+  return data.interactive_features;
 };
 
 export const loadHowItWorksSteps = (): StepConfig[] => {

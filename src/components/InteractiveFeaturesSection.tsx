@@ -2,46 +2,10 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import InteractiveFeatureCard from "./InteractiveFeatureCard";
 import { motion } from "framer-motion";
+import { loadInteractiveFeatures } from "@/utils/configLoader";
 
 const InteractiveFeaturesSection = () => {
-  const features = [
-    {
-      title: "Accessibility First",
-      description: "Stories designed with dyslexia-friendly fonts and color-blind accessible themes for every child.",
-      images: {
-        primary: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop&crop=faces",
-        secondary: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop&crop=faces"
-      },
-      theme: "accessibility" as const
-    },
-    {
-      title: "Emotional Storytelling", 
-      description: "Characters that teach empathy, kindness, and emotional intelligence through heartwarming adventures.",
-      images: {
-        primary: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&crop=faces",
-        secondary: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop&crop=center"
-      },
-      theme: "emotional" as const
-    },
-    {
-      title: "Imagination Comes Alive",
-      description: "Watch characters leap from pages with magical sparkles in immersive, fantastical worlds.",
-      images: {
-        primary: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop&crop=center",
-        secondary: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop&crop=center"
-      },
-      theme: "imagination" as const
-    },
-    {
-      title: "Build Your Own Stories",
-      description: "Create personalized adventures with interactive storytelling tools and custom character cards.",
-      images: {
-        primary: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop&crop=faces",
-        secondary: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop&crop=faces"
-      },
-      theme: "building" as const
-    }
-  ];
+  const features = loadInteractiveFeatures();
 
   return (
     <section className="py-20 px-4 bg-white dark:bg-gray-900">

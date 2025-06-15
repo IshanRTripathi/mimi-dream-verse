@@ -95,7 +95,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-4">
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="flex-1">
                 <h4 className="font-semibold text-sm mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-200">
                   <Star className="w-4 h-4 text-yellow-500 fill-current" />
@@ -107,12 +107,12 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                   ))}
                 </ul>
               </div>
-              <div className="w-20 h-20 flex-shrink-0">
+              <div className="w-full sm:w-24 h-16 sm:h-24 flex items-center justify-center flex-shrink-0">
                 <DotLottieReact
                   src="https://lottie.host/67ea3b7c-848c-4f81-b198-913550b5ed4e/GWlJIQAV6m.lottie"
                   loop
                   autoplay
-                  className="w-full h-full object-contain"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
               </div>

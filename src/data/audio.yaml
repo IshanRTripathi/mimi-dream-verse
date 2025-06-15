@@ -16,7 +16,7 @@ audio:
       volume: 0.25
       loop: true
 
-  # Button interaction sounds
+  # Button interaction sounds (currently using bgmusic as placeholder)
   ui_sounds:
     click: "/src/assets/audio/bgmusic.mp3"
     pop: "/src/assets/audio/bgmusic.mp3"
@@ -32,7 +32,7 @@ audio:
       default: "/src/assets/audio/normaltone.mp3"
       alternative: "/src/assets/audio/normaltone.mp3"
 
-  # Story background sounds
+  # Story background sounds (currently using bgmusic as placeholder)
   ambient_sounds:
     forest: "/src/assets/audio/bgmusic.mp3"
     ocean: "/src/assets/audio/bgmusic.mp3"

@@ -3,12 +3,10 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useAudio } from '@/contexts/AudioContext';
 
 const PersonalizedToggle = () => {
   const [isPersonalized, setIsPersonalized] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { playStoryAudio } = useAudio();
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const toggleMode = () => {
@@ -26,29 +24,40 @@ const PersonalizedToggle = () => {
     if (currentAudioRef.current) {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
-    }
-
-    if (!isPlaying) {
-      if (isPersonalized) {
-        // Play realistic tone for personalized mode
-        currentAudioRef.current = new Audio('/src/assets/audio/realistictone.mp3');
-      } else {
-        // Play normal tone for normal mode
-        currentAudioRef.current = new Audio('/src/assets/audio/normaltone.mp3');
-      }
-
-      if (currentAudioRef.current) {
-        currentAudioRef.current.volume = 0.5;
-        currentAudioRef.current.onended = () => {
-          setIsPlaying(false);
-          currentAudioRef.current = null;
-        };
-        currentAudioRef.current.play().catch(console.log);
-      }
-      setIsPlaying(true);
-    } else {
       setIsPlaying(false);
+      return;
     }
+
+    // Play audio based on current mode
+    let audioPath = '';
+    if (isPersonalized) {
+      audioPath = '/src/assets/audio/realistictone.mp3';
+    } else {
+      audioPath = '/src/assets/audio/normaltone.mp3';
+    }
+
+    const audio = new Audio(audioPath);
+    audio.volume = 0.7;
+    
+    audio.onended = () => {
+      setIsPlaying(false);
+      currentAudioRef.current = null;
+    };
+
+    audio.onerror = () => {
+      console.error('Audio failed to load:', audioPath);
+      setIsPlaying(false);
+      currentAudioRef.current = null;
+    };
+
+    currentAudioRef.current = audio;
+    audio.play().then(() => {
+      setIsPlaying(true);
+    }).catch(error => {
+      console.error('Audio play failed:', error);
+      setIsPlaying(false);
+      currentAudioRef.current = null;
+    });
   };
 
   return (
@@ -61,7 +70,14 @@ const PersonalizedToggle = () => {
       <div className="flex justify-center mb-4 sm:mb-6 lg:mb-8">
         <div className="bg-gray-100 dark:bg-gray-700 rounded-full p-1 sm:p-2 flex">
           <Button
-            onClick={() => setIsPersonalized(true)}
+            onClick={() => {
+              if (currentAudioRef.current) {
+                currentAudioRef.current.pause();
+                currentAudioRef.current = null;
+                setIsPlaying(false);
+              }
+              setIsPersonalized(true);
+            }}
             className={cn(
               "rounded-full px-3 sm:px-4 lg:px-6 py-1 sm:py-2 transition-all duration-300 text-sm sm:text-base",
               isPersonalized 
@@ -72,7 +88,14 @@ const PersonalizedToggle = () => {
             Personalized
           </Button>
           <Button
-            onClick={() => setIsPersonalized(false)}
+            onClick={() => {
+              if (currentAudioRef.current) {
+                currentAudioRef.current.pause();
+                currentAudioRef.current = null;
+                setIsPlaying(false);
+              }
+              setIsPersonalized(false);
+            }}
             className={cn(
               "rounded-full px-3 sm:px-4 lg:px-6 py-1 sm:py-2 transition-all duration-300 text-sm sm:text-base",
               !isPersonalized 

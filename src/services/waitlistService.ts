@@ -16,6 +16,12 @@ class WaitlistService {
   private readonly STORAGE_KEY = 'waitlist_entries';
   private readonly STATS_KEY = 'waitlist_stats';
 
+  // Hardcoded stats
+  private readonly HARDCODED_STATS = {
+    totalSignups: 41,
+    recentSignups: 12
+  };
+
   constructor() {
     // Auto-configure Google Forms on initialization
     this.initializeGoogleIntegration();
@@ -115,26 +121,9 @@ class WaitlistService {
     return { success: true, alreadyExists: false };
   }
 
-  // Get current statistics
+  // Return hardcoded statistics instead of calculated ones
   getStats(): WaitlistStats {
-    try {
-      const stored = localStorage.getItem(this.STATS_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch {
-      // Fall through to default
-    }
-
-    // Fallback: calculate from entries
-    const entries = this.getEntries();
-    const now = Date.now();
-    const dayAgo = now - (24 * 60 * 60 * 1000);
-    
-    return {
-      totalSignups: entries.length,
-      recentSignups: entries.filter(entry => entry.timestamp > dayAgo).length
-    };
+    return this.HARDCODED_STATS;
   }
 
   // Check if email is already signed up
@@ -143,10 +132,9 @@ class WaitlistService {
     return entries.some(entry => entry.email.toLowerCase() === email.toLowerCase());
   }
 
-  // Get formatted count for display
+  // Use hardcoded count for display
   getFormattedCount(): string {
-    const stats = this.getStats();
-    const count = stats.totalSignups;
+    const count = this.HARDCODED_STATS.totalSignups;
     
     if (count < 1000) {
       return count.toString();

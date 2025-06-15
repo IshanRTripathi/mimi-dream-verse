@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -141,7 +142,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
               </div>
               <div className="w-full sm:w-24 h-16 sm:h-24 flex items-center justify-center flex-shrink-0">
                 <DotLottieReact
-                  src="/public/assets/waitlist-animation.json"
+                  src="/assets/waitlist-animation.json"
                   loop
                   autoplay
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain"

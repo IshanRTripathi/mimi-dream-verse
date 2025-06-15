@@ -144,6 +144,43 @@ class WaitlistService {
       return `${Math.floor(count / 1000)}k+`;
     }
   }
+
+  // Get all waitlist entries
+  private getEntries(): WaitlistEntry[] {
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  // Save entries to localStorage
+  private saveEntries(entries: WaitlistEntry[]): void {
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(entries));
+      this.updateStats(entries);
+    } catch (error) {
+      console.error('Failed to save waitlist entries:', error);
+    }
+  }
+
+  // Update statistics
+  private updateStats(entries: WaitlistEntry[]): void {
+    const now = Date.now();
+    const dayAgo = now - (24 * 60 * 60 * 1000);
+    
+    const stats: WaitlistStats = {
+      totalSignups: entries.length,
+      recentSignups: entries.filter(entry => entry.timestamp > dayAgo).length
+    };
+
+    try {
+      localStorage.setItem(this.STATS_KEY, JSON.stringify(stats));
+    } catch (error) {
+      console.error('Failed to save waitlist stats:', error);
+    }
+  }
 }
 
 export const waitlistService = new WaitlistService();

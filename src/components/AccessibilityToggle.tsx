@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Accessibility } from 'lucide-react';
 
 const AccessibilityToggle = () => {
@@ -55,8 +55,8 @@ const AccessibilityToggle = () => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <HoverCard>
+      <HoverCardTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
@@ -65,8 +65,8 @@ const AccessibilityToggle = () => {
         >
           <Accessibility className="w-4 h-4 text-purple-600 dark:text-purple-400" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent 
+      </HoverCardTrigger>
+      <HoverCardContent 
         className="w-72 p-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-white/20 dark:border-gray-700/30"
         align="end"
       >
@@ -134,8 +134,8 @@ const AccessibilityToggle = () => {
             />
           </div>
         </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </HoverCardContent>
+    </HoverCard>
   );
 };
 

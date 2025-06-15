@@ -25,34 +25,14 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     onMessage: (message) => {
       console.log("Received message:", message);
       
-      // Handle different message types according to WebSocket API docs
-      switch (message.type) {
-        case "conversation_initiation_metadata":
-          console.log("Conversation initiated:", message);
-          break;
-        case "agent_response":
-          // Extract story request from agent response
-          if (message.agent_response && message.agent_response_type === "text") {
-            const responseText = message.agent_response;
-            setStoryRequest(responseText);
-            onStoryRequest(responseText);
-          }
-          break;
-        case "user_transcript":
-          // Handle user speech transcription
-          if (message.user_transcript && message.is_final) {
-            console.log("Final user transcript:", message.user_transcript);
-          }
-          break;
-        case "agent_response_correction":
-          console.log("Agent response correction:", message);
-          break;
-        case "ping":
-          // Handle ping - should be automatically handled by the library
-          console.log("Received ping");
-          break;
-        default:
-          console.log("Unknown message type:", message);
+      // Handle message based on the actual library structure
+      // message has properties: { message: string; source: Role; }
+      if (message.source === "ai" && message.message) {
+        console.log("AI response:", message.message);
+        setStoryRequest(message.message);
+        onStoryRequest(message.message);
+      } else if (message.source === "user" && message.message) {
+        console.log("User transcript:", message.message);
       }
     },
     onError: (error) => {

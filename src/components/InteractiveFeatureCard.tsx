@@ -32,7 +32,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
       transition={{ duration: 0.5 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-[#FAF8F4] dark:bg-[#1E1E1E] rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50 flex-shrink-0 w-full sm:w-80 overflow-hidden"
+      className="bg-[#FAF8F4] dark:bg-[#1E1E1E] rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50 flex-shrink-0 w-72 sm:w-80 md:w-72 lg:w-80 overflow-hidden"
     >
       {/* Image Container - Full width, 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden">

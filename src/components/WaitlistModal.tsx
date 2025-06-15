@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -145,7 +144,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                   src="/assets/waitlist-animation.json"
                   loop
                   autoplay
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                  className="w-9 h-9 object-contain"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
               </div>

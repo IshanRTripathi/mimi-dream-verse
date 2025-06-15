@@ -43,24 +43,26 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
     
     const fullEmail = emailExtension === "@custom" ? email : email + emailExtension;
 
-    // Check if email is already signed up
-    if (waitlistService.isEmailSignedUp(fullEmail)) {
-      setError("This email is already on our waitlist!");
-      setIsLoading(false);
-      return;
-    }
-
-    // Simulate API call delay
-    setTimeout(() => {
-      const success = waitlistService.addSignup(fullEmail);
+    try {
+      const result = await waitlistService.addSignup(fullEmail);
       
-      if (success) {
+      if (result.alreadyExists) {
+        setError("This email is already on our waitlist!");
+        setIsLoading(false);
+        return;
+      }
+
+      if (result.success) {
         setIsSubmitted(true);
       } else {
         setError("Something went wrong. Please try again.");
       }
+    } catch (error) {
+      console.error('Signup error:', error);
+      setError("Something went wrong. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleClose = () => {

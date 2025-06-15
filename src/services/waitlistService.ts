@@ -1,4 +1,6 @@
 
+import { googleFormsService } from './googleFormsService';
+
 interface WaitlistEntry {
   id: string;
   email: string;
@@ -51,13 +53,13 @@ class WaitlistService {
     }
   }
 
-  // Add a new signup
-  addSignup(email: string): boolean {
+  // Add a new signup with dual storage (localStorage + Google Forms)
+  async addSignup(email: string): Promise<{ success: boolean; alreadyExists: boolean }> {
     const entries = this.getEntries();
     
     // Check if email already exists
     if (entries.some(entry => entry.email.toLowerCase() === email.toLowerCase())) {
-      return false; // Already signed up
+      return { success: false, alreadyExists: true };
     }
 
     const newEntry: WaitlistEntry = {
@@ -66,9 +68,24 @@ class WaitlistService {
       timestamp: Date.now()
     };
 
+    // Save to localStorage first
     entries.push(newEntry);
     this.saveEntries(entries);
-    return true;
+
+    // Try to submit to Google Forms if configured
+    let googleFormsSuccess = true;
+    if (googleFormsService.isConfigured()) {
+      try {
+        googleFormsSuccess = await googleFormsService.submitToGoogleForms(email);
+        if (!googleFormsSuccess) {
+          console.warn('Failed to submit to Google Forms, but saved locally');
+        }
+      } catch (error) {
+        console.warn('Google Forms submission failed:', error);
+      }
+    }
+
+    return { success: true, alreadyExists: false };
   }
 
   // Get current statistics
@@ -111,6 +128,11 @@ class WaitlistService {
     } else {
       return `${Math.floor(count / 1000)}k+`;
     }
+  }
+
+  // Configure Google Forms integration
+  configureGoogleForms(formUrl: string, emailFieldId: string) {
+    googleFormsService.configure(formUrl, emailFieldId);
   }
 }
 

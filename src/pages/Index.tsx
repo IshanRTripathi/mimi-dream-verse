@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import ThemeToggle from "@/components/ThemeToggle";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import AccessibilityToggle from "@/components/AccessibilityToggle";
+import PersonalizedToggle from "@/components/PersonalizedToggle";
 
 const Index = () => {
   return (
@@ -37,6 +38,14 @@ const Index = () => {
       <main className="relative pt-16 sm:pt-20 md:pt-24">
         <Hero />
         <Features />
+        
+        {/* PersonalizedToggle Section */}
+        <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <PersonalizedToggle />
+          </div>
+        </section>
+        
         <HowItWorks />
         <Testimonials />
         <Pricing />

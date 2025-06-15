@@ -25,89 +25,81 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     onMessage: (message) => {
       console.log("Received message:", message);
       
-      // Handle different message types according to ElevenLabs docs
-      try {
-        if (message && typeof message === 'object') {
-          const messageData = message as any;
+      // Handle messages according to ElevenLabs docs - be very careful not to break the flow
+      if (message && typeof message === 'object') {
+        const messageData = message as any;
+        
+        // Handle user transcription - just log, don't process
+        if (messageData.type === 'user_transcript') {
+          console.log("User transcript:", messageData.user_transcript);
+          return;
+        }
+        
+        // Handle agent response - extract story requests
+        if (messageData.type === 'agent_response') {
+          console.log("Agent response:", messageData.agent_response);
           
-          // Handle user transcription (tentative and final)
-          if (messageData.type === 'user_transcript') {
-            console.log("User transcript:", messageData.user_transcript);
-            // Don't process user transcripts as story requests
+          const responseText = messageData.agent_response?.trim();
+          if (responseText && responseText.length > 30 && 
+              !responseText.toLowerCase().includes('hi') && 
+              !responseText.toLowerCase().includes('hello') &&
+              !responseText.toLowerCase().includes("i'm mimi")) {
+            setStoryRequest(responseText);
+            onStoryRequest(responseText);
+          }
+          return;
+        }
+        
+        // Handle audio data - just log
+        if (messageData.type === 'audio') {
+          console.log("Audio data received");
+          return;
+        }
+        
+        // Handle other message types without breaking flow
+        if (messageData.type === 'interruption') {
+          console.log("Interruption detected");
+          return;
+        }
+        
+        if (messageData.type === 'ping' || messageData.type === 'pong') {
+          console.log("Connection health check:", messageData.type);
+          return;
+        }
+        
+        if (messageData.type === 'error') {
+          console.error("Agent error:", messageData.error);
+          return;
+        }
+        
+        // Handle legacy format for backward compatibility
+        if (messageData.source && messageData.message) {
+          if (messageData.source === "user") {
+            console.log("User message (legacy):", messageData.message);
             return;
           }
           
-          // Handle agent response
-          if (messageData.type === 'agent_response') {
-            console.log("Agent response:", messageData.agent_response);
-            
-            // Only capture substantial agent responses for story requests
-            const responseText = messageData.agent_response?.trim();
-            if (responseText && responseText.length > 20 && 
+          if (messageData.source === "ai") {
+            console.log("AI response (legacy):", messageData.message);
+            const responseText = messageData.message.trim();
+            if (responseText.length > 30 && 
                 !responseText.toLowerCase().includes('hi') && 
-                !responseText.toLowerCase().includes('hello')) {
+                !responseText.toLowerCase().includes('hello') &&
+                !responseText.toLowerCase().includes("i'm mimi")) {
               setStoryRequest(responseText);
               onStoryRequest(responseText);
             }
             return;
           }
-          
-          // Handle audio data
-          if (messageData.type === 'audio') {
-            console.log("Audio data received");
-            // Don't process audio data
-            return;
-          }
-          
-          // Handle interruption
-          if (messageData.type === 'interruption') {
-            console.log("Interruption detected");
-            return;
-          }
-          
-          // Handle ping/pong for connection health
-          if (messageData.type === 'ping' || messageData.type === 'pong') {
-            console.log("Connection health check:", messageData.type);
-            return;
-          }
-          
-          // Handle error messages
-          if (messageData.type === 'error') {
-            console.error("Agent error:", messageData.error);
-            return;
-          }
-          
-          // Fallback for legacy message format (source/message)
-          if (messageData.source && messageData.message) {
-            if (messageData.source === "user") {
-              console.log("User message (legacy):", messageData.message);
-              return;
-            }
-            
-            if (messageData.source === "ai") {
-              console.log("AI response (legacy):", messageData.message);
-              const responseText = messageData.message.trim();
-              if (responseText.length > 20 && 
-                  !responseText.toLowerCase().includes('hi') && 
-                  !responseText.toLowerCase().includes('hello')) {
-                setStoryRequest(responseText);
-                onStoryRequest(responseText);
-              }
-              return;
-            }
-          }
-          
-          // Log unhandled message types for debugging
-          console.log("Unhandled message type:", messageData.type || messageData);
         }
-      } catch (error) {
-        console.error("Error processing message:", error);
-        // Don't end conversation on message processing errors
+        
+        // Log unhandled messages for debugging
+        console.log("Unhandled message type:", messageData.type || messageData);
       }
     },
     onError: (error) => {
       console.error("Conversation error:", error);
-      // Don't automatically end conversation on errors
+      // Don't automatically end conversation on errors - let user decide
     }
   });
 

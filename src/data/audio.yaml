@@ -26,11 +26,11 @@ audio:
   # Personalized story audio
   story_audio:
     personalized:
-      mom_voice: "/src/assets/audio/normaltone.mp3"
+      mom_voice: "/src/assets/audio/realistictone.mp3"
       dad_voice: "/src/assets/audio/realistictone.mp3"
     ai_narrator:
       default: "/src/assets/audio/normaltone.mp3"
-      alternative: "/src/assets/audio/realistictone.mp3"
+      alternative: "/src/assets/audio/normaltone.mp3"
 
   # Story background sounds
   ambient_sounds:

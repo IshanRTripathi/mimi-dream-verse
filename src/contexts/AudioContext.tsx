@@ -11,6 +11,7 @@ interface AudioContextType {
   setVolume: (volume: number) => void;
   volume: number;
   isBackgroundMusicPlaying: boolean;
+  stopAllAudio: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -35,6 +36,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
   const currentTrackRef = useRef<string>('');
+  const activeAudioRefs = useRef<HTMLAudioElement[]>([]);
 
   // Initialize audio files
   React.useEffect(() => {
@@ -49,7 +51,12 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     audioRefs.current = uiSounds;
 
     return () => {
+      // Cleanup all audio
       Object.values(audioRefs.current).forEach(audio => {
+        audio.pause();
+        audio.src = '';
+      });
+      activeAudioRefs.current.forEach(audio => {
         audio.pause();
         audio.src = '';
       });
@@ -68,11 +75,23 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.volume = volume;
     }
+    activeAudioRefs.current.forEach(audio => {
+      audio.volume = volume;
+    });
   }, [volume]);
+
+  const stopAllAudio = () => {
+    // Stop all active audio except background music
+    activeAudioRefs.current.forEach(audio => {
+      audio.pause();
+    });
+    activeAudioRefs.current = [];
+  };
 
   const playSound = (soundType: 'pop' | 'click' | 'success' | 'hover') => {
     const audio = audioRefs.current[soundType];
     if (audio) {
+      // Stop any previous instance of this sound
       audio.currentTime = 0;
       audio.play().catch(error => {
         console.log('Audio play prevented:', error);
@@ -117,6 +136,9 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   };
 
   const playStoryAudio = (type: 'personalized' | 'ai_narrator', variant?: string) => {
+    // Stop any currently playing story audio
+    stopAllAudio();
+
     let audioPath: string;
     
     if (type === 'personalized') {
@@ -131,6 +153,18 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
 
     const audio = new Audio(audioPath);
     audio.volume = volume;
+    
+    // Add to active audio list
+    activeAudioRefs.current.push(audio);
+    
+    // Remove from active list when ended
+    audio.onended = () => {
+      const index = activeAudioRefs.current.indexOf(audio);
+      if (index > -1) {
+        activeAudioRefs.current.splice(index, 1);
+      }
+    };
+    
     audio.play().catch(console.log);
   };
 
@@ -139,6 +173,10 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     const audio = new Audio(audioPath);
     audio.volume = volume * 0.5; // Ambient sounds are quieter
     audio.loop = true;
+    
+    // Add to active audio list
+    activeAudioRefs.current.push(audio);
+    
     audio.play().catch(console.log);
   };
 
@@ -155,7 +193,8 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
       playAmbientSound,
       setVolume, 
       volume,
-      isBackgroundMusicPlaying
+      isBackgroundMusicPlaying,
+      stopAllAudio
     }}>
       {children}
     </AudioContext.Provider>

@@ -1,6 +1,6 @@
-
 import { Card } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const HowItWorks = () => {
   // Base theme description for consistent styling across all images
@@ -155,6 +155,17 @@ const HowItWorks = () => {
               Your first personalized story will be ready in just 3-5 minutes. 
               Perfect for tonight's bedtime!
             </p>
+            
+            {/* Try It Now Button */}
+            <Button 
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-3 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 mb-6"
+              size="lg"
+            >
+              <Sparkles className="w-5 h-5 mr-2" />
+              Try It Now - Free!
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+            
             <div className="flex justify-center items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
               <span>🚀 Instant Generation</span>
               <span>•</span>

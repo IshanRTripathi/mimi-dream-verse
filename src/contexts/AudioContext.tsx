@@ -29,9 +29,9 @@ interface AudioProviderProps {
 }
 
 export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
-  const [volume, setVolumeState] = useState(0.3);
-  const [isBackgroundMusicPlaying, setIsBackgroundMusicPlaying] = useState(false);
   const audioConfig = loadAudioConfig();
+  const [volume, setVolumeState] = useState(audioConfig.volume_levels.background_music);
+  const [isBackgroundMusicPlaying, setIsBackgroundMusicPlaying] = useState(false);
   
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
@@ -44,7 +44,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     const uiSounds: { [key: string]: HTMLAudioElement } = {};
     Object.entries(audioConfig.ui_sounds).forEach(([key, path]) => {
       const audio = new Audio(path);
-      audio.volume = volume * 0.5; // UI sounds are quieter
+      audio.volume = audioConfig.volume_levels.ui_sounds;
       uiSounds[key] = audio;
     });
 
@@ -70,13 +70,13 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   // Update volume when it changes
   React.useEffect(() => {
     Object.values(audioRefs.current).forEach(audio => {
-      audio.volume = volume * 0.5; // UI sounds remain quieter
+      audio.volume = audioConfig.volume_levels.ui_sounds;
     });
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.volume = volume;
     }
     if (activeStoryAudioRef.current) {
-      activeStoryAudioRef.current.volume = volume;
+      activeStoryAudioRef.current.volume = audioConfig.volume_levels.narration;
     }
   }, [volume]);
 
@@ -159,8 +159,10 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }
 
     const audio = new Audio(audioPath);
-    audio.volume = volume;
+    audio.volume = audioConfig.volume_levels.narration;
     activeStoryAudioRef.current = audio;
+    
+    console.log('🔊 Story audio volume set to:', audio.volume);
     
     // Clean up reference when audio ends
     audio.onended = () => {

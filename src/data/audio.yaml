@@ -38,3 +38,9 @@ audio:
     ocean: "/src/assets/audio/bgmusic.mp3"
     magical: "/src/assets/audio/bgmusic.mp3"
     garden: "/src/assets/audio/bgmusic.mp3"
+
+  # Volume levels
+  volume_levels:
+    background_music: 0.3
+    narration: 0.5
+    ui_sounds: 0.2

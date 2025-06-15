@@ -48,10 +48,11 @@ const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
       <Button
         ref={buttonRef}
         className={cn(
-          "relative transition-all duration-300 ease-out",
+          "relative transition-all duration-300 ease-out overflow-hidden",
           "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700",
           "text-white font-bold shadow-xl",
           "hover:shadow-2xl",
+          "flex items-center justify-center gap-2",
           className
         )}
         onMouseMove={handleMouseMove}
@@ -61,8 +62,9 @@ const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
         {...props}
       >
         <span className={cn(
-          "relative z-10 transition-all duration-300",
-          isHovered && "scale-110"
+          "relative z-10 transition-all duration-300 flex items-center justify-center gap-2",
+          "w-full h-full",
+          isHovered && "scale-105"
         )}>
           {children}
         </span>

@@ -99,9 +99,7 @@ const CreateStory = () => {
   };
 
   const handleGenerateStory = () => {
-    // Here you would implement the story generation logic
     console.log("Generating story with:", formData);
-    // For now, just navigate back
     navigate('/');
   };
 
@@ -124,12 +122,11 @@ const CreateStory = () => {
               </p>
             </div>
 
-            {/* Toggle between AI conversation and manual input */}
             <div className="mb-6">
               <div className="flex justify-center mb-4">
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-full p-1 flex">
                   <Button
-                    variant={formData.storyRequest ? "default" : "ghost"}
+                    variant={!formData.storyRequest ? "default" : "ghost"}
                     size="sm"
                     className="rounded-full px-4"
                     onClick={() => setFormData({...formData, storyRequest: ""})}
@@ -137,7 +134,7 @@ const CreateStory = () => {
                     Talk to Mimi
                   </Button>
                   <Button
-                    variant={!formData.storyRequest ? "default" : "ghost"}
+                    variant={formData.storyRequest ? "default" : "ghost"}
                     size="sm"
                     className="rounded-full px-4"
                     onClick={() => {}}
@@ -148,10 +145,7 @@ const CreateStory = () => {
               </div>
 
               {!formData.storyRequest ? (
-                <ConversationalAgent
-                  onStoryRequest={handleStoryRequest}
-                  animationData={defaultAnimationData}
-                />
+                <ConversationalAgent onStoryRequest={handleStoryRequest} />
               ) : (
                 <div className="space-y-4">
                   <Textarea
@@ -346,7 +340,6 @@ const CreateStory = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-800 transition-colors duration-300">
-      {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
@@ -371,10 +364,8 @@ const CreateStory = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
       <div className="pt-24 pb-12 px-4">
         <div className="container mx-auto max-w-4xl">
-          {/* Progress Bar */}
           <div className="mb-12">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -392,10 +383,8 @@ const CreateStory = () => {
             </div>
           </div>
 
-          {/* Step Content */}
           {renderStep()}
 
-          {/* Navigation Buttons */}
           <div className="flex justify-between mt-8 max-w-2xl mx-auto">
             <Button
               onClick={handlePrev}

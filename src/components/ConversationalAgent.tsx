@@ -2,19 +2,15 @@
 import { useState } from "react";
 import { useConversation } from "@11labs/react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Mic, MicOff, MessageCircle } from "lucide-react";
 import Lottie from "lottie-react";
+import mimiAnimation from "@/assets/mimi-animation.json";
 
 interface ConversationalAgentProps {
   onStoryRequest: (request: string) => void;
-  animationData: any; // Lottie animation JSON data
 }
 
-const ConversationalAgent = ({ onStoryRequest, animationData }: ConversationalAgentProps) => {
-  const [apiKey, setApiKey] = useState("");
-  const [agentId, setAgentId] = useState("");
-  const [isSetup, setIsSetup] = useState(false);
+const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
   const [storyRequest, setStoryRequest] = useState("");
 
   const conversation = useConversation({
@@ -27,7 +23,7 @@ const ConversationalAgent = ({ onStoryRequest, animationData }: ConversationalAg
     onMessage: (message) => {
       console.log("Received message:", message);
       // Extract story request from the conversation
-      if (message.type === "agent_response" && message.message) {
+      if (message.source === "agent" && message.message) {
         setStoryRequest(message.message);
         onStoryRequest(message.message);
       }
@@ -38,35 +34,17 @@ const ConversationalAgent = ({ onStoryRequest, animationData }: ConversationalAg
   });
 
   const handleStartConversation = async () => {
-    if (!apiKey || !agentId) {
-      alert("Please enter both API Key and Agent ID");
-      return;
-    }
-
     try {
       // Request microphone access
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      // Generate signed URL for the conversation
-      const response = await fetch(
-        `https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=${agentId}`,
-        {
-          method: "GET",
-          headers: {
-            "xi-api-key": apiKey,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to get signed URL");
-      }
-
-      const body = await response.json();
-      await conversation.startSession({ url: body.signed_url });
+      // Start conversation with the public agent ID
+      await conversation.startSession({ 
+        agentId: "agent_01jxj6tth2fcebbds6h0p9mb6g"
+      });
     } catch (error) {
       console.error("Failed to start conversation:", error);
-      alert("Failed to start conversation. Please check your credentials.");
+      alert("Failed to start conversation. Please check your microphone permissions.");
     }
   };
 
@@ -74,65 +52,13 @@ const ConversationalAgent = ({ onStoryRequest, animationData }: ConversationalAg
     await conversation.endSession();
   };
 
-  if (!isSetup) {
-    return (
-      <div className="space-y-6">
-        <div className="text-center mb-6">
-          <div className="w-32 h-32 mx-auto mb-4">
-            <Lottie animationData={animationData} loop={true} />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">Setup AI Assistant</h3>
-          <p className="text-gray-600 dark:text-gray-300 text-sm">
-            Enter your ElevenLabs credentials to start talking with Mimi
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">ElevenLabs API Key</label>
-            <Input
-              type="password"
-              placeholder="Enter your ElevenLabs API key"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Agent ID</label>
-            <Input
-              placeholder="Enter your ElevenLabs Agent ID"
-              value={agentId}
-              onChange={(e) => setAgentId(e.target.value)}
-            />
-          </div>
-          <Button 
-            onClick={() => setIsSetup(true)}
-            className="w-full"
-            disabled={!apiKey || !agentId}
-          >
-            Setup Assistant
-          </Button>
-        </div>
-
-        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm">
-          <p className="text-blue-700 dark:text-blue-300">
-            💡 <strong>Need credentials?</strong> Get your API key and create an agent at{" "}
-            <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" className="underline">
-              elevenlabs.io
-            </a>
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-32 h-32 mx-auto mb-4">
           <Lottie 
-            animationData={animationData} 
-            loop={conversation.isSpeaking} 
+            animationData={mimiAnimation} 
+            loop={conversation.isSpeaking || conversation.status === "connected"} 
             className={conversation.isSpeaking ? "animate-pulse" : ""}
           />
         </div>
@@ -189,6 +115,12 @@ const ConversationalAgent = ({ onStoryRequest, animationData }: ConversationalAg
           </p>
         </div>
       )}
+
+      <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm">
+        <p className="text-blue-700 dark:text-blue-300">
+          💡 <strong>Tip:</strong> Just speak naturally! Ask for any kind of story - adventures, fairy tales, educational stories, or anything you can imagine.
+        </p>
+      </div>
     </div>
   );
 };

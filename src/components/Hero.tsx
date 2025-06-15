@@ -1,12 +1,12 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
-import { Play, Pause, Heart, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PersonalizedToggle from "./PersonalizedToggle";
 
 const Hero = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateStory = () => {
@@ -49,32 +49,6 @@ const Hero = () => {
           {/* Personalized Toggle Section */}
           <div className="mb-12 px-6">
             <PersonalizedToggle />
-          </div>
-
-          {/* Voice Demo Section */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 shadow-xl border border-purple-100 dark:border-gray-700 max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-              🎙️ Hear it in Your Voice
-            </h3>
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <Button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full w-16 h-16 shadow-lg transform hover:scale-105 transition-all duration-200"
-              >
-                {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
-              </Button>
-              <div className="text-left">
-                <p className="font-medium text-gray-800 dark:text-gray-200">Preview: Mom's Voice</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {isPlaying ? "Playing..." : "Tap to hear sample"}
-                </p>
-              </div>
-            </div>
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 rounded-2xl p-4">
-              <p className="text-sm italic text-gray-700 dark:text-gray-300">
-                "Once upon a time, little Emma discovered a magical garden where butterflies danced and flowers sang beautiful melodies..."
-              </p>
-            </div>
           </div>
 
           {/* CTA Buttons */}

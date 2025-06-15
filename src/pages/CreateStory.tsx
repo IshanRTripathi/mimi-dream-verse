@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,6 +7,71 @@ import { ArrowLeft, ArrowRight, Play, Pause, Mic, MicOff, Sparkles } from "lucid
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import ConversationalAgent from "@/components/ConversationalAgent";
+
+// Default Lottie animation data (you can replace this with actual JSON file)
+const defaultAnimationData = {
+  v: "5.7.4",
+  fr: 60,
+  ip: 0,
+  op: 120,
+  w: 200,
+  h: 200,
+  nm: "AI Agent",
+  ddd: 0,
+  assets: [],
+  layers: [
+    {
+      ddd: 0,
+      ind: 1,
+      ty: 4,
+      nm: "Circle",
+      sr: 1,
+      ks: {
+        o: { a: 0, k: 100 },
+        r: { a: 1, k: [{ i: { x: 0.833, y: 0.833 }, o: { x: 0.167, y: 0.167 }, t: 0, s: [0] }, { t: 120, s: [360] }] },
+        p: { a: 0, k: [100, 100, 0] },
+        a: { a: 0, k: [0, 0, 0] },
+        s: { a: 0, k: [100, 100, 100] }
+      },
+      ao: 0,
+      shapes: [
+        {
+          ty: "gr",
+          it: [
+            {
+              d: 1,
+              ty: "el",
+              s: { a: 0, k: [80, 80] },
+              p: { a: 0, k: [0, 0] },
+              nm: "Ellipse Path 1",
+              mn: "ADBE Vector Shape - Ellipse"
+            },
+            {
+              ty: "fl",
+              c: { a: 0, k: [0.6, 0.4, 1, 1] },
+              o: { a: 0, k: 100 },
+              r: 1,
+              bm: 0,
+              nm: "Fill 1",
+              mn: "ADBE Vector Graphic - Fill"
+            }
+          ],
+          nm: "Ellipse 1",
+          np: 2,
+          cix: 2,
+          bm: 0,
+          ix: 1,
+          mn: "ADBE Vector Group"
+        }
+      ],
+      ip: 0,
+      op: 120,
+      st: 0,
+      bm: 0
+    }
+  ]
+};
 
 const CreateStory = () => {
   const navigate = useNavigate();
@@ -41,6 +105,10 @@ const CreateStory = () => {
     navigate('/');
   };
 
+  const handleStoryRequest = (request: string) => {
+    setFormData({...formData, storyRequest: request});
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -52,16 +120,56 @@ const CreateStory = () => {
                 Just tell Mimi what you want to listen to
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                Describe the story theme, characters, or adventure you'd like to hear
+                Talk directly to Mimi or type your story request
               </p>
             </div>
-            
-            <Textarea
-              placeholder="Tell us about the story you'd like... (e.g., 'A magical adventure where my child discovers a hidden fairy garden and makes friends with talking animals')"
-              value={formData.storyRequest}
-              onChange={(e) => setFormData({...formData, storyRequest: e.target.value})}
-              className="min-h-32 text-base"
-            />
+
+            {/* Toggle between AI conversation and manual input */}
+            <div className="mb-6">
+              <div className="flex justify-center mb-4">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-full p-1 flex">
+                  <Button
+                    variant={formData.storyRequest ? "default" : "ghost"}
+                    size="sm"
+                    className="rounded-full px-4"
+                    onClick={() => setFormData({...formData, storyRequest: ""})}
+                  >
+                    Talk to Mimi
+                  </Button>
+                  <Button
+                    variant={!formData.storyRequest ? "default" : "ghost"}
+                    size="sm"
+                    className="rounded-full px-4"
+                    onClick={() => {}}
+                  >
+                    Type Request
+                  </Button>
+                </div>
+              </div>
+
+              {!formData.storyRequest ? (
+                <ConversationalAgent
+                  onStoryRequest={handleStoryRequest}
+                  animationData={defaultAnimationData}
+                />
+              ) : (
+                <div className="space-y-4">
+                  <Textarea
+                    placeholder="Tell us about the story you'd like... (e.g., 'A magical adventure where my child discovers a hidden fairy garden and makes friends with talking animals')"
+                    value={formData.storyRequest}
+                    onChange={(e) => setFormData({...formData, storyRequest: e.target.value})}
+                    className="min-h-32 text-base"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => setFormData({...formData, storyRequest: ""})}
+                    className="w-full"
+                  >
+                    Switch to Voice Input
+                  </Button>
+                </div>
+              )}
+            </div>
             
             <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg">
               <p className="text-sm text-gray-600 dark:text-gray-300">

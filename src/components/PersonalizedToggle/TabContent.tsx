@@ -1,11 +1,7 @@
-
 import { AssetDisplay } from './AssetDisplay';
 import { AudioPlayer } from './AudioPlayer';
 import { FeaturesList } from './FeaturesList';
-
-// Import the images using Vite's import system
-import normalAsset from '@/assets/featureImages/normalasset.jpg';
-import personalizedAsset from '@/assets/featureImages/personalisedasset.jpg';
+import { AssetManager } from '@/utils/assetManager';
 
 interface TabContentProps {
   type: 'normal' | 'personalized';
@@ -17,7 +13,7 @@ export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) =
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
-    imageSrc: personalizedAsset,
+    imageSrc: AssetManager.images.features.personalizedAsset,
     alt: 'Personalized story asset',
     label: 'Personalized',
     imageGradient: 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50',
@@ -33,7 +29,7 @@ export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) =
       { text: 'Custom character appearance', color: 'bg-purple-400' }
     ]
   } : {
-    imageSrc: normalAsset,
+    imageSrc: AssetManager.images.features.normalAsset,
     alt: 'Normal story asset',
     label: 'Normal',
     imageGradient: 'bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50',

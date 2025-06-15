@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Volume2, VolumeX } from 'lucide-react';
 import { useAudio } from '@/contexts/AudioContext';
+import { AssetManager } from '@/utils/assetManager';
 
 interface BackgroundMusicProps {
   className?: string;
@@ -21,8 +21,10 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
   const toggleMusic = () => {
     if (isBackgroundMusicPlaying) {
       stopBackgroundMusic();
+      AssetManager.utils.logAssetLoad('audio', 'background music stopped', true);
     } else {
       playBackgroundMusic(); // Plays the first track by default
+      AssetManager.utils.logAssetLoad('audio', 'background music started', true);
     }
   };
 

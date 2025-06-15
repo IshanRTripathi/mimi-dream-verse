@@ -1,16 +1,6 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
-
-// Import local images
-import accessibility1 from "@/assets/featureImages/accessibility1.jpg";
-import accessibility2 from "@/assets/featureImages/accessibility2.jpg";
-import values1 from "@/assets/featureImages/values1.jpeg";
-import values2 from "@/assets/featureImages/values2.jpeg";
-import alive1 from "@/assets/featureImages/alive1.jpg";
-import alive2 from "@/assets/featureImages/alive2.jpg";
-import imagine1 from "@/assets/featureImages/imagine1.jpg";
-import imagine2 from "@/assets/featureImages/imagine2.jpg";
+import { AssetManager } from "@/utils/assetManager";
 
 interface InteractiveFeatureCardProps {
   title: string;
@@ -25,21 +15,6 @@ interface InteractiveFeatureCardProps {
 const InteractiveFeatureCard = ({ title, description, images, theme }: InteractiveFeatureCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Map local image paths to imported modules
-  const getImageSrc = (imagePath: string) => {
-    const imageMap: Record<string, string> = {
-      "/src/assets/featureImages/accessibility1.jpg": accessibility1,
-      "/src/assets/featureImages/accessibility2.jpg": accessibility2,
-      "/src/assets/featureImages/values1.jpeg": values1,
-      "/src/assets/featureImages/values2.jpeg": values2,
-      "/src/assets/featureImages/alive1.jpg": alive1,
-      "/src/assets/featureImages/alive2.jpg": alive2,
-      "/src/assets/featureImages/imagine1.jpg": imagine1,
-      "/src/assets/featureImages/imagine2.jpg": imagine2,
-    };
-    return imageMap[imagePath] || imagePath;
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -53,7 +28,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-3xl">
         {/* Primary Image */}
         <motion.img
-          src={getImageSrc(images.primary)}
+          src={AssetManager.images.getByPath(images.primary)}
           alt={`${title} - primary`}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           animate={{ opacity: isHovered ? 0 : 1 }}
@@ -62,7 +37,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
         
         {/* Secondary Image */}
         <motion.img
-          src={getImageSrc(images.secondary)}
+          src={AssetManager.images.getByPath(images.secondary)}
           alt={`${title} - secondary`}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           animate={{ opacity: isHovered ? 1 : 0 }}

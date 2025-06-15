@@ -1,11 +1,7 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
-
-// Import audio files directly
-import normalTone from '@/assets/audio/normaltone.mp3';
-import realisticTone from '@/assets/audio/realistictone.mp3';
+import { AssetManager } from '@/utils/assetManager';
 
 interface AudioPlayerProps {
   audioType: 'normal' | 'personalized';
@@ -48,7 +44,7 @@ export const AudioPlayer = ({
       setIsPlaying(false);
       setIsLoading(false);
       onAudioStateChange?.(false);
-      console.log('🎵 Audio stopped');
+      AssetManager.utils.logAssetLoad('audio', 'stopped', true);
     }
   };
 
@@ -62,10 +58,9 @@ export const AudioPlayer = ({
     setError(null);
     setIsLoading(true);
 
-    // Use imported audio files
-    const audioSrc = audioType === 'personalized' ? realisticTone : normalTone;
-
-    console.log('🎵 Attempting to load audio:', audioType);
+    // Use centralized asset management
+    const audioSrc = AssetManager.audio.getStoryAudio(audioType);
+    AssetManager.utils.logAssetLoad('audio', audioType, true);
     
     try {
       const audio = new Audio();
@@ -86,7 +81,7 @@ export const AudioPlayer = ({
         audio.play().then(() => {
           setIsPlaying(true);
           onAudioStateChange?.(true);
-          console.log('🎵 Audio playing successfully');
+          AssetManager.utils.logAssetLoad('audio', 'playing', true);
         }).catch(error => {
           console.error('❌ Audio play failed:', error);
           setError('Failed to play audio. Please try again.');
@@ -98,7 +93,7 @@ export const AudioPlayer = ({
       });
 
       audio.addEventListener('ended', () => {
-        console.log('🎵 Audio playback ended');
+        AssetManager.utils.logAssetLoad('audio', 'ended', true);
         setIsPlaying(false);
         currentAudioRef.current = null;
         onAudioStateChange?.(false);
@@ -114,8 +109,8 @@ export const AudioPlayer = ({
         onAudioStateChange?.(false);
       });
 
-      // Set audio properties
-      audio.volume = 0.5; // Default narration volume
+      // Set audio properties using centralized config
+      audio.volume = AssetManager.audio.volumes.narration;
       audio.preload = 'metadata';
       
       // Set the source and start loading

@@ -40,16 +40,6 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
     return imageMap[imagePath] || imagePath;
   };
 
-  const getThemeColors = (theme: string) => {
-    const themes = {
-      accessibility: "from-blue-500/20 to-indigo-500/20",
-      emotional: "from-pink-500/20 to-rose-500/20", 
-      imagination: "from-purple-500/20 to-violet-500/20",
-      building: "from-green-500/20 to-emerald-500/20"
-    };
-    return themes[theme as keyof typeof themes] || themes.accessibility;
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -61,8 +51,6 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
     >
       {/* Image Container - Full width, 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden">
-        <div className={`absolute inset-0 bg-gradient-to-br ${getThemeColors(theme)} z-10`}></div>
-        
         {/* Primary Image */}
         <motion.img
           src={getImageSrc(images.primary)}

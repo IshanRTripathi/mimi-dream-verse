@@ -3,7 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Volume2, VolumeX } from 'lucide-react';
 
-const BackgroundMusic = () => {
+interface BackgroundMusicProps {
+  className?: string;
+  showVolumeControl?: boolean;
+}
+
+const BackgroundMusic = ({ className = "", showVolumeControl = true }: BackgroundMusicProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.2);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -48,7 +53,7 @@ const BackgroundMusic = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full p-2 border border-purple-200 dark:bg-gray-800/80 dark:border-gray-600 transition-all duration-300">
+    <div className={`bg-white/80 backdrop-blur-sm rounded-full p-2 border border-purple-200 dark:bg-gray-800/80 dark:border-gray-600 transition-all duration-300 ${className}`}>
       <div className="flex items-center gap-2">
         <Button
           onClick={toggleMusic}
@@ -64,7 +69,7 @@ const BackgroundMusic = () => {
           )}
         </Button>
         
-        {isPlaying && (
+        {showVolumeControl && isPlaying && (
           <div className="flex items-center gap-2 px-2">
             <input
               type="range"

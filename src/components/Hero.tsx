@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
@@ -14,7 +15,7 @@ const Hero = () => {
     navigate('/create-story');
   };
 
-  const handleTryFree = () => {
+  const handleJoinWaitlist = () => {
     setIsWaitlistOpen(true);
   };
 
@@ -65,12 +66,12 @@ const Hero = () => {
               Create Your First Story ✨
             </MagneticButton>
             <MagneticButton 
-              onClick={handleTryFree}
+              onClick={handleJoinWaitlist}
               variant="outline" 
               className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold bg-white dark:bg-gray-900"
               strength={0.15}
             >
-              Try it now free 📱
+              Join Waitlist 📋
             </MagneticButton>
           </div>
 

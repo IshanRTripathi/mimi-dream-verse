@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Mail, Star, Sparkles } from "lucide-react";
+import { loadWaitlistConfig } from "@/utils/configLoader";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -16,6 +17,8 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
   const [emailExtension, setEmailExtension] = useState("@gmail.com");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const waitlistConfig = loadWaitlistConfig();
 
   const emailExtensions = [
     "@gmail.com",
@@ -58,13 +61,13 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
               <Star className="w-8 h-8 text-white fill-current" />
             </div>
             <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">
-              You're on the list! 🎉
+              {waitlistConfig.successMessage.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              We'll notify you as soon as StoryMimi is ready for early access.
+              {waitlistConfig.successMessage.subtitle}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-              Check your email for confirmation and exclusive early bird offers!
+              {waitlistConfig.successMessage.details}
             </p>
             <Button onClick={handleClose} className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700">
               Got it!
@@ -84,11 +87,12 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Join the Waitlist ✨
+              {waitlistConfig.title}
             </DialogTitle>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
-              Be the first to experience magical storytelling with StoryMimi
-            </p>
+            <p 
+              className="text-gray-600 dark:text-gray-300 mt-2"
+              dangerouslySetInnerHTML={{ __html: waitlistConfig.subtitle }}
+            />
           </div>
         </DialogHeader>
 
@@ -129,13 +133,12 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-4">
             <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
               <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              Early Bird Perks:
+              {waitlistConfig.earlyBirdPerks.title}
             </h4>
             <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1">
-              <li>• 3 months free premium access</li>
-              <li>• Exclusive beta features</li>
-              <li>• Priority customer support</li>
-              <li>• Special launch pricing</li>
+              {waitlistConfig.earlyBirdPerks.benefits.map((benefit, index) => (
+                <li key={index}>• {benefit}</li>
+              ))}
             </ul>
           </div>
 

@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import featuresYaml from '../data/features.yaml?raw';
 import howItWorksYaml from '../data/how-it-works.yaml?raw';
 import testimonialsYaml from '../data/testimonials.yaml?raw';
+import waitlistYaml from '../data/waitlist.yaml?raw';
 
 export interface FeatureConfig {
   icon: string;
@@ -35,6 +36,20 @@ export interface TestimonialConfig {
   highlight: string;
 }
 
+export interface WaitlistConfig {
+  title: string;
+  subtitle: string;
+  earlyBirdPerks: {
+    title: string;
+    benefits: string[];
+  };
+  successMessage: {
+    title: string;
+    subtitle: string;
+    details: string;
+  };
+}
+
 export const loadFeatures = (): FeatureConfig[] => {
   const data = yaml.load(featuresYaml) as { features: FeatureConfig[] };
   return data.features;
@@ -48,4 +63,9 @@ export const loadHowItWorksSteps = (): StepConfig[] => {
 export const loadTestimonials = (): TestimonialConfig[] => {
   const data = yaml.load(testimonialsYaml) as { testimonials: TestimonialConfig[] };
   return data.testimonials;
+};
+
+export const loadWaitlistConfig = (): WaitlistConfig => {
+  const data = yaml.load(waitlistYaml) as { waitlist: WaitlistConfig };
+  return data.waitlist;
 };

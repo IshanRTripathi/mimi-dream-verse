@@ -1,0 +1,15 @@
+
+waitlist:
+  title: "Join the Waitlist ✨"
+  subtitle: "Good things come to those who <strong>wait</strong>, where <strong>good things</strong> make bedtime magical"
+  earlyBirdPerks:
+    title: "Early Bird Perks:"
+    benefits:
+      - "3 months free premium access"
+      - "Exclusive beta features" 
+      - "Priority customer support"
+      - "Special launch pricing"
+  successMessage:
+    title: "You're on the list! 🎉"
+    subtitle: "We'll notify you as soon as StoryMimi is ready for early access."
+    details: "Check your email for confirmation and exclusive early bird offers!"

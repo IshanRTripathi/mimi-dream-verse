@@ -5,10 +5,11 @@ import { FeaturesList } from './FeaturesList';
 
 interface TabContentProps {
   type: 'normal' | 'personalized';
+  shouldStopAudio?: boolean;
 }
 
-export const TabContent = ({ type }: TabContentProps) => {
-  console.log('TabContent rendering with type:', type);
+export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) => {
+  console.log('TabContent rendering with type:', type, 'shouldStopAudio:', shouldStopAudio);
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
@@ -65,6 +66,7 @@ export const TabContent = ({ type }: TabContentProps) => {
           sampleText={config.sampleText}
           gradientColors={config.audioGradient}
           buttonGradient={config.buttonGradient}
+          shouldStop={shouldStopAudio}
         />
         <FeaturesList features={config.features} />
       </div>

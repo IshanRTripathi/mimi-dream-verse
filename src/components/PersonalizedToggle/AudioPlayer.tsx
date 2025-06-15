@@ -1,7 +1,8 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
+import { loadAudioConfig } from '@/utils/configLoader';
 
 interface AudioPlayerProps {
   audioType: 'normal' | 'personalized';
@@ -10,6 +11,8 @@ interface AudioPlayerProps {
   sampleText: string;
   gradientColors: string;
   buttonGradient: string;
+  shouldStop?: boolean;
+  onAudioStateChange?: (isPlaying: boolean) => void;
 }
 
 export const AudioPlayer = ({ 
@@ -18,16 +21,28 @@ export const AudioPlayer = ({
   description, 
   sampleText, 
   gradientColors,
-  buttonGradient 
+  buttonGradient,
+  shouldStop = false,
+  onAudioStateChange
 }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const audioConfig = loadAudioConfig();
+
+  // Stop audio when shouldStop prop changes to true
+  useEffect(() => {
+    if (shouldStop && currentAudioRef.current) {
+      stopCurrentAudio();
+    }
+  }, [shouldStop]);
 
   const stopCurrentAudio = () => {
     if (currentAudioRef.current) {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
       setIsPlaying(false);
+      onAudioStateChange?.(false);
+      console.log('🎵 Audio stopped due to tab switch');
     }
   };
 
@@ -53,6 +68,7 @@ export const AudioPlayer = ({
         console.error('❌ All audio paths failed to load:', audioPaths);
         setIsPlaying(false);
         currentAudioRef.current = null;
+        onAudioStateChange?.(false);
         return;
       }
 
@@ -60,8 +76,8 @@ export const AudioPlayer = ({
       console.log('🎵 Trying to load audio from:', currentPath);
       
       const audio = new Audio(currentPath);
-      // Set narration volume to 0.5 (volume level 5 out of 10)
-      audio.volume = 0.5;
+      // Use the narration volume level from config
+      audio.volume = audioConfig.volume_levels.narration;
       
       audio.oncanplaythrough = () => {
         if (!audioLoaded) {
@@ -71,11 +87,13 @@ export const AudioPlayer = ({
           currentAudioRef.current = audio;
           audio.play().then(() => {
             setIsPlaying(true);
+            onAudioStateChange?.(true);
             console.log('🎵 Audio playing');
           }).catch(error => {
             console.error('❌ Audio play failed:', error);
             setIsPlaying(false);
             currentAudioRef.current = null;
+            onAudioStateChange?.(false);
           });
         }
       };
@@ -84,6 +102,7 @@ export const AudioPlayer = ({
         console.log('🎵 Audio ended');
         setIsPlaying(false);
         currentAudioRef.current = null;
+        onAudioStateChange?.(false);
       };
 
       audio.onerror = (error) => {

@@ -6,18 +6,19 @@ import { TabContent } from './TabContent';
 const PersonalizedToggle = () => {
   console.log('PersonalizedToggle component rendering');
   const [activeTab, setActiveTab] = useState('normal');
-  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
-
-  const stopCurrentAudio = () => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current = null;
-    }
-  };
+  const [shouldStopAudio, setShouldStopAudio] = useState(false);
 
   const handleTabChange = (value: string) => {
-    stopCurrentAudio();
-    setActiveTab(value);
+    console.log('🔄 Tab switching from', activeTab, 'to', value);
+    
+    // Trigger audio stop for current tab
+    setShouldStopAudio(true);
+    
+    // Reset the stop flag after a short delay and switch tab
+    setTimeout(() => {
+      setShouldStopAudio(false);
+      setActiveTab(value);
+    }, 100);
   };
 
   return (
@@ -43,11 +44,17 @@ const PersonalizedToggle = () => {
         </TabsList>
 
         <TabsContent value="normal" className="mt-0">
-          <TabContent type="normal" />
+          <TabContent 
+            type="normal" 
+            shouldStopAudio={activeTab !== 'normal' || shouldStopAudio}
+          />
         </TabsContent>
 
         <TabsContent value="personalized" className="mt-0">
-          <TabContent type="personalized" />
+          <TabContent 
+            type="personalized" 
+            shouldStopAudio={activeTab !== 'personalized' || shouldStopAudio}
+          />
         </TabsContent>
       </Tabs>
     </div>

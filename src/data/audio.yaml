@@ -4,37 +4,37 @@ audio:
   # Background music files
   background_music:
     - name: "Gentle Lullaby"
-      file: "/src/assets/audio/lullaby-gentle.mp3"
+      file: "/src/assets/audio/bgmusic.mp3"
       volume: 0.3
       loop: true
     - name: "Peaceful Dreams"
-      file: "/src/assets/audio/peaceful-dreams.mp3"
+      file: "/src/assets/audio/bgmusic.mp3"
       volume: 0.2
       loop: true
     - name: "Starlight Melody"
-      file: "/src/assets/audio/starlight-melody.mp3"
+      file: "/src/assets/audio/bgmusic.mp3"
       volume: 0.25
       loop: true
 
   # Button interaction sounds
   ui_sounds:
-    click: "/src/assets/audio/ui-click.mp3"
-    pop: "/src/assets/audio/ui-pop.mp3"
-    success: "/src/assets/audio/ui-success.mp3"
-    hover: "/src/assets/audio/ui-hover.mp3"
+    click: "/src/assets/audio/bgmusic.mp3"
+    pop: "/src/assets/audio/bgmusic.mp3"
+    success: "/src/assets/audio/bgmusic.mp3"
+    hover: "/src/assets/audio/bgmusic.mp3"
 
   # Personalized story audio
   story_audio:
     personalized:
-      mom_voice: "/src/assets/audio/story-mom-voice-sample.mp3"
-      dad_voice: "/src/assets/audio/story-dad-voice-sample.mp3"
+      mom_voice: "/src/assets/audio/normaltone.mp3"
+      dad_voice: "/src/assets/audio/realistictone.mp3"
     ai_narrator:
-      default: "/src/assets/audio/story-ai-narrator.mp3"
-      alternative: "/src/assets/audio/story-ai-narrator-alt.mp3"
+      default: "/src/assets/audio/normaltone.mp3"
+      alternative: "/src/assets/audio/realistictone.mp3"
 
   # Story background sounds
   ambient_sounds:
-    forest: "/src/assets/audio/ambient-forest.mp3"
-    ocean: "/src/assets/audio/ambient-ocean.mp3"
-    magical: "/src/assets/audio/ambient-magical.mp3"
-    garden: "/src/assets/audio/ambient-garden.mp3"
+    forest: "/src/assets/audio/bgmusic.mp3"
+    ocean: "/src/assets/audio/bgmusic.mp3"
+    magical: "/src/assets/audio/bgmusic.mp3"
+    garden: "/src/assets/audio/bgmusic.mp3"

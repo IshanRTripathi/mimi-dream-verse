@@ -1,5 +1,5 @@
-
 import { googleFormsService } from './googleFormsService';
+import { GOOGLE_FORMS_CONFIG, GOOGLE_SHEETS_CONFIG } from '@/config/googleForms';
 
 interface WaitlistEntry {
   id: string;
@@ -15,6 +15,25 @@ interface WaitlistStats {
 class WaitlistService {
   private readonly STORAGE_KEY = 'waitlist_entries';
   private readonly STATS_KEY = 'waitlist_stats';
+
+  constructor() {
+    // Auto-configure Google Forms on initialization
+    this.initializeGoogleIntegration();
+  }
+
+  private initializeGoogleIntegration() {
+    if (GOOGLE_FORMS_CONFIG.enabled && GOOGLE_FORMS_CONFIG.formUrl && GOOGLE_FORMS_CONFIG.emailFieldId) {
+      googleFormsService.configure(GOOGLE_FORMS_CONFIG.formUrl, GOOGLE_FORMS_CONFIG.emailFieldId);
+    }
+    
+    if (GOOGLE_SHEETS_CONFIG.enabled && GOOGLE_SHEETS_CONFIG.spreadsheetId && GOOGLE_SHEETS_CONFIG.apiKey) {
+      googleFormsService.configureSheetsAPI(
+        GOOGLE_SHEETS_CONFIG.spreadsheetId, 
+        GOOGLE_SHEETS_CONFIG.apiKey, 
+        GOOGLE_SHEETS_CONFIG.sheetName
+      );
+    }
+  }
 
   // Get all waitlist entries
   private getEntries(): WaitlistEntry[] {
@@ -73,8 +92,6 @@ class WaitlistService {
     this.saveEntries(entries);
 
     // Try to submit to configured integrations
-    let integrationSuccess = true;
-    
     if (googleFormsService.isConfigured()) {
       try {
         if (googleFormsService.isFormsConfigured()) {
@@ -138,16 +155,6 @@ class WaitlistService {
     } else {
       return `${Math.floor(count / 1000)}k+`;
     }
-  }
-
-  // Configure Google Forms integration
-  configureGoogleForms(formUrl: string, emailFieldId: string) {
-    googleFormsService.configure(formUrl, emailFieldId);
-  }
-
-  // Configure Google Sheets API integration
-  configureGoogleSheetsAPI(spreadsheetId: string, apiKey: string, sheetName: string = 'Sheet1') {
-    googleFormsService.configureSheetsAPI(spreadsheetId, apiKey, sheetName);
   }
 }
 

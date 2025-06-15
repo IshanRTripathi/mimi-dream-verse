@@ -86,13 +86,11 @@ const PersonalizedToggle = () => {
             {/* Image Section */}
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50 rounded-2xl lg:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
-                <div className="text-center p-4 sm:p-6 lg:p-8">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mx-auto mb-2 sm:mb-4 flex items-center justify-center text-2xl sm:text-3xl lg:text-4xl">
-                    🧚‍♀️
-                  </div>
-                  <p className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300">Fairy Tale</p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Generic story character</p>
-                </div>
+                <img 
+                  src="/src/assets/featureImages/normalasset.jpg" 
+                  alt="Normal story asset"
+                  className="w-full h-full object-cover rounded-2xl lg:rounded-3xl"
+                />
               </div>
               
               <div className="absolute -top-2 sm:-top-3 left-2 sm:left-4 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold text-white shadow-lg bg-gradient-to-r from-blue-500 to-cyan-500">
@@ -152,13 +150,11 @@ const PersonalizedToggle = () => {
             {/* Image Section */}
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 rounded-2xl lg:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
-                <div className="text-center p-4 sm:p-6 lg:p-8">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-2 sm:mb-4 flex items-center justify-center text-2xl sm:text-3xl lg:text-4xl">
-                    👸
-                  </div>
-                  <p className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300">Emma's Adventure</p>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Custom character integrated</p>
-                </div>
+                <img 
+                  src="/src/assets/featureImages/personalisedasset.jpg" 
+                  alt="Personalized story asset"
+                  className="w-full h-full object-cover rounded-2xl lg:rounded-3xl"
+                />
               </div>
               
               <div className="absolute -top-2 sm:-top-3 left-2 sm:left-4 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold text-white shadow-lg bg-gradient-to-r from-purple-500 to-pink-500">

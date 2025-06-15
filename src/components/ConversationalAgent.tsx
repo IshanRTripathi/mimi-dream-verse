@@ -12,6 +12,7 @@ interface ConversationalAgentProps {
 
 const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
   const [storyRequest, setStoryRequest] = useState("");
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -19,13 +20,39 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     },
     onDisconnect: () => {
       console.log("Disconnected from ElevenLabs agent");
+      setConversationId(null);
     },
     onMessage: (message) => {
       console.log("Received message:", message);
-      // Extract story request from the conversation
-      if (message.source === "ai" && message.message) {
-        setStoryRequest(message.message);
-        onStoryRequest(message.message);
+      
+      // Handle different message types according to WebSocket API docs
+      switch (message.type) {
+        case "conversation_initiation_metadata":
+          console.log("Conversation initiated:", message);
+          break;
+        case "agent_response":
+          // Extract story request from agent response
+          if (message.agent_response && message.agent_response_type === "text") {
+            const responseText = message.agent_response;
+            setStoryRequest(responseText);
+            onStoryRequest(responseText);
+          }
+          break;
+        case "user_transcript":
+          // Handle user speech transcription
+          if (message.user_transcript && message.is_final) {
+            console.log("Final user transcript:", message.user_transcript);
+          }
+          break;
+        case "agent_response_correction":
+          console.log("Agent response correction:", message);
+          break;
+        case "ping":
+          // Handle ping - should be automatically handled by the library
+          console.log("Received ping");
+          break;
+        default:
+          console.log("Unknown message type:", message);
       }
     },
     onError: (error) => {
@@ -35,21 +62,30 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
 
   const handleStartConversation = async () => {
     try {
-      // Request microphone access
+      // Request microphone access first
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      // Start conversation with the updated agent ID
-      await conversation.startSession({ 
+      // Start conversation with proper agent ID and handle response
+      const sessionId = await conversation.startSession({ 
         agentId: "agent_01jxsmn9d5fr8arzbsy2cgbbt0"
       });
+      
+      setConversationId(sessionId);
+      console.log("Conversation started with ID:", sessionId);
     } catch (error) {
       console.error("Failed to start conversation:", error);
-      alert("Failed to start conversation. Please check your microphone permissions.");
+      alert("Failed to start conversation. Please check your microphone permissions and try again.");
     }
   };
 
   const handleEndConversation = async () => {
-    await conversation.endSession();
+    try {
+      await conversation.endSession();
+      setConversationId(null);
+      setStoryRequest("");
+    } catch (error) {
+      console.error("Failed to end conversation:", error);
+    }
   };
 
   return (
@@ -75,6 +111,11 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
         <p className="text-gray-600 dark:text-gray-300 text-sm">
           Tell Mimi what kind of story you'd like to hear
         </p>
+        {conversationId && (
+          <p className="text-xs text-gray-500 mt-1">
+            Session ID: {conversationId}
+          </p>
+        )}
       </div>
 
       <div className="flex justify-center gap-4">

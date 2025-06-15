@@ -61,7 +61,7 @@ const InteractiveFeaturesSection = () => {
         </motion.div>
 
         {/* Desktop Grid Layout */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -77,7 +77,7 @@ const InteractiveFeaturesSection = () => {
         {/* Mobile Scrollable Layout */}
         <div className="sm:hidden">
           <ScrollArea className="w-full">
-            <div className="flex gap-4 pb-4">
+            <div className="flex gap-6 pb-4">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}

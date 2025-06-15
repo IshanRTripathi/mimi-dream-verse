@@ -32,10 +32,10 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
       transition={{ duration: 0.5 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-[#FAF8F4] dark:bg-[#1E1E1E] rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50 flex-shrink-0 w-full sm:w-80"
+      className="bg-[#FAF8F4] dark:bg-[#1E1E1E] rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50 flex-shrink-0 w-full sm:w-80 overflow-hidden"
     >
-      {/* Image Container */}
-      <div className="relative h-48 mb-4 rounded-xl overflow-hidden">
+      {/* Image Container - Full width, 1:1 aspect ratio */}
+      <div className="relative w-full aspect-square overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br ${getThemeColors(theme)} z-10`}></div>
         
         {/* Primary Image */}
@@ -57,8 +57,8 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
         />
       </div>
 
-      {/* Content */}
-      <div className="text-center">
+      {/* Content - With padding */}
+      <div className="p-6 text-center">
         <h3 className="text-xl font-bold mb-2 text-[#2B2B2B] dark:text-[#F1F1F1] font-rounded">
           {title}
         </h3>

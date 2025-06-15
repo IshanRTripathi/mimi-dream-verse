@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useConversation } from "@11labs/react";
 import { Button } from "@/components/ui/button";
@@ -37,9 +38,9 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
       // Request microphone access
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      // Start conversation with the public agent ID
+      // Start conversation with the updated agent ID
       await conversation.startSession({ 
-        agentId: "agent_01jxj6tth2fcebbds6h0p9mb6g"
+        agentId: "agent_01jxsmn9d5fr8arzbsy2cgbbt0"
       });
     } catch (error) {
       console.error("Failed to start conversation:", error);

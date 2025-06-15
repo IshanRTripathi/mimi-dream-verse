@@ -25,33 +25,73 @@ const PersonalizedToggle = () => {
       return;
     }
 
-    // Play audio based on type - corrected paths
-    const audioPath = audioType === 'personalized' 
-      ? '/src/assets/realistictone.mp3' 
-      : '/src/assets/normaltone.mp3';
+    // Try multiple possible paths for the audio files
+    const audioPaths = audioType === 'personalized' 
+      ? [
+          '/src/assets/audio/realistictone.mp3',
+          '/src/assets/realistictone.mp3',
+          '/assets/audio/realistictone.mp3',
+          '/assets/realistictone.mp3',
+          './src/assets/audio/realistictone.mp3',
+          './src/assets/realistictone.mp3'
+        ]
+      : [
+          '/src/assets/audio/normaltone.mp3',
+          '/src/assets/normaltone.mp3',
+          '/assets/audio/normaltone.mp3',
+          '/assets/normaltone.mp3',
+          './src/assets/audio/normaltone.mp3',
+          './src/assets/normaltone.mp3'
+        ];
 
-    const audio = new Audio(audioPath);
-    audio.volume = 0.7;
-    
-    audio.onended = () => {
-      setIsPlaying(false);
-      currentAudioRef.current = null;
+    let audioLoaded = false;
+    let currentPathIndex = 0;
+
+    const tryLoadAudio = () => {
+      if (currentPathIndex >= audioPaths.length) {
+        console.error('All audio paths failed to load:', audioPaths);
+        setIsPlaying(false);
+        currentAudioRef.current = null;
+        return;
+      }
+
+      const currentPath = audioPaths[currentPathIndex];
+      console.log('Trying to load audio from:', currentPath);
+      
+      const audio = new Audio(currentPath);
+      audio.volume = 0.7;
+      
+      audio.oncanplaythrough = () => {
+        if (!audioLoaded) {
+          audioLoaded = true;
+          console.log('Audio loaded successfully from:', currentPath);
+          currentAudioRef.current = audio;
+          audio.play().then(() => {
+            setIsPlaying(true);
+          }).catch(error => {
+            console.error('Audio play failed:', error);
+            setIsPlaying(false);
+            currentAudioRef.current = null;
+          });
+        }
+      };
+
+      audio.onended = () => {
+        setIsPlaying(false);
+        currentAudioRef.current = null;
+      };
+
+      audio.onerror = (error) => {
+        console.log('Failed to load audio from:', currentPath, error);
+        currentPathIndex++;
+        tryLoadAudio();
+      };
+
+      // Start loading the audio
+      audio.load();
     };
 
-    audio.onerror = () => {
-      console.error('Audio failed to load:', audioPath);
-      setIsPlaying(false);
-      currentAudioRef.current = null;
-    };
-
-    currentAudioRef.current = audio;
-    audio.play().then(() => {
-      setIsPlaying(true);
-    }).catch(error => {
-      console.error('Audio play failed:', error);
-      setIsPlaying(false);
-      currentAudioRef.current = null;
-    });
+    tryLoadAudio();
   };
 
   const handleTabChange = (value: string) => {

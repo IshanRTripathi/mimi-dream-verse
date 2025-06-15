@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
@@ -144,15 +145,17 @@ const Pricing = () => {
               Join our waitlist now and get <span className="text-purple-600 font-bold text-xl">75% OFF</span> your first 6 months when we launch! 
               Plus exclusive beta access and premium features absolutely FREE.
             </p>
-            <MagneticButton
-              onClick={() => setIsWaitlistOpen(true)}
-              className="bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-700/80 hover:to-pink-700/80 text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-6 backdrop-blur-md border border-white/20"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <Star className="w-5 h-5 mr-2 fill-current" />
-              Claim My Early Bird Discount!
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </MagneticButton>
+            <div className="flex justify-center mb-6">
+              <MagneticButton
+                onClick={() => setIsWaitlistOpen(true)}
+                className="bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-700/80 hover:to-pink-700/80 text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 backdrop-blur-md border border-white/20 flex items-center gap-2"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <Star className="w-5 h-5 fill-current" />
+                Claim My Early Bird Discount!
+                <ArrowRight className="w-5 h-5" />
+              </MagneticButton>
+            </div>
             <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
               <span>✅ 30-day money-back guarantee</span>
               <span>•</span>

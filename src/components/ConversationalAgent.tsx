@@ -4,7 +4,7 @@ import { useConversation } from "@11labs/react";
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff, MessageCircle } from "lucide-react";
 import Lottie from "lottie-react";
-import mimiAnimation from "@/assets/mimi-animation.json";
+import mimiAnimation from "@/assets/animations/mimi-animation.json";
 
 interface ConversationalAgentProps {
   onStoryRequest: (request: string) => void;
@@ -25,18 +25,47 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     onMessage: (message) => {
       console.log("Received message:", message);
       
-      // Handle message based on the actual library structure
-      // message has properties: { message: string; source: Role; }
-      if (message.source === "ai" && message.message) {
-        console.log("AI response:", message.message);
-        setStoryRequest(message.message);
-        onStoryRequest(message.message);
-      } else if (message.source === "user" && message.message) {
-        console.log("User transcript:", message.message);
+      // Handle different message types more carefully
+      try {
+        // Check if message has the expected structure
+        if (message && typeof message === 'object') {
+          // Handle user transcript (only process final transcripts to avoid premature endings)
+          if (message.source === "user" && message.message) {
+            console.log("User transcript:", message.message);
+            // Only process if it's a final transcript (not tentative)
+            if (message.type === "transcript" || !message.type) {
+              // Don't end conversation on user messages
+            }
+          }
+          
+          // Handle AI response
+          if (message.source === "ai" && message.message) {
+            console.log("AI response:", message.message);
+            setStoryRequest(message.message);
+            onStoryRequest(message.message);
+          }
+          
+          // Handle audio chunks without ending conversation
+          if (message.type === "audio_chunk") {
+            console.log("Audio chunk received, continuing conversation...");
+            // Don't process audio chunks as story requests
+            return;
+          }
+          
+          // Handle other message types gracefully
+          if (message.type === "debug" || message.type === "error") {
+            console.log(`${message.type} message:`, message);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Error processing message:", error);
+        // Don't end conversation on message processing errors
       }
     },
     onError: (error) => {
       console.error("Conversation error:", error);
+      // Don't automatically end conversation on errors
     }
   });
 

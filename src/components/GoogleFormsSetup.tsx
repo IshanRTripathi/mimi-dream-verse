@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Check, AlertCircle, ExternalLink, Mail, FileSpreadsheet } from 'lucide-react';
+import { Check, AlertCircle, ExternalLink, Mail, FileSpreadsheet, Zap } from 'lucide-react';
 import { waitlistService } from '@/services/waitlistService';
 
 const GoogleFormsSetup = () => {
@@ -15,6 +15,15 @@ const GoogleFormsSetup = () => {
   const [apiKey, setApiKey] = useState('');
   const [sheetName, setSheetName] = useState('Sheet1');
   const [isConfigured, setIsConfigured] = useState(false);
+
+  // Pre-configured form data
+  const quickSetupFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeEN03u9EGQ6wVte-6-hVBvbQ8GmJAG0-GvaokwkCPFMbbYyA/formResponse';
+  const quickSetupFieldId = 'entry.551667936';
+
+  const handleQuickSetup = () => {
+    waitlistService.configureGoogleForms(quickSetupFormUrl, quickSetupFieldId);
+    setIsConfigured(true);
+  };
 
   const handleFormsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +46,7 @@ const GoogleFormsSetup = () => {
       <Alert className="border-green-200 bg-green-50 dark:bg-green-900/20">
         <Check className="h-4 w-4 text-green-600" />
         <AlertDescription className="text-green-800 dark:text-green-200">
-          ✅ Google integration is now active! Waitlist signups will automatically be sent to your Google Sheet.
+          ✅ Google integration is now active! Waitlist signups will automatically be sent to your Google Form/Sheet.
         </AlertDescription>
       </Alert>
     );
@@ -47,35 +56,63 @@ const GoogleFormsSetup = () => {
     <Card className="max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          📊 Google Sheets Integration
+          📊 Google Integration Setup
         </CardTitle>
         <CardDescription>
-          Since your form doesn't allow pre-filling, here are two ways to connect your waitlist to Google Sheets:
+          Connect your waitlist to Google Forms or Google Sheets to automatically collect signups.
         </CardDescription>
       </CardHeader>
       
-      <CardContent>
-        <Tabs defaultValue="simple" className="w-full">
+      <CardContent className="space-y-6">
+        {/* Quick Setup Option */}
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-lg border border-green-200 dark:border-green-700">
+          <div className="flex items-start justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-green-800 dark:text-green-200 flex items-center gap-2 mb-2">
+                <Zap className="w-5 h-5" />
+                Quick Setup - Your Form is Ready!
+              </h3>
+              <p className="text-green-700 dark:text-green-300 text-sm mb-4">
+                I found your Google Form details! Click below to activate the integration instantly.
+              </p>
+              <div className="text-xs text-green-600 dark:text-green-400 space-y-1 mb-4">
+                <div>Form ID: entry.551667936</div>
+                <div>Form URL: Configured ✓</div>
+              </div>
+            </div>
+            <Button 
+              onClick={handleQuickSetup}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              <Zap className="w-4 h-4 mr-2" />
+              Activate Now
+            </Button>
+          </div>
+        </div>
+
+        <div className="text-center text-gray-500 dark:text-gray-400 text-sm">
+          Or configure manually below
+        </div>
+
+        <Tabs defaultValue="forms" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="simple" className="flex items-center gap-2">
+            <TabsTrigger value="forms" className="flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              Simple Form Method
+              Google Forms
             </TabsTrigger>
-            <TabsTrigger value="api" className="flex items-center gap-2">
+            <TabsTrigger value="sheets" className="flex items-center gap-2">
               <FileSpreadsheet className="w-4 h-4" />
-              Direct API Method
+              Google Sheets API
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="simple" className="space-y-6">
+          <TabsContent value="forms" className="space-y-6">
             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">📝 Try This Alternative Approach:</h4>
+              <h4 className="font-semibold mb-2">📝 Manual Google Forms Setup:</h4>
               <ol className="list-decimal list-inside space-y-2 text-sm">
-                <li>Go back to your <a href="https://docs.google.com/forms/d/1FAIpQLSeEN03u9EGQ6wVte-6-hVBvbQ8GmJAG0-GvaokwkCPFMbbYyA/edit" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Google Form (Edit Mode)</a></li>
-                <li>Delete the current email question and create a new "Short answer" question</li>
-                <li>Make sure it's NOT set as "Email" type, just regular "Short answer"</li>
-                <li>Try the pre-fill link method again</li>
-                <li>If that works, you'll get an entry ID like "entry.123456789"</li>
+                <li>Get your form's submission URL (replace "viewform" with "formResponse")</li>
+                <li>Get the field ID using the pre-fill method or inspect element</li>
+                <li>Enter both values below</li>
               </ol>
             </div>
 
@@ -114,7 +151,7 @@ const GoogleFormsSetup = () => {
             </form>
           </TabsContent>
 
-          <TabsContent value="api" className="space-y-6">
+          <TabsContent value="sheets" className="space-y-6">
             <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
               <h4 className="font-semibold mb-2">🔑 Google Sheets API Setup:</h4>
               <ol className="list-decimal list-inside space-y-2 text-sm">
@@ -179,7 +216,7 @@ const GoogleFormsSetup = () => {
         <Alert className="mt-6">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            <strong>Note:</strong> Both methods will save signups locally in your browser as backup. Choose the method that works best for your setup.
+            <strong>Note:</strong> All methods will save signups locally in your browser as backup. Choose the method that works best for your setup.
           </AlertDescription>
         </Alert>
       </CardContent>

@@ -1,27 +1,27 @@
 
 // Centralized asset management system
-// Import all assets directly using Vite's import system
+// Import all assets from the new centralized structure
 
-// Audio assets
+// Audio assets from centralized folder
 import normalTone from '@/assets/audio/normaltone.mp3';
 import realisticTone from '@/assets/audio/realistictone.mp3';
 import bgMusic from '@/assets/audio/bgmusic.mp3';
 
-// Feature images
-import normalAsset from '@/assets/featureImages/normalasset.jpg';
-import personalizedAsset from '@/assets/featureImages/personalisedasset.jpg';
-import accessibility1 from '@/assets/featureImages/accessibility1.jpg';
-import accessibility2 from '@/assets/featureImages/accessibility2.jpg';
-import values1 from '@/assets/featureImages/values1.jpeg';
-import values2 from '@/assets/featureImages/values2.jpeg';
-import alive1 from '@/assets/featureImages/alive1.jpg';
-import alive2 from '@/assets/featureImages/alive2.jpg';
-import imagine1 from '@/assets/featureImages/imagine1.jpg';
-import imagine2 from '@/assets/featureImages/imagine2.jpg';
+// Image assets from centralized folder
+import normalAsset from '@/assets/images/normalasset.jpg';
+import personalizedAsset from '@/assets/images/personalisedasset.jpg';
+import accessibility1 from '@/assets/images/accessibility1.jpg';
+import accessibility2 from '@/assets/images/accessibility2.jpg';
+import values1 from '@/assets/images/values1.jpeg';
+import values2 from '@/assets/images/values2.jpeg';
+import alive1 from '@/assets/images/alive1.jpg';
+import alive2 from '@/assets/images/alive2.jpg';
+import imagine1 from '@/assets/images/imagine1.jpg';
+import imagine2 from '@/assets/images/imagine2.jpg';
 
-// Animation assets
-import mimiAnimation from '@/assets/mimi-animation.json';
-import arrowAnimation from '@/assets/arrow-animation.json';
+// Animation assets from centralized folder
+import mimiAnimation from '@/assets/animations/mimi-animation.json';
+import arrowAnimation from '@/assets/animations/arrow-animation.json';
 
 export const AssetManager = {
   // Audio assets
@@ -61,14 +61,14 @@ export const AssetManager = {
     // Helper function to get image by path
     getByPath: (imagePath: string): string => {
       const imageMap: Record<string, string> = {
-        '/src/assets/featureImages/accessibility1.jpg': accessibility1,
-        '/src/assets/featureImages/accessibility2.jpg': accessibility2,
-        '/src/assets/featureImages/values1.jpeg': values1,
-        '/src/assets/featureImages/values2.jpeg': values2,
-        '/src/assets/featureImages/alive1.jpg': alive1,
-        '/src/assets/featureImages/alive2.jpg': alive2,
-        '/src/assets/featureImages/imagine1.jpg': imagine1,
-        '/src/assets/featureImages/imagine2.jpg': imagine2,
+        '/src/assets/images/accessibility1.jpg': accessibility1,
+        '/src/assets/images/accessibility2.jpg': accessibility2,
+        '/src/assets/images/values1.jpeg': values1,
+        '/src/assets/images/values2.jpeg': values2,
+        '/src/assets/images/alive1.jpg': alive1,
+        '/src/assets/images/alive2.jpg': alive2,
+        '/src/assets/images/imagine1.jpg': imagine1,
+        '/src/assets/images/imagine2.jpg': imagine2,
       };
       return imageMap[imagePath] || imagePath;
     }

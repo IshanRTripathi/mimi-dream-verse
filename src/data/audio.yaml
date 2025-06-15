@@ -44,3 +44,9 @@ audio:
     background_music: 0.3
     narration: 0.5
     ui_sounds: 0.2
+
+  # Note: All assets are now centrally managed through AssetManager
+  # Physical files are organized in:
+  # - src/assets/audio/ (for audio files)
+  # - src/assets/images/ (for image files) 
+  # - src/assets/animations/ (for animation files)

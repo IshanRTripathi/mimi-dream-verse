@@ -1,9 +1,12 @@
-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Crown, Sparkles } from "lucide-react";
+import { useState } from "react";
+import WaitlistModal from "./WaitlistModal";
 
 const Pricing = () => {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   const plans = [
     {
       name: "Free Trial",
@@ -121,7 +124,10 @@ const Pricing = () => {
                 ))}
               </ul>
 
-              <Button className={`w-full py-3 rounded-full font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 ${plan.buttonStyle}`}>
+              <Button 
+                onClick={() => setIsWaitlistOpen(true)}
+                className={`w-full py-3 rounded-full font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 ${plan.buttonStyle}`}
+              >
                 {plan.buttonText}
               </Button>
             </Card>
@@ -129,24 +135,35 @@ const Pricing = () => {
         </div>
 
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl p-8 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">
-              🎁 Special Launch Offer
+          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl p-8 max-w-3xl mx-auto border-2 border-purple-200">
+            <h3 className="text-3xl font-bold mb-4 text-gray-800">
+              🎁 Limited Time: Early Bird Special!
             </h3>
-            <p className="text-gray-600 mb-6">
-              Get 50% off your first 3 months when you upgrade from the free trial! 
-              Limited time offer for early supporters.
+            <p className="text-lg text-gray-700 mb-6 font-medium">
+              Join our waitlist now and get <span className="text-purple-600 font-bold text-xl">75% OFF</span> your first 6 months when we launch! 
+              Plus exclusive beta access and premium features absolutely FREE.
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500">
+            <Button
+              onClick={() => setIsWaitlistOpen(true)}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 mb-6"
+            >
+              <Star className="w-5 h-5 mr-2 fill-current" />
+              Claim My Early Bird Discount!
+            </Button>
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
               <span>✅ 30-day money-back guarantee</span>
               <span>•</span>
               <span>🔒 Cancel anytime</span>
               <span>•</span>
               <span>📱 iOS & Android included</span>
+              <span>•</span>
+              <span>⚡ Limited spots available</span>
             </div>
           </div>
         </div>
       </div>
+      
+      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
     </section>
   );
 };

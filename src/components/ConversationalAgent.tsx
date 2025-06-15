@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useConversation } from "@11labs/react";
 import { Button } from "@/components/ui/button";
@@ -55,11 +54,17 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <div className="w-32 h-32 mx-auto mb-4">
+        <div className="w-48 h-48 mx-auto mb-4">
           <Lottie 
             animationData={mimiAnimation} 
             loop={conversation.isSpeaking || conversation.status === "connected"} 
-            className={conversation.isSpeaking ? "animate-pulse" : ""}
+            className={`transition-transform duration-300 ${
+              conversation.isSpeaking 
+                ? "animate-pulse scale-110" 
+                : conversation.status === "connected" 
+                ? "scale-105" 
+                : "scale-100"
+            }`}
           />
         </div>
         <h3 className="text-xl font-semibold mb-2">

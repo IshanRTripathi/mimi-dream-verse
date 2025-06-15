@@ -1,7 +1,10 @@
-
 import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { useState } from "react";
+import WaitlistModal from "./WaitlistModal";
 
 const Footer = () => {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white py-16">
       <div className="container mx-auto px-4">
@@ -63,14 +66,20 @@ const Footer = () => {
             </div>
 
             <div className="mt-6">
-              <h5 className="font-semibold mb-2">Download the App</h5>
+              <h5 className="font-semibold mb-2">Get Notified When We Launch</h5>
               <div className="flex flex-col gap-2">
-                <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg px-4 py-2 text-center text-sm font-medium cursor-pointer hover:from-purple-700 hover:to-pink-700 transition-colors">
-                  📱 Download for iOS
-                </div>
-                <div className="bg-gradient-to-r from-green-600 to-teal-600 rounded-lg px-4 py-2 text-center text-sm font-medium cursor-pointer hover:from-green-700 hover:to-teal-700 transition-colors">
-                  🤖 Download for Android
-                </div>
+                <button
+                  onClick={() => setIsWaitlistOpen(true)}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg px-4 py-2 text-center text-sm font-medium cursor-pointer hover:from-purple-700 hover:to-pink-700 transition-colors"
+                >
+                  📱 Join Waitlist for iOS
+                </button>
+                <button
+                  onClick={() => setIsWaitlistOpen(true)}
+                  className="bg-gradient-to-r from-green-600 to-teal-600 rounded-lg px-4 py-2 text-center text-sm font-medium cursor-pointer hover:from-green-700 hover:to-teal-700 transition-colors"
+                >
+                  🤖 Join Waitlist for Android
+                </button>
               </div>
             </div>
           </div>
@@ -91,6 +100,8 @@ const Footer = () => {
           </p>
         </div>
       </div>
+      
+      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
     </footer>
   );
 };

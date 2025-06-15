@@ -4,6 +4,8 @@ import { loadHowItWorksSteps } from "@/utils/configLoader";
 import AnimatedSlideshow from "./AnimatedSlideshow";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import arrowAnimation from "@/assets/arrow-animation.json";
 
 const HowItWorks = () => {
   const steps = loadHowItWorksSteps();
@@ -40,15 +42,35 @@ const HowItWorks = () => {
               Perfect for tonight's bedtime!
             </p>
             
-            <MagneticButton 
-              onClick={handleTryNow}
-              className="px-8 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg shadow-xl hover:shadow-2xl mb-4 md:mb-6 w-full sm:w-auto min-h-[56px] md:min-h-[64px]"
-              size="lg"
-            >
-              <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0" />
-              <span className="px-2">Try It Now - Free!</span>
-              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
-            </MagneticButton>
+            <div className="flex items-center justify-center gap-4 mb-4 md:mb-6">
+              {/* Left Arrow */}
+              <div className="w-8 h-8 md:w-12 md:h-12 opacity-60">
+                <Lottie 
+                  animationData={arrowAnimation} 
+                  loop={true}
+                  className="w-full h-full"
+                />
+              </div>
+              
+              <MagneticButton 
+                onClick={handleTryNow}
+                className="px-8 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg shadow-xl hover:shadow-2xl min-h-[56px] md:min-h-[64px]"
+                size="lg"
+              >
+                <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0" />
+                <span className="px-2">Try It Now - Free!</span>
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
+              </MagneticButton>
+              
+              {/* Right Arrow */}
+              <div className="w-8 h-8 md:w-12 md:h-12 opacity-60 scale-x-[-1]">
+                <Lottie 
+                  animationData={arrowAnimation} 
+                  loop={true}
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
             
             <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 text-xs md:text-sm text-gray-500 dark:text-gray-400">
               <span>🚀 Instant Generation</span>

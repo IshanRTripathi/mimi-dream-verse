@@ -60,12 +60,14 @@ export const AudioPlayer = ({
       console.log('🎵 Trying to load audio from:', currentPath);
       
       const audio = new Audio(currentPath);
-      audio.volume = 0.7;
+      // Set narration volume to 0.5 (volume level 5 out of 10)
+      audio.volume = 0.5;
       
       audio.oncanplaythrough = () => {
         if (!audioLoaded) {
           audioLoaded = true;
           console.log('✅ Audio loaded successfully from:', currentPath);
+          console.log('🔊 Audio volume set to:', audio.volume);
           currentAudioRef.current = audio;
           audio.play().then(() => {
             setIsPlaying(true);

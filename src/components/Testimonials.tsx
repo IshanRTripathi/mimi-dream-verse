@@ -18,19 +18,19 @@ const Testimonials = () => {
     if (scrollWidth <= clientWidth) return;
 
     let scrollPosition = 0;
-    const scrollSpeed = 1; // pixels per frame
+    const scrollSpeed = 1;
     
     const scroll = () => {
       scrollPosition += scrollSpeed;
       
-      if (scrollPosition >= scrollWidth - clientWidth) {
+      if (scrollPosition >= scrollWidth / 2) {
         scrollPosition = 0;
       }
       
       scrollContainer.scrollLeft = scrollPosition;
     };
 
-    const intervalId = setInterval(scroll, 50); // 50ms interval for smooth scrolling
+    const intervalId = setInterval(scroll, 50);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -65,7 +65,7 @@ const Testimonials = () => {
           {testimonials.concat(testimonials).map((testimonial, index) => (
             <Card
               key={index}
-              className="p-6 border-0 shadow-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm min-w-[320px] flex-shrink-0"
+              className="p-6 border-0 shadow-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm w-80 flex-shrink-0"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-3xl">{testimonial.avatar}</div>

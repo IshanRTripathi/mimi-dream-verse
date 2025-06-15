@@ -107,12 +107,13 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                   ))}
                 </ul>
               </div>
-              <div className="w-36 h-36 flex-shrink-0">
+              <div className="w-20 h-20 flex-shrink-0">
                 <DotLottieReact
                   src="https://lottie.host/67ea3b7c-848c-4f81-b198-913550b5ed4e/GWlJIQAV6m.lottie"
                   loop
                   autoplay
-                  className="w-full h-full"
+                  className="w-full h-full object-contain"
+                  style={{ imageRendering: 'crisp-edges' }}
                 />
               </div>
             </div>

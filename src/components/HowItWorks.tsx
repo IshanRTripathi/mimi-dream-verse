@@ -54,7 +54,7 @@ const HowItWorks = () => {
               
               <MagneticButton 
                 onClick={handleTryNow}
-                className="px-8 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg shadow-xl hover:shadow-2xl min-h-[56px] md:min-h-[64px] backdrop-blur-md bg-gradient-to-r from-purple-600/90 to-pink-600/90 border border-white/20 hover:from-purple-700/90 hover:to-pink-700/90"
+                className="px-8 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg shadow-lg hover:shadow-xl min-h-[56px] md:min-h-[64px] backdrop-blur-md bg-gradient-to-r from-purple-600/80 to-pink-600/80 border border-white/20 hover:from-purple-700/80 hover:to-pink-700/80"
                 size="lg"
               >
                 <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0" />

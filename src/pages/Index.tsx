@@ -7,6 +7,7 @@ import Pricing from "@/components/Pricing";
 import Footer from "@/components/Footer";
 import ThemeToggle from "@/components/ThemeToggle";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import AccessibilityToggle from "@/components/AccessibilityToggle";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
           {/* Controls - Right Side */}
           <div className="flex items-center gap-2 md:gap-3">
             <BackgroundMusic showVolumeControl={false} />
+            <AccessibilityToggle />
             <ThemeToggle />
           </div>
         </div>

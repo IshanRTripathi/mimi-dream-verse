@@ -25,28 +25,80 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     onMessage: (message) => {
       console.log("Received message:", message);
       
-      // Handle different message types more carefully
+      // Handle different message types according to ElevenLabs docs
       try {
-        // Check if message has the expected structure
         if (message && typeof message === 'object') {
-          // Handle user transcript
-          if (message.source === "user" && message.message) {
-            console.log("User transcript:", message.message);
-            // Don't process user messages as story requests
+          const messageData = message as any;
+          
+          // Handle user transcription (tentative and final)
+          if (messageData.type === 'user_transcript') {
+            console.log("User transcript:", messageData.user_transcript);
+            // Don't process user transcripts as story requests
             return;
           }
           
-          // Handle AI response - only process meaningful AI responses
-          if (message.source === "ai" && message.message) {
-            console.log("AI response:", message.message);
+          // Handle agent response
+          if (messageData.type === 'agent_response') {
+            console.log("Agent response:", messageData.agent_response);
             
-            // Only capture substantial AI responses (not just greetings)
-            const messageText = message.message.trim();
-            if (messageText.length > 10 && !messageText.toLowerCase().startsWith('hi')) {
-              setStoryRequest(messageText);
-              onStoryRequest(messageText);
+            // Only capture substantial agent responses for story requests
+            const responseText = messageData.agent_response?.trim();
+            if (responseText && responseText.length > 20 && 
+                !responseText.toLowerCase().includes('hi') && 
+                !responseText.toLowerCase().includes('hello')) {
+              setStoryRequest(responseText);
+              onStoryRequest(responseText);
+            }
+            return;
+          }
+          
+          // Handle audio data
+          if (messageData.type === 'audio') {
+            console.log("Audio data received");
+            // Don't process audio data
+            return;
+          }
+          
+          // Handle interruption
+          if (messageData.type === 'interruption') {
+            console.log("Interruption detected");
+            return;
+          }
+          
+          // Handle ping/pong for connection health
+          if (messageData.type === 'ping' || messageData.type === 'pong') {
+            console.log("Connection health check:", messageData.type);
+            return;
+          }
+          
+          // Handle error messages
+          if (messageData.type === 'error') {
+            console.error("Agent error:", messageData.error);
+            return;
+          }
+          
+          // Fallback for legacy message format (source/message)
+          if (messageData.source && messageData.message) {
+            if (messageData.source === "user") {
+              console.log("User message (legacy):", messageData.message);
+              return;
+            }
+            
+            if (messageData.source === "ai") {
+              console.log("AI response (legacy):", messageData.message);
+              const responseText = messageData.message.trim();
+              if (responseText.length > 20 && 
+                  !responseText.toLowerCase().includes('hi') && 
+                  !responseText.toLowerCase().includes('hello')) {
+                setStoryRequest(responseText);
+                onStoryRequest(responseText);
+              }
+              return;
             }
           }
+          
+          // Log unhandled message types for debugging
+          console.log("Unhandled message type:", messageData.type || messageData);
         }
       } catch (error) {
         console.error("Error processing message:", error);
@@ -64,7 +116,7 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
       // Request microphone access first
       await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      // Start conversation with proper agent ID and handle response
+      // Start conversation with proper agent ID
       const sessionId = await conversation.startSession({ 
         agentId: "agent_01jxsmn9d5fr8arzbsy2cgbbt0"
       });

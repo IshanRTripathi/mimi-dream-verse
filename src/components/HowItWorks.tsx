@@ -42,12 +42,12 @@ const HowItWorks = () => {
             
             <MagneticButton 
               onClick={handleTryNow}
-              className="px-6 md:px-8 py-3 rounded-full text-base md:text-lg shadow-xl hover:shadow-2xl mb-4 md:mb-6 w-full sm:w-auto"
+              className="px-8 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg shadow-xl hover:shadow-2xl mb-4 md:mb-6 w-full sm:w-auto min-h-[56px] md:min-h-[64px]"
               size="lg"
             >
-              <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              Try It Now - Free!
-              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
+              <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0" />
+              <span className="px-2">Try It Now - Free!</span>
+              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
             </MagneticButton>
             
             <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 text-xs md:text-sm text-gray-500 dark:text-gray-400">

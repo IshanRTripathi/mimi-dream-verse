@@ -2,15 +2,17 @@
 import React, { useRef, useState } from 'react';
 import { Button, ButtonProps } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAudio } from '@/contexts/AudioContext';
 
 interface MagneticButtonProps extends ButtonProps {
   strength?: number;
 }
 
 const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
-  ({ className, strength = 0.2, children, ...props }, ref) => {
+  ({ className, strength = 0.2, children, onClick, ...props }, ref) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [isHovered, setIsHovered] = useState(false);
+    const { playSound } = useAudio();
 
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!buttonRef.current) return;
@@ -35,6 +37,13 @@ const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
       setIsHovered(true);
     };
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      playSound('pop');
+      if (onClick) {
+        onClick(e);
+      }
+    };
+
     return (
       <Button
         ref={buttonRef}
@@ -48,6 +57,7 @@ const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleMouseEnter}
+        onClick={handleClick}
         {...props}
       >
         <span className={cn(

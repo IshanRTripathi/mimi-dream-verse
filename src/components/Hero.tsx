@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Heart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import PersonalizedToggle from "./PersonalizedToggle";
+import PersonalizedToggle from "./PersonalizedToggle/PersonalizedToggle";
 import WaitlistModal from "./WaitlistModal";
 
 const Hero = () => {

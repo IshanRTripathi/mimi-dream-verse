@@ -13,7 +13,7 @@ export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) =
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
-    imageSrc: '/src/assets/featureImages/personalisedasset.jpg',
+    imageSrc: '/personalisedasset.jpg',
     alt: 'Personalized story asset',
     label: 'Personalized',
     imageGradient: 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50',
@@ -29,7 +29,7 @@ export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) =
       { text: 'Custom character appearance', color: 'bg-purple-400' }
     ]
   } : {
-    imageSrc: '/src/assets/featureImages/normalasset.jpg',
+    imageSrc: '/normalasset.jpg',
     alt: 'Normal story asset',
     label: 'Normal',
     imageGradient: 'bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50',

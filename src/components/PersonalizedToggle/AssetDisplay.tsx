@@ -22,13 +22,6 @@ export const AssetDisplay = ({
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     console.error('❌ Image failed to load:', imageSrc, e);
-    // Try alternative path
-    const img = e.target as HTMLImageElement;
-    if (imageSrc.includes('/src/assets/')) {
-      const altPath = imageSrc.replace('/src/assets/', '/');
-      console.log('Trying alternative path:', altPath);
-      img.src = altPath;
-    }
   };
 
   return (

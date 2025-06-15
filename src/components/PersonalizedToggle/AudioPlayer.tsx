@@ -52,69 +52,47 @@ export const AudioPlayer = ({
       return;
     }
 
-    // Use audio paths from the audio folder
-    const audioPaths = audioType === 'personalized' 
-      ? ['/src/assets/audio/realistictone.mp3', '/realistictone.mp3']
-      : ['/src/assets/audio/normaltone.mp3', '/normaltone.mp3'];
+    // Use correct audio paths from public folder
+    const audioPath = audioType === 'personalized' 
+      ? '/realistictone.mp3'
+      : '/normaltone.mp3';
 
-    console.log('Attempting to load audio for type:', audioType);
-    console.log('Audio paths to try:', audioPaths);
-
-    let audioLoaded = false;
-    let currentPathIndex = 0;
-
-    const tryLoadAudio = () => {
-      if (currentPathIndex >= audioPaths.length) {
-        console.error('❌ All audio paths failed to load:', audioPaths);
+    console.log('🎵 Loading audio from:', audioPath);
+    
+    const audio = new Audio(audioPath);
+    audio.volume = audioConfig.volume_levels.narration;
+    
+    audio.oncanplaythrough = () => {
+      console.log('✅ Audio loaded successfully from:', audioPath);
+      console.log('🔊 Audio volume set to:', audio.volume);
+      currentAudioRef.current = audio;
+      audio.play().then(() => {
+        setIsPlaying(true);
+        onAudioStateChange?.(true);
+        console.log('🎵 Audio playing');
+      }).catch(error => {
+        console.error('❌ Audio play failed:', error);
         setIsPlaying(false);
         currentAudioRef.current = null;
         onAudioStateChange?.(false);
-        return;
-      }
-
-      const currentPath = audioPaths[currentPathIndex];
-      console.log('🎵 Trying to load audio from:', currentPath);
-      
-      const audio = new Audio(currentPath);
-      // Use the narration volume level from config
-      audio.volume = audioConfig.volume_levels.narration;
-      
-      audio.oncanplaythrough = () => {
-        if (!audioLoaded) {
-          audioLoaded = true;
-          console.log('✅ Audio loaded successfully from:', currentPath);
-          console.log('🔊 Audio volume set to:', audio.volume);
-          currentAudioRef.current = audio;
-          audio.play().then(() => {
-            setIsPlaying(true);
-            onAudioStateChange?.(true);
-            console.log('🎵 Audio playing');
-          }).catch(error => {
-            console.error('❌ Audio play failed:', error);
-            setIsPlaying(false);
-            currentAudioRef.current = null;
-            onAudioStateChange?.(false);
-          });
-        }
-      };
-
-      audio.onended = () => {
-        console.log('🎵 Audio ended');
-        setIsPlaying(false);
-        currentAudioRef.current = null;
-        onAudioStateChange?.(false);
-      };
-
-      audio.onerror = (error) => {
-        console.log('❌ Failed to load audio from:', currentPath, error);
-        currentPathIndex++;
-        tryLoadAudio();
-      };
-
-      audio.load();
+      });
     };
 
-    tryLoadAudio();
+    audio.onended = () => {
+      console.log('🎵 Audio ended');
+      setIsPlaying(false);
+      currentAudioRef.current = null;
+      onAudioStateChange?.(false);
+    };
+
+    audio.onerror = (error) => {
+      console.error('❌ Failed to load audio from:', audioPath, error);
+      setIsPlaying(false);
+      currentAudioRef.current = null;
+      onAudioStateChange?.(false);
+    };
+
+    audio.load();
   };
 
   return (

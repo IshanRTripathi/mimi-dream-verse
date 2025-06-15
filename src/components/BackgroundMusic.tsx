@@ -53,24 +53,24 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
   };
 
   return (
-    <div className={`bg-white/80 backdrop-blur-sm rounded-full p-2 border border-purple-200 dark:bg-gray-800/80 dark:border-gray-600 transition-all duration-300 ${className}`}>
+    <div className={`group ${className}`}>
       <div className="flex items-center gap-2">
         <Button
           onClick={toggleMusic}
           variant="ghost"
           size="icon"
-          className="w-10 h-10 rounded-full hover:bg-purple-100 dark:hover:bg-gray-700"
+          className="w-10 h-10 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
           aria-label={isPlaying ? 'Pause background music' : 'Play background music'}
         >
           {isPlaying ? (
-            <Volume2 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+            <Volume2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           ) : (
-            <VolumeX className="w-5 h-5 text-gray-400" />
+            <VolumeX className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           )}
         </Button>
         
         {showVolumeControl && isPlaying && (
-          <div className="flex items-center gap-2 px-2">
+          <div className="flex items-center gap-2 px-3 py-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/20 dark:border-gray-700/30 rounded-full shadow-lg animate-fade-in">
             <input
               type="range"
               min="0"
@@ -81,7 +81,7 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
               className="w-16 h-1 bg-purple-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-600"
               aria-label="Volume control"
             />
-            <span className="text-xs text-purple-600 dark:text-purple-400 w-8">
+            <span className="text-xs text-purple-600 dark:text-purple-400 w-8 font-medium">
               {Math.round(volume * 100)}%
             </span>
           </div>

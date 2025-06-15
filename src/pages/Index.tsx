@@ -11,10 +11,25 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-800 transition-colors duration-300">
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
-        <BackgroundMusic showVolumeControl={false} />
-        <ThemeToggle />
-      </div>
+      {/* Top Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 p-4">
+        <div className="flex justify-between items-start">
+          {/* Logo/Brand - Left Side */}
+          <div className="flex items-center">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              StoryMimi ✨
+            </h1>
+          </div>
+          
+          {/* Controls - Right Side */}
+          <div className="flex items-center gap-3">
+            <BackgroundMusic showVolumeControl={false} />
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
       <Hero />
       <Features />
       <HowItWorks />

@@ -9,11 +9,11 @@ audio:
       loop: true
     - name: "Peaceful Dreams"
       file: "/src/assets/audio/bgmusic.mp3"
-      volume: 0.2
+      volume: 0.3
       loop: true
     - name: "Starlight Melody"
       file: "/src/assets/audio/bgmusic.mp3"
-      volume: 0.25
+      volume: 0.3
       loop: true
 
   # Button interaction sounds (currently using bgmusic as placeholder)

@@ -34,14 +34,14 @@ const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
             AI-powered personalized stories with your voice, your child as the hero, 
             and beautiful custom illustrations that make every bedtime magical ✨
           </p>
 
           {/* Voice Demo Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 shadow-xl border border-purple-100 max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 shadow-xl border border-purple-100 dark:border-gray-700 max-w-2xl mx-auto">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
               🎙️ Hear it in Your Voice
             </h3>
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -52,14 +52,14 @@ const Hero = () => {
                 {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
               </Button>
               <div className="text-left">
-                <p className="font-medium text-gray-800">Preview: Mom's Voice</p>
-                <p className="text-sm text-gray-600">
+                <p className="font-medium text-gray-800 dark:text-gray-200">Preview: Mom's Voice</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {isPlaying ? "Playing..." : "Tap to hear sample"}
                 </p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4">
-              <p className="text-sm italic text-gray-700">
+            <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 rounded-2xl p-4">
+              <p className="text-sm italic text-gray-700 dark:text-gray-300">
                 "Once upon a time, little Emma discovered a magical garden where butterflies danced and flowers sang beautiful melodies..."
               </p>
             </div>
@@ -70,13 +70,13 @@ const Hero = () => {
             <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl transform hover:scale-105 transition-all duration-200">
               Create Your First Story ✨
             </Button>
-            <Button variant="outline" className="border-2 border-purple-300 text-purple-600 hover:bg-purple-50 px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-200">
+            <Button variant="outline" className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-200">
               Watch Demo 📱
             </Button>
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (

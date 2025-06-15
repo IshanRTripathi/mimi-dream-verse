@@ -1,6 +1,8 @@
+
 import { Heart, Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
 import WaitlistModal from "./WaitlistModal";
+import WaitlistCounter from "./WaitlistCounter";
 
 const Footer = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -17,10 +19,13 @@ const Footer = () => {
             <p className="text-gray-300 mb-4 leading-relaxed">
               Creating magical, personalized bedtime stories that bring families closer together, one tale at a time.
             </p>
-            <div className="flex items-center gap-2 text-pink-400">
+            <div className="flex items-center gap-2 text-pink-400 mb-4">
               <Heart className="w-4 h-4 fill-current" />
               <span className="text-sm">Made with love for families</span>
             </div>
+            
+            {/* Waitlist Counter in Footer */}
+            <WaitlistCounter variant="compact" showRecent={false} />
           </div>
 
           {/* Product */}

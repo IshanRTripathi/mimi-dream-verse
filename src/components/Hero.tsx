@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
@@ -5,6 +6,7 @@ import { Heart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PersonalizedToggle from "./PersonalizedToggle/PersonalizedToggle";
 import WaitlistModal from "./WaitlistModal";
+import WaitlistCounter from "./WaitlistCounter";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -73,8 +75,13 @@ const Hero = () => {
             </Button>
           </div>
 
+          {/* Waitlist Counter */}
+          <div className="mt-8 flex justify-center">
+            <WaitlistCounter variant="compact" className="justify-center" />
+          </div>
+
           {/* Trust Indicators */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-gray-500 dark:text-gray-400 px-6">
+          <div className="mt-8 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-gray-500 dark:text-gray-400 px-6">
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (

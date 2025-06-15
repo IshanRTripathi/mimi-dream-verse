@@ -4,9 +4,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Star } from "lucide-react";
+import { Mail, Star, AlertCircle } from "lucide-react";
 import { loadWaitlistConfig } from "@/utils/configLoader";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { waitlistService } from "@/services/waitlistService";
+import WaitlistCounter from "./WaitlistCounter";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -18,6 +20,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
   const [emailExtension, setEmailExtension] = useState("@gmail.com");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   
   const waitlistConfig = loadWaitlistConfig();
 
@@ -36,10 +39,26 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
     if (!email) return;
 
     setIsLoading(true);
+    setError("");
     
-    // Simulate API call
+    const fullEmail = emailExtension === "@custom" ? email : email + emailExtension;
+
+    // Check if email is already signed up
+    if (waitlistService.isEmailSignedUp(fullEmail)) {
+      setError("This email is already on our waitlist!");
+      setIsLoading(false);
+      return;
+    }
+
+    // Simulate API call delay
     setTimeout(() => {
-      setIsSubmitted(true);
+      const success = waitlistService.addSignup(fullEmail);
+      
+      if (success) {
+        setIsSubmitted(true);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
       setIsLoading(false);
     }, 1500);
   };
@@ -48,6 +67,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
     setIsSubmitted(false);
     setEmail("");
     setEmailExtension("@gmail.com");
+    setError("");
     onClose();
   };
 
@@ -70,6 +90,12 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
               {waitlistConfig.successMessage.details}
             </p>
+            
+            {/* Show updated counter */}
+            <div className="mb-6">
+              <WaitlistCounter variant="compact" className="justify-center" />
+            </div>
+            
             <Button onClick={handleClose} className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700">
               Got it!
             </Button>
@@ -90,6 +116,11 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
             <p className="text-gray-600 dark:text-gray-300 mt-2">
               <strong className="text-purple-600 dark:text-purple-400">Good things</strong> come to those who <strong className="text-purple-600 dark:text-purple-400">wait</strong>! ✨
             </p>
+            
+            {/* Show current waitlist count */}
+            <div className="mt-4">
+              <WaitlistCounter variant="badge" />
+            </div>
           </div>
         </DialogHeader>
 
@@ -126,7 +157,10 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                 type={emailExtension === "@custom" ? "email" : "text"}
                 placeholder={emailExtension === "@custom" ? "your.email@domain.com" : "yourname"}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError(""); // Clear error when user types
+                }}
                 className="flex-1"
                 required
               />
@@ -149,6 +183,13 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Preview: {fullEmail || "yourname" + emailExtension}
               </p>
+            )}
+            
+            {error && (
+              <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm mt-2">
+                <AlertCircle className="w-4 h-4" />
+                <span>{error}</span>
+              </div>
             )}
           </div>
 

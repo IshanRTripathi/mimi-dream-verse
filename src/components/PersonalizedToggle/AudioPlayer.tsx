@@ -52,10 +52,10 @@ export const AudioPlayer = ({
       return;
     }
 
-    // Use the same pattern as background music - direct asset paths
+    // Use audio paths from the audio folder
     const audioPaths = audioType === 'personalized' 
-      ? ['/src/assets/realistictone.mp3', '/realistictone.mp3']
-      : ['/src/assets/normaltone.mp3', '/normaltone.mp3'];
+      ? ['/src/assets/audio/realistictone.mp3', '/realistictone.mp3']
+      : ['/src/assets/audio/normaltone.mp3', '/normaltone.mp3'];
 
     console.log('Attempting to load audio for type:', audioType);
     console.log('Audio paths to try:', audioPaths);

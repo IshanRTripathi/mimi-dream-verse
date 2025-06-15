@@ -89,6 +89,11 @@ export interface AudioConfig {
     magical: string;
     garden: string;
   };
+  volume_levels: {
+    background_music: number;
+    narration: number;
+    ui_sounds: number;
+  };
 }
 
 export const loadFeatures = (): FeatureConfig[] => {

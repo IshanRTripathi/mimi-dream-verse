@@ -1,4 +1,3 @@
-
 import yaml from 'js-yaml';
 
 // Import YAML files as text
@@ -6,6 +5,7 @@ import featuresYaml from '../data/features.yaml?raw';
 import howItWorksYaml from '../data/how-it-works.yaml?raw';
 import testimonialsYaml from '../data/testimonials.yaml?raw';
 import waitlistYaml from '../data/waitlist.yaml?raw';
+import audioYaml from '../data/audio.yaml?raw';
 
 export interface FeatureConfig {
   icon: string;
@@ -60,6 +60,37 @@ export interface WaitlistConfig {
   };
 }
 
+export interface AudioConfig {
+  background_music: {
+    name: string;
+    file: string;
+    volume: number;
+    loop: boolean;
+  }[];
+  ui_sounds: {
+    click: string;
+    pop: string;
+    success: string;
+    hover: string;
+  };
+  story_audio: {
+    personalized: {
+      mom_voice: string;
+      dad_voice: string;
+    };
+    ai_narrator: {
+      default: string;
+      alternative: string;
+    };
+  };
+  ambient_sounds: {
+    forest: string;
+    ocean: string;
+    magical: string;
+    garden: string;
+  };
+}
+
 export const loadFeatures = (): FeatureConfig[] => {
   const data = yaml.load(featuresYaml) as { features: FeatureConfig[] };
   return data.features;
@@ -83,4 +114,9 @@ export const loadTestimonials = (): TestimonialConfig[] => {
 export const loadWaitlistConfig = (): WaitlistConfig => {
   const data = yaml.load(waitlistYaml) as { waitlist: WaitlistConfig };
   return data.waitlist;
+};
+
+export const loadAudioConfig = (): AudioConfig => {
+  const data = yaml.load(audioYaml) as { audio: AudioConfig };
+  return data.audio;
 };

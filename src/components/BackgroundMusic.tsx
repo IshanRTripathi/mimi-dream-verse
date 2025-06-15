@@ -1,7 +1,8 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Volume2, VolumeX } from 'lucide-react';
+import { useAudio } from '@/contexts/AudioContext';
 
 interface BackgroundMusicProps {
   className?: string;
@@ -9,46 +10,19 @@ interface BackgroundMusicProps {
 }
 
 const BackgroundMusic = ({ className = "", showVolumeControl = true }: BackgroundMusicProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.2);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    // Create audio element for background music
-    audioRef.current = new Audio();
-    audioRef.current.loop = true;
-    audioRef.current.volume = volume;
-    
-    // Using a placeholder URL - in production, you'd use actual children's music
-    // For demo purposes, we'll simulate the functionality
-    audioRef.current.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmYbBjiS2O/NeSsFJnbH8N2QQAoUXrTp66hVFApGnuDyvmYbBzie1+/OdSsFJnfH8N2QQAoUXrTp66hVFApGnuDyvmYbBji=';
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+  const { 
+    playBackgroundMusic, 
+    stopBackgroundMusic, 
+    setVolume, 
+    volume, 
+    isBackgroundMusicPlaying 
+  } = useAudio();
 
   const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        // Handle autoplay policy
-        audioRef.current.play().catch(error => {
-          console.log('Autoplay prevented:', error);
-          // Could show a user-friendly message here
-        });
-      }
-      setIsPlaying(!isPlaying);
+    if (isBackgroundMusicPlaying) {
+      stopBackgroundMusic();
+    } else {
+      playBackgroundMusic(); // Plays the first track by default
     }
   };
 
@@ -60,16 +34,16 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
           variant="ghost"
           size="icon"
           className="w-10 h-10 rounded-full hover:bg-white/20 dark:hover:bg-gray-700/20 transition-all duration-300 hover:scale-105"
-          aria-label={isPlaying ? 'Pause background music' : 'Play background music'}
+          aria-label={isBackgroundMusicPlaying ? 'Pause background music' : 'Play background music'}
         >
-          {isPlaying ? (
+          {isBackgroundMusicPlaying ? (
             <Volume2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           ) : (
             <VolumeX className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           )}
         </Button>
         
-        {showVolumeControl && isPlaying && (
+        {showVolumeControl && isBackgroundMusicPlaying && (
           <div className="flex items-center gap-2 px-3 py-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/20 dark:border-gray-700/30 rounded-full shadow-lg animate-fade-in">
             <input
               type="range"

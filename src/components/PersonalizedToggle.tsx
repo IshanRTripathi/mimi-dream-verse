@@ -1,22 +1,28 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAudio } from '@/contexts/AudioContext';
 
 const PersonalizedToggle = () => {
   const [isPersonalized, setIsPersonalized] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { playStoryAudio } = useAudio();
 
   const toggleMode = () => {
     setIsPersonalized(!isPersonalized);
-    setIsPlaying(false); // Stop audio when switching modes
+    setIsPlaying(false);
   };
 
   const toggleAudio = () => {
+    if (!isPlaying) {
+      if (isPersonalized) {
+        playStoryAudio('personalized', 'mom');
+      } else {
+        playStoryAudio('ai_narrator', 'default');
+      }
+    }
     setIsPlaying(!isPlaying);
-    // Here you would implement actual audio playback
-    console.log(`${isPlaying ? 'Stopping' : 'Playing'} ${isPersonalized ? 'personalized' : 'normal'} audio`);
   };
 
   return (

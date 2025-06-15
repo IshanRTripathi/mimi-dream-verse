@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Star } from "lucide-react";
 import { loadWaitlistConfig } from "@/utils/configLoader";
 import Lottie from "lottie-react";
-import codeAnimation from "@/assets/code-animation.json";
+import mimiAnimation from "@/assets/mimi-animation.json";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -86,7 +86,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
           <div className="text-center mb-4">
             <div className="w-20 h-20 mx-auto mb-4">
               <Lottie 
-                animationData={codeAnimation} 
+                animationData={mimiAnimation} 
                 loop={true}
                 className="w-full h-full"
               />

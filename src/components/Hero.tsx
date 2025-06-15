@@ -1,15 +1,20 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Play, Pause, Heart, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import PersonalizedToggle from "./PersonalizedToggle";
 
 const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCreateStory = () => {
+    navigate('/create-story');
+  };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20">
       {/* Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 animate-bounce delay-100">
@@ -27,22 +32,22 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto text-center relative z-10 max-w-6xl">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-6">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent leading-tight px-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent leading-tight px-6">
             Magical Bedtime Stories
             <br />
             <span className="text-3xl md:text-5xl lg:text-6xl">Just for Your Child</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed px-6">
             AI-powered personalized stories with your voice, your child as the hero, 
             and beautiful custom illustrations that make every bedtime magical ✨
           </p>
 
           {/* Personalized Toggle Section */}
-          <div className="mb-12 px-4">
+          <div className="mb-12 px-6">
             <PersonalizedToggle />
           </div>
 
@@ -73,8 +78,11 @@ const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-            <MagneticButton className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-6">
+            <MagneticButton 
+              onClick={handleCreateStory}
+              className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
+            >
               Create Your First Story ✨
             </MagneticButton>
             <Button variant="outline" className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-200">
@@ -83,7 +91,7 @@ const Hero = () => {
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-gray-500 dark:text-gray-400 px-4">
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-gray-500 dark:text-gray-400 px-6">
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (

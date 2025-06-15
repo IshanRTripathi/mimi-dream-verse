@@ -14,6 +14,23 @@ export const AssetDisplay = ({
   gradientColors,
   labelGradient 
 }: AssetDisplayProps) => {
+  console.log('AssetDisplay rendering with imageSrc:', imageSrc);
+  
+  const handleImageLoad = () => {
+    console.log('✅ Image loaded successfully:', imageSrc);
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error('❌ Image failed to load:', imageSrc, e);
+    // Try alternative path
+    const img = e.target as HTMLImageElement;
+    if (imageSrc.includes('/src/assets/')) {
+      const altPath = imageSrc.replace('/src/assets/', '/');
+      console.log('Trying alternative path:', altPath);
+      img.src = altPath;
+    }
+  };
+
   return (
     <div className="relative">
       <div className={`aspect-square ${gradientColors} rounded-2xl lg:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg`}>
@@ -21,6 +38,8 @@ export const AssetDisplay = ({
           src={imageSrc} 
           alt={alt}
           className="w-full h-full object-cover rounded-2xl lg:rounded-3xl"
+          onLoad={handleImageLoad}
+          onError={handleImageError}
         />
       </div>
       

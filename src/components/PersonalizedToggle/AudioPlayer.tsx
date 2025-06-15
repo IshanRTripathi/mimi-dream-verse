@@ -37,23 +37,27 @@ export const AudioPlayer = ({
       return;
     }
 
+    // Use the same pattern as background music - direct asset paths
     const audioPaths = audioType === 'personalized' 
-      ? ['realistictone.mp3', 'assets/realistictone.mp3']
-      : ['normaltone.mp3', 'assets/normaltone.mp3'];
+      ? ['/src/assets/realistictone.mp3', '/realistictone.mp3']
+      : ['/src/assets/normaltone.mp3', '/normaltone.mp3'];
+
+    console.log('Attempting to load audio for type:', audioType);
+    console.log('Audio paths to try:', audioPaths);
 
     let audioLoaded = false;
     let currentPathIndex = 0;
 
     const tryLoadAudio = () => {
       if (currentPathIndex >= audioPaths.length) {
-        console.error('All audio paths failed to load:', audioPaths);
+        console.error('❌ All audio paths failed to load:', audioPaths);
         setIsPlaying(false);
         currentAudioRef.current = null;
         return;
       }
 
       const currentPath = audioPaths[currentPathIndex];
-      console.log('Trying to load audio from:', currentPath);
+      console.log('🎵 Trying to load audio from:', currentPath);
       
       const audio = new Audio(currentPath);
       audio.volume = 0.7;
@@ -61,12 +65,13 @@ export const AudioPlayer = ({
       audio.oncanplaythrough = () => {
         if (!audioLoaded) {
           audioLoaded = true;
-          console.log('Audio loaded successfully from:', currentPath);
+          console.log('✅ Audio loaded successfully from:', currentPath);
           currentAudioRef.current = audio;
           audio.play().then(() => {
             setIsPlaying(true);
+            console.log('🎵 Audio playing');
           }).catch(error => {
-            console.error('Audio play failed:', error);
+            console.error('❌ Audio play failed:', error);
             setIsPlaying(false);
             currentAudioRef.current = null;
           });
@@ -74,12 +79,13 @@ export const AudioPlayer = ({
       };
 
       audio.onended = () => {
+        console.log('🎵 Audio ended');
         setIsPlaying(false);
         currentAudioRef.current = null;
       };
 
       audio.onerror = (error) => {
-        console.log('Failed to load audio from:', currentPath, error);
+        console.log('❌ Failed to load audio from:', currentPath, error);
         currentPathIndex++;
         tryLoadAudio();
       };

@@ -12,7 +12,7 @@ export const TabContent = ({ type }: TabContentProps) => {
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
-    imageSrc: 'personalisedasset.jpg',
+    imageSrc: '/src/assets/featureImages/personalisedasset.jpg',
     alt: 'Personalized story asset',
     label: 'Personalized',
     imageGradient: 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50',
@@ -28,7 +28,7 @@ export const TabContent = ({ type }: TabContentProps) => {
       { text: 'Custom character appearance', color: 'bg-purple-400' }
     ]
   } : {
-    imageSrc: 'normalasset.jpg',
+    imageSrc: '/src/assets/featureImages/normalasset.jpg',
     alt: 'Normal story asset',
     label: 'Normal',
     imageGradient: 'bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50',
@@ -44,6 +44,8 @@ export const TabContent = ({ type }: TabContentProps) => {
       { text: 'Standard illustrations', color: 'bg-blue-400' }
     ]
   };
+
+  console.log('TabContent config imageSrc:', config.imageSrc);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 items-center">

@@ -107,7 +107,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                   ))}
                 </ul>
               </div>
-              <div className="w-24 h-24 flex-shrink-0">
+              <div className="w-36 h-36 flex-shrink-0">
                 <DotLottieReact
                   src="https://lottie.host/67ea3b7c-848c-4f81-b198-913550b5ed4e/GWlJIQAV6m.lottie"
                   loop

@@ -3,72 +3,23 @@ import { Card } from "@/components/ui/card";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Mic, Palette, Users, Sparkles, Volume2, Camera } from "lucide-react";
 import { useState } from "react";
+import { loadFeatures, type FeatureConfig } from "@/utils/configLoader";
 
 const Features = () => {
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
+  const features = loadFeatures();
 
-  const features = [
-    {
-      icon: <Mic className="w-8 h-8" />,
-      title: "Custom Voice Cloning",
-      description: "Record your voice once, and we'll create unlimited stories in your loving tone",
-      demo: "🎙️ Try Voice Demo",
-      gradient: "from-blue-500 to-cyan-500",
-      bgGradient: "from-blue-50 to-cyan-50",
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&crop=faces",
-      imageAlt: "Parent recording voice for personalized stories"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Your Child is the Hero",
-      description: "Every story features your child as the main character in magical adventures",
-      demo: "👑 Customize Character",
-      gradient: "from-purple-500 to-pink-500",
-      bgGradient: "from-purple-50 to-pink-50",
-      image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop&crop=faces",
-      imageAlt: "Child as the hero in magical stories"
-    },
-    {
-      icon: <Palette className="w-8 h-8" />,
-      title: "AI-Generated Illustrations",
-      description: "Beautiful, personalized artwork that brings each story to life",
-      demo: "🎨 See Art Styles",
-      gradient: "from-orange-500 to-red-500",
-      bgGradient: "from-orange-50 to-red-50",
-      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop&crop=center",
-      imageAlt: "AI-generated illustrations for stories"
-    },
-    {
-      icon: <Sparkles className="w-8 h-8" />,
-      title: "Endless Story Variety",
-      description: "New adventures every night with different themes, morals, and magical worlds",
-      demo: "📚 Browse Stories",
-      gradient: "from-green-500 to-teal-500",
-      bgGradient: "from-green-50 to-teal-50",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop&crop=center",
-      imageAlt: "Endless variety of magical stories"
-    },
-    {
-      icon: <Volume2 className="w-8 h-8" />,
-      title: "Interactive Audio",
-      description: "Immersive sound effects and background music enhance the storytelling experience",
-      demo: "🔊 Listen Preview",
-      gradient: "from-indigo-500 to-purple-500",
-      bgGradient: "from-indigo-50 to-purple-50",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop&crop=center",
-      imageAlt: "Interactive audio storytelling experience"
-    },
-    {
-      icon: <Camera className="w-8 h-8" />,
-      title: "Photo Integration",
-      description: "Upload your child's photo to see them illustrated in their favorite stories",
-      demo: "📸 Try Photo Magic",
-      gradient: "from-pink-500 to-rose-500",
-      bgGradient: "from-pink-50 to-rose-50",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop&crop=faces",
-      imageAlt: "Photo integration for personalized characters"
-    }
-  ];
+  const getIconComponent = (iconName: string) => {
+    const iconMap = {
+      Mic: <Mic className="w-8 h-8" />,
+      Users: <Users className="w-8 h-8" />,
+      Palette: <Palette className="w-8 h-8" />,
+      Sparkles: <Sparkles className="w-8 h-8" />,
+      Volume2: <Volume2 className="w-8 h-8" />,
+      Camera: <Camera className="w-8 h-8" />
+    };
+    return iconMap[iconName as keyof typeof iconMap] || <Sparkles className="w-8 h-8" />;
+  };
 
   return (
     <section className="py-20 px-4 bg-white dark:bg-gray-900">
@@ -101,7 +52,7 @@ const Features = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className={`absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center text-white shadow-lg z-20`}>
-                  {feature.icon}
+                  {getIconComponent(feature.icon)}
                 </div>
               </div>
 

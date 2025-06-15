@@ -1,0 +1,62 @@
+
+testimonials:
+  - name: "Sarah Johnson"
+    role: "Mother of 2"
+    avatar: "👩‍💼"
+    rating: 5
+    text: "My kids are absolutely obsessed! They ask for 'Mommy voice stories' every single night. The personalization is incredible - seeing Emma as a brave princess in her own adventures brings tears to my eyes."
+    highlight: "seeing Emma as a brave princess"
+  - name: "Michael Chen"
+    role: "Working Dad"
+    avatar: "👨‍💻"
+    rating: 5
+    text: "As a dad who travels frequently, StoryMimi helps me stay connected with bedtime routines. My son loves hearing stories in my voice even when I'm away. It's been a game-changer for our family."
+    highlight: "helps me stay connected"
+  - name: "Lisa Rodriguez"
+    role: "Grandmother"
+    avatar: "👵"
+    rating: 5
+    text: "My grandchildren live across the country, but now I can tell them bedtime stories anytime! The app captured my voice perfectly, and they love seeing themselves in fairy tales. Pure magic!"
+    highlight: "Pure magic!"
+  - name: "James Wilson"
+    role: "Single Father"
+    avatar: "👨‍👧"
+    rating: 5
+    text: "Bedtime was always a struggle until we found StoryMimi. Now my daughter Sophie can't wait to hear what adventure she'll go on next. The stories are educational and entertaining!"
+    highlight: "can't wait to hear what adventure"
+  - name: "Amy Foster"
+    role: "Teacher & Mom"
+    avatar: "👩‍🏫"
+    rating: 5
+    text: "The educational value is outstanding! My kids learn about different cultures, problem-solving, and values through these personalized stories. It's entertainment and learning combined perfectly."
+    highlight: "entertainment and learning combined perfectly"
+  - name: "David Kim"
+    role: "Tech Dad"
+    avatar: "👨‍💻"
+    rating: 5
+    text: "I was skeptical about AI-generated content, but the quality blew me away. The stories are creative, age-appropriate, and the voice cloning is incredibly natural. My twins are hooked!"
+    highlight: "quality blew me away"
+  - name: "Emily Watson"
+    role: "Busy Mom"
+    avatar: "👩‍💼"
+    rating: 5
+    text: "StoryMimi has transformed our bedtime routine! My daughter loves hearing herself in magical adventures, and I love that it's educational too."
+    highlight: "transformed our bedtime routine"
+  - name: "Robert Martinez"
+    role: "First-time Dad"
+    avatar: "👨‍👶"
+    rating: 5
+    text: "Being a new dad, I wasn't sure how to tell bedtime stories. StoryMimi makes it so easy and my baby boy already responds to my voice in the stories!"
+    highlight: "makes it so easy"
+  - name: "Jennifer Lee"
+    role: "Working Mom"
+    avatar: "👩‍💻"
+    rating: 5
+    text: "The quality is amazing and my kids can't get enough! They've learned so much through these personalized adventures."
+    highlight: "learned so much"
+  - name: "Thomas Brown"
+    role: "Single Dad"
+    avatar: "👨‍👧‍👦"
+    rating: 5
+    text: "My twins have completely different interests, but StoryMimi creates perfect stories for each of them. It's like having a personal storyteller!"
+    highlight: "perfect stories for each of them"

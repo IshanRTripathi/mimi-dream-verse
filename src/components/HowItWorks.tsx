@@ -2,49 +2,10 @@
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { loadHowItWorksSteps } from "@/utils/configLoader";
 
 const HowItWorks = () => {
-  // Base theme description for consistent styling across all images
-  const baseTheme = "Pixar-style 3D rendered image with vibrant colors, soft lighting, cartoon-like characters with exaggerated friendly features, warm and inviting atmosphere, high-quality digital art with smooth textures, playful and magical ambiance suitable for children's content";
-
-  const steps = [
-    {
-      step: "1",
-      title: "Record Your Voice",
-      description: "Simply read a short sample text to capture your unique voice",
-      icon: "🎙️",
-      color: "from-blue-500 to-cyan-500",
-      imagePrompt: `${baseTheme}. Scene: A loving parent (mid-30s, warm smile) sitting comfortably in a cozy living room, holding a smartphone close to their mouth while reading from a children's book. Soft evening lighting through a window, bookshelves in background, the phone screen showing a recording interface with sound waves. The parent looks engaged and happy, wearing casual home clothes. Colors: warm blues and soft yellows.`,
-      imagePlaceholder: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&crop=faces"
-    },
-    {
-      step: "2", 
-      title: "Create Your Child's Character",
-      description: "Upload a photo and customize their appearance in the stories",
-      icon: "👑",
-      color: "from-purple-500 to-pink-500",
-      imagePrompt: `${baseTheme}. Scene: A magical transformation showcase featuring 4-5 diverse 3D animated child characters (ages 4-8) in a floating carousel arrangement. Each character has unique features - different ethnicities, hair colors, and clothing styles (princess dress, superhero cape, wizard hat, explorer outfit). Sparkles and magical particles surround them. Background shows a dreamy cloud environment with rainbow gradients. Colors: vibrant purples, pinks, and golden sparkles.`,
-      imagePlaceholder: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop&crop=faces"
-    },
-    {
-      step: "3",
-      title: "Choose Story Themes",
-      description: "Pick from adventures, fairy tales, educational stories, and more",
-      icon: "📚",
-      color: "from-orange-500 to-red-500",
-      imagePrompt: `${baseTheme}. Scene: A magical library with floating books opening to reveal miniature 3D scenes inside each book - a pirate ship on ocean waves, a fairy tale castle with dragons, a space rocket among stars, and a jungle with friendly animals. Books are arranged in a semi-circle with glowing effects. A cute owl librarian with glasses sits on a stack of books pointing with a wand. Colors: warm oranges, reds, and golden magical glows.`,
-      imagePlaceholder: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop&crop=center"
-    },
-    {
-      step: "4",
-      title: "Listen & Enjoy",
-      description: "Your personalized story is ready with your voice and custom illustrations",
-      icon: "✨",
-      color: "from-green-500 to-teal-500",
-      imagePrompt: `${baseTheme}. Scene: A heartwarming bedtime scene with a parent and child cuddled together in a cozy bed, both looking peaceful and happy. The child (personalized character from step 2) is snuggled against the parent while magical story elements float around them - gentle fairy lights, floating storybook characters, and dreamy clouds. A smartphone on the nightstand glows softly, indicating the story is playing. Soft moonlight through curtains. Colors: soothing greens, teals, and warm amber lighting.`,
-      imagePlaceholder: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop&crop=center"
-    }
-  ];
+  const steps = loadHowItWorksSteps();
 
   return (
     <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">

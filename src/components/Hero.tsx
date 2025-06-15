@@ -9,7 +9,7 @@ const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
       {/* Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 animate-bounce delay-100">
@@ -26,23 +26,23 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
+      <div className="container mx-auto text-center relative z-10 max-w-6xl">
+        <div className="max-w-4xl mx-auto px-4">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent leading-tight px-4">
             Magical Bedtime Stories
             <br />
             <span className="text-3xl md:text-5xl lg:text-6xl">Just for Your Child</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed px-4">
             AI-powered personalized stories with your voice, your child as the hero, 
             and beautiful custom illustrations that make every bedtime magical ✨
           </p>
 
           {/* Personalized Toggle Section */}
-          <div className="mb-12">
+          <div className="mb-12 px-4">
             <PersonalizedToggle />
           </div>
 
@@ -73,7 +73,7 @@ const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
             <MagneticButton className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl">
               Create Your First Story ✨
             </MagneticButton>
@@ -83,7 +83,7 @@ const Hero = () => {
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-gray-500 dark:text-gray-400 px-4">
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -92,9 +92,9 @@ const Hero = () => {
               </div>
               <span>Trusted by 10,000+ families</span>
             </div>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <span>🔒 Safe & Secure</span>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <span>📱 iOS & Android</span>
           </div>
         </div>

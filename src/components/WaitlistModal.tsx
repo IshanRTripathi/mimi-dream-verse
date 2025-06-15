@@ -1,11 +1,12 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Star, Sparkles } from "lucide-react";
+import { Mail, Star } from "lucide-react";
 import { loadWaitlistConfig } from "@/utils/configLoader";
+import Lottie from "lottie-react";
+import codeAnimation from "@/assets/code-animation.json";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -83,16 +84,19 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="text-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Sparkles className="w-8 h-8 text-white" />
+            <div className="w-20 h-20 mx-auto mb-4">
+              <Lottie 
+                animationData={codeAnimation} 
+                loop={true}
+                className="w-full h-full"
+              />
             </div>
             <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               {waitlistConfig.title}
             </DialogTitle>
-            <p 
-              className="text-gray-600 dark:text-gray-300 mt-2"
-              dangerouslySetInnerHTML={{ __html: waitlistConfig.subtitle }}
-            />
+            <p className="text-gray-600 dark:text-gray-300 mt-2">
+              Be first to experience magical bedtime stories! ✨
+            </p>
           </div>
         </DialogHeader>
 

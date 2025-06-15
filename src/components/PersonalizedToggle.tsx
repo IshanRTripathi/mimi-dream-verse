@@ -25,23 +25,17 @@ const PersonalizedToggle = () => {
       return;
     }
 
-    // Try multiple possible paths for the audio files
+    // Use production-ready paths that work when published
     const audioPaths = audioType === 'personalized' 
       ? [
-          '/src/assets/audio/realistictone.mp3',
-          '/src/assets/realistictone.mp3',
-          '/assets/audio/realistictone.mp3',
+          '/realistictone.mp3',
           '/assets/realistictone.mp3',
-          './src/assets/audio/realistictone.mp3',
-          './src/assets/realistictone.mp3'
+          './realistictone.mp3'
         ]
       : [
-          '/src/assets/audio/normaltone.mp3',
-          '/src/assets/normaltone.mp3',
-          '/assets/audio/normaltone.mp3',
+          '/normaltone.mp3',
           '/assets/normaltone.mp3',
-          './src/assets/audio/normaltone.mp3',
-          './src/assets/normaltone.mp3'
+          './normaltone.mp3'
         ];
 
     let audioLoaded = false;
@@ -127,7 +121,7 @@ const PersonalizedToggle = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50 rounded-2xl lg:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
                 <img 
-                  src="/src/assets/featureImages/normalasset.jpg" 
+                  src="/normalasset.jpg" 
                   alt="Normal story asset"
                   className="w-full h-full object-cover rounded-2xl lg:rounded-3xl"
                 />
@@ -191,7 +185,7 @@ const PersonalizedToggle = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 rounded-2xl lg:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
                 <img 
-                  src="/src/assets/featureImages/personalisedasset.jpg" 
+                  src="/personalisedasset.jpg" 
                   alt="Personalized story asset"
                   className="w-full h-full object-cover rounded-2xl lg:rounded-3xl"
                 />

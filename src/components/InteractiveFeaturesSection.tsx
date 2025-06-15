@@ -60,38 +60,22 @@ const InteractiveFeaturesSection = () => {
           </p>
         </motion.div>
 
-        {/* Desktop Grid Layout */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <InteractiveFeatureCard {...feature} />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Mobile Scrollable Layout */}
-        <div className="sm:hidden">
-          <ScrollArea className="w-full">
-            <div className="flex gap-6 pb-4">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <InteractiveFeatureCard {...feature} />
-                </motion.div>
-              ))}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
+        {/* Single Row Scrollable Layout */}
+        <ScrollArea className="w-full">
+          <div className="flex gap-6 pb-4">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <InteractiveFeatureCard {...feature} />
+              </motion.div>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </section>
   );

@@ -61,14 +61,14 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-6">
             <MagneticButton 
               onClick={handleCreateStory}
-              className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
+              className="px-8 py-4 rounded-full text-lg font-semibold shadow-xl backdrop-blur-md bg-gradient-to-r from-purple-600/90 to-pink-600/90 border border-white/20 hover:from-purple-700/90 hover:to-pink-700/90"
             >
               Create Your First Story ✨
             </MagneticButton>
             <Button 
               onClick={handleJoinWaitlist}
               variant="outline" 
-              className="border-2 border-purple-300 dark:border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 px-8 py-4 rounded-full text-lg font-semibold bg-white dark:bg-gray-900 transition-colors"
+              className="border-2 border-purple-300/50 dark:border-purple-600/50 text-purple-600 dark:text-purple-400 hover:bg-purple-50/80 dark:hover:bg-purple-950/80 px-8 py-4 rounded-full text-lg font-semibold bg-white/20 dark:bg-gray-900/20 backdrop-blur-md transition-colors"
             >
               Join Waitlist 📋
             </Button>

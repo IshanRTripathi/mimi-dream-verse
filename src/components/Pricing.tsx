@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Crown, Sparkles } from "lucide-react";
@@ -21,7 +22,7 @@ const Pricing = () => {
         "Email support"
       ],
       buttonText: "Start Free Trial",
-      buttonStyle: "border-2 border-purple-300 text-purple-600 hover:bg-purple-50",
+      buttonStyle: "border-2 border-purple-300/50 text-purple-600 hover:bg-purple-50/80 bg-white/20 backdrop-blur-md",
       popular: false,
       icon: <Star className="w-6 h-6" />
     },
@@ -41,7 +42,7 @@ const Pricing = () => {
         "Offline listening"
       ],
       buttonText: "Start Family Plan",
-      buttonStyle: "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white",
+      buttonStyle: "bg-gradient-to-r from-purple-600/90 to-pink-600/90 hover:from-purple-700/90 hover:to-pink-700/90 text-white backdrop-blur-md border border-white/20",
       popular: true,
       icon: <Crown className="w-6 h-6" />
     },
@@ -61,7 +62,7 @@ const Pricing = () => {
         "1-on-1 onboarding call"
       ],
       buttonText: "Go Premium",
-      buttonStyle: "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white",
+      buttonStyle: "bg-gradient-to-r from-orange-500/90 to-red-500/90 hover:from-orange-600/90 hover:to-red-600/90 text-white backdrop-blur-md border border-white/20",
       popular: false,
       icon: <Sparkles className="w-6 h-6" />
     }
@@ -145,7 +146,7 @@ const Pricing = () => {
             </p>
             <Button
               onClick={() => setIsWaitlistOpen(true)}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 mb-6"
+              className="bg-gradient-to-r from-purple-600/90 to-pink-600/90 hover:from-purple-700/90 hover:to-pink-700/90 text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 mb-6 backdrop-blur-md border border-white/20"
             >
               <Star className="w-5 h-5 mr-2 fill-current" />
               Claim My Early Bird Discount!

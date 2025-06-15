@@ -25,10 +25,10 @@ const PersonalizedToggle = () => {
       return;
     }
 
-    // Play audio based on type
+    // Play audio based on type - corrected paths
     const audioPath = audioType === 'personalized' 
-      ? '/src/assets/audio/realistictone.mp3' 
-      : '/src/assets/audio/normaltone.mp3';
+      ? '/src/assets/realistictone.mp3' 
+      : '/src/assets/normaltone.mp3';
 
     const audio = new Audio(audioPath);
     audio.volume = 0.7;

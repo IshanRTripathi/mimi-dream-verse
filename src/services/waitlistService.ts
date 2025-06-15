@@ -53,7 +53,7 @@ class WaitlistService {
     }
   }
 
-  // Add a new signup with dual storage (localStorage + Google Forms)
+  // Add a new signup with multiple integration options
   async addSignup(email: string): Promise<{ success: boolean; alreadyExists: boolean }> {
     const entries = this.getEntries();
     
@@ -72,16 +72,26 @@ class WaitlistService {
     entries.push(newEntry);
     this.saveEntries(entries);
 
-    // Try to submit to Google Forms if configured
-    let googleFormsSuccess = true;
+    // Try to submit to configured integrations
+    let integrationSuccess = true;
+    
     if (googleFormsService.isConfigured()) {
       try {
-        googleFormsSuccess = await googleFormsService.submitToGoogleForms(email);
-        if (!googleFormsSuccess) {
-          console.warn('Failed to submit to Google Forms, but saved locally');
+        if (googleFormsService.isFormsConfigured()) {
+          const formsSuccess = await googleFormsService.submitToGoogleForms(email);
+          if (!formsSuccess) {
+            console.warn('Failed to submit to Google Forms, but saved locally');
+          }
+        }
+        
+        if (googleFormsService.isSheetsConfigured()) {
+          const sheetsSuccess = await googleFormsService.submitToGoogleSheets(email);
+          if (!sheetsSuccess) {
+            console.warn('Failed to submit to Google Sheets, but saved locally');
+          }
         }
       } catch (error) {
-        console.warn('Google Forms submission failed:', error);
+        console.warn('Integration submission failed:', error);
       }
     }
 
@@ -133,6 +143,11 @@ class WaitlistService {
   // Configure Google Forms integration
   configureGoogleForms(formUrl: string, emailFieldId: string) {
     googleFormsService.configure(formUrl, emailFieldId);
+  }
+
+  // Configure Google Sheets API integration
+  configureGoogleSheetsAPI(spreadsheetId: string, apiKey: string, sheetName: string = 'Sheet1') {
+    googleFormsService.configureSheetsAPI(spreadsheetId, apiKey, sheetName);
   }
 }
 

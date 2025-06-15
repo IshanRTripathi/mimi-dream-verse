@@ -59,7 +59,7 @@ const BackgroundMusic = ({ className = "", showVolumeControl = true }: Backgroun
           onClick={toggleMusic}
           variant="ghost"
           size="icon"
-          className="w-10 h-10 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
+          className="w-10 h-10 rounded-full hover:bg-white/20 dark:hover:bg-gray-700/20 transition-all duration-300 hover:scale-105"
           aria-label={isPlaying ? 'Pause background music' : 'Play background music'}
         >
           {isPlaying ? (

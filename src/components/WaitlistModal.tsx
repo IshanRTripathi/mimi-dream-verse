@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Mail, Star } from "lucide-react";
 import { loadWaitlistConfig } from "@/utils/configLoader";
 import Lottie from "lottie-react";
 import mimiAnimation from "@/assets/mimi-animation.json";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -101,8 +103,32 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-4">
+            <div className="flex items-start gap-4">
+              <div className="flex-1">
+                <h4 className="font-semibold text-sm mb-2 flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                  <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                  {waitlistConfig.earlyBirdPerks.title}
+                </h4>
+                <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+                  {waitlistConfig.earlyBirdPerks.benefits.map((benefit, index) => (
+                    <li key={index}>• {benefit}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="w-16 h-16 flex-shrink-0">
+                <DotLottieReact
+                  src="https://lottie.host/67ea3b7c-848c-4f81-b198-913550b5ed4e/GWlJIQAV6m.lottie"
+                  loop
+                  autoplay
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <label className="block text-sm font-medium mb-2">Email Address</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Email Address</label>
             <div className="flex gap-2">
               <Input
                 type={emailExtension === "@custom" ? "email" : "text"}
@@ -128,22 +154,10 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
               )}
             </div>
             {emailExtension !== "@custom" && (
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Preview: {fullEmail || "yourname" + emailExtension}
               </p>
             )}
-          </div>
-
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-4">
-            <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
-              <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              {waitlistConfig.earlyBirdPerks.title}
-            </h4>
-            <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1">
-              {waitlistConfig.earlyBirdPerks.benefits.map((benefit, index) => (
-                <li key={index}>• {benefit}</li>
-              ))}
-            </ul>
           </div>
 
           <Button 

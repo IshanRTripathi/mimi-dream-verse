@@ -17,13 +17,15 @@ const Index = () => {
         <div className="flex justify-between items-center">
           {/* Logo/Brand - Left Side */}
           <div className="flex items-center">
-            <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              StoryMimi ✨
-            </h1>
+            <div className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 rounded-2xl px-6 py-3 shadow-lg">
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                StoryMimi ✨
+              </h1>
+            </div>
           </div>
           
           {/* Controls - Right Side */}
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-2 md:gap-3 bg-white/20 dark:bg-gray-800/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 rounded-2xl px-4 py-2 shadow-lg">
             <BackgroundMusic showVolumeControl={false} />
             <AccessibilityToggle />
             <ThemeToggle />

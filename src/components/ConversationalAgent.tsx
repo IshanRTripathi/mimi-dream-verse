@@ -29,33 +29,23 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
       try {
         // Check if message has the expected structure
         if (message && typeof message === 'object') {
-          // Handle user transcript (only process final transcripts to avoid premature endings)
+          // Handle user transcript
           if (message.source === "user" && message.message) {
             console.log("User transcript:", message.message);
-            // Only process if it's a final transcript (not tentative)
-            if (message.type === "transcript" || !message.type) {
-              // Don't end conversation on user messages
-            }
+            // Don't process user messages as story requests
+            return;
           }
           
-          // Handle AI response
+          // Handle AI response - only process meaningful AI responses
           if (message.source === "ai" && message.message) {
             console.log("AI response:", message.message);
-            setStoryRequest(message.message);
-            onStoryRequest(message.message);
-          }
-          
-          // Handle audio chunks without ending conversation
-          if (message.type === "audio_chunk") {
-            console.log("Audio chunk received, continuing conversation...");
-            // Don't process audio chunks as story requests
-            return;
-          }
-          
-          // Handle other message types gracefully
-          if (message.type === "debug" || message.type === "error") {
-            console.log(`${message.type} message:`, message);
-            return;
+            
+            // Only capture substantial AI responses (not just greetings)
+            const messageText = message.message.trim();
+            if (messageText.length > 10 && !messageText.toLowerCase().startsWith('hi')) {
+              setStoryRequest(messageText);
+              onStoryRequest(messageText);
+            }
           }
         }
       } catch (error) {

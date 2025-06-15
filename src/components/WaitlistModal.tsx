@@ -6,8 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Mail, Star } from "lucide-react";
 import { loadWaitlistConfig } from "@/utils/configLoader";
-import Lottie from "lottie-react";
-import mimiAnimation from "@/assets/mimi-animation.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 interface WaitlistModalProps {
@@ -86,18 +84,11 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="text-center mb-4">
-            <div className="w-20 h-20 mx-auto mb-4">
-              <Lottie 
-                animationData={mimiAnimation} 
-                loop={true}
-                className="w-full h-full"
-              />
-            </div>
             <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               {waitlistConfig.title}
             </DialogTitle>
             <p className="text-gray-600 dark:text-gray-300 mt-2">
-              Be first to experience magical bedtime stories! ✨
+              <strong className="text-purple-600 dark:text-purple-400">Good things</strong> come to those who <strong className="text-purple-600 dark:text-purple-400">wait</strong>! ✨
             </p>
           </div>
         </DialogHeader>
@@ -116,7 +107,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
                   ))}
                 </ul>
               </div>
-              <div className="w-16 h-16 flex-shrink-0">
+              <div className="w-24 h-24 flex-shrink-0">
                 <DotLottieReact
                   src="https://lottie.host/67ea3b7c-848c-4f81-b198-913550b5ed4e/GWlJIQAV6m.lottie"
                   loop

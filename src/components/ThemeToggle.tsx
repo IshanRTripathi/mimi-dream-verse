@@ -10,15 +10,15 @@ const ThemeToggle = () => {
   return (
     <Button
       onClick={toggleTheme}
-      variant="outline"
+      variant="ghost"
       size="icon"
-      className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm border-purple-200 hover:bg-purple-50 dark:bg-gray-800/80 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-300"
+      className="w-10 h-10 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
     >
       {theme === 'light' ? (
-        <Moon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+        <Moon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
       ) : (
-        <Sun className="w-5 h-5 text-yellow-500" />
+        <Sun className="w-4 h-4 text-yellow-500" />
       )}
     </Button>
   );

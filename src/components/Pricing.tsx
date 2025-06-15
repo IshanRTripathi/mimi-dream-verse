@@ -1,10 +1,13 @@
 
+
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Check, Star, Crown, Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import WaitlistModal from "./WaitlistModal";
+import Lottie from "lottie-react";
+import arrowAnimation from "@/assets/arrow-animation.json";
 
 const Pricing = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -145,16 +148,32 @@ const Pricing = () => {
               Join our waitlist now and get <span className="text-purple-600 font-bold text-xl">75% OFF</span> your first 6 months when we launch! 
               Plus exclusive beta access and premium features absolutely FREE.
             </p>
-            <div className="flex justify-center mb-6">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              {/* Left Arrow */}
+              <div className="w-8 h-8 md:w-12 md:h-12 opacity-60">
+                <Lottie 
+                  animationData={arrowAnimation} 
+                  loop={true}
+                  className="w-full h-full"
+                />
+              </div>
+              
               <MagneticButton
                 onClick={() => setIsWaitlistOpen(true)}
                 className="bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-700/80 hover:to-pink-700/80 text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 backdrop-blur-md border border-white/20 flex items-center gap-2"
               >
-                <ArrowLeft className="w-5 h-5" />
                 <Star className="w-5 h-5 fill-current" />
                 Claim My Early Bird Discount!
-                <ArrowRight className="w-5 h-5" />
               </MagneticButton>
+              
+              {/* Right Arrow */}
+              <div className="w-8 h-8 md:w-12 md:h-12 opacity-60 scale-x-[-1]">
+                <Lottie 
+                  animationData={arrowAnimation} 
+                  loop={true}
+                  className="w-full h-full"
+                />
+              </div>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
               <span>✅ 30-day money-back guarantee</span>
@@ -175,3 +194,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+

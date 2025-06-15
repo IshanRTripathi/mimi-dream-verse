@@ -23,7 +23,7 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
     onMessage: (message) => {
       console.log("Received message:", message);
       // Extract story request from the conversation
-      if (message.source === "agent" && message.message) {
+      if (message.source === "ai" && message.message) {
         setStoryRequest(message.message);
         onStoryRequest(message.message);
       }

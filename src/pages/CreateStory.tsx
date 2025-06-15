@@ -78,6 +78,7 @@ const CreateStory = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [inputMode, setInputMode] = useState<'voice' | 'text'>('voice');
   
   const [formData, setFormData] = useState({
     storyRequest: "",
@@ -126,25 +127,25 @@ const CreateStory = () => {
               <div className="flex justify-center mb-4">
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-full p-1 flex">
                   <Button
-                    variant={!formData.storyRequest ? "default" : "ghost"}
+                    variant={inputMode === 'voice' ? "default" : "ghost"}
                     size="sm"
                     className="rounded-full px-4"
-                    onClick={() => setFormData({...formData, storyRequest: ""})}
+                    onClick={() => setInputMode('voice')}
                   >
                     Talk to Mimi
                   </Button>
                   <Button
-                    variant={formData.storyRequest ? "default" : "ghost"}
+                    variant={inputMode === 'text' ? "default" : "ghost"}
                     size="sm"
                     className="rounded-full px-4"
-                    onClick={() => {}}
+                    onClick={() => setInputMode('text')}
                   >
                     Type Request
                   </Button>
                 </div>
               </div>
 
-              {!formData.storyRequest ? (
+              {inputMode === 'voice' ? (
                 <ConversationalAgent onStoryRequest={handleStoryRequest} />
               ) : (
                 <div className="space-y-4">
@@ -156,7 +157,7 @@ const CreateStory = () => {
                   />
                   <Button
                     variant="outline"
-                    onClick={() => setFormData({...formData, storyRequest: ""})}
+                    onClick={() => setInputMode('voice')}
                     className="w-full"
                   >
                     Switch to Voice Input

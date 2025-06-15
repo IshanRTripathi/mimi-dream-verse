@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TabContent } from './TabContent';
 
 const PersonalizedToggle = () => {
+  console.log('PersonalizedToggle component rendering');
   const [activeTab, setActiveTab] = useState('normal');
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 

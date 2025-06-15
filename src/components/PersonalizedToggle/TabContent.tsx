@@ -8,6 +8,7 @@ interface TabContentProps {
 }
 
 export const TabContent = ({ type }: TabContentProps) => {
+  console.log('TabContent rendering with type:', type);
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {

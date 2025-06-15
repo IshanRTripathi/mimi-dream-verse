@@ -57,7 +57,8 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
         <div className="w-48 h-48 mx-auto mb-4">
           <Lottie 
             animationData={mimiAnimation} 
-            loop={conversation.isSpeaking || conversation.status === "connected"} 
+            loop={true}
+            autoplay={true}
             className={`transition-transform duration-300 ${
               conversation.isSpeaking 
                 ? "animate-pulse scale-110" 

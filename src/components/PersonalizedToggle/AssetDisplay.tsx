@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { AssetManager } from '@/utils/assetManager';
+import { StaticAssetManager } from '@/utils/staticAssetManager';
 
 interface AssetDisplayProps {
   imageSrc: string;
@@ -38,14 +38,14 @@ export const AssetDisplay = ({
     console.log('✅ Image loaded successfully:', resolvedImageSrc);
     setImageLoaded(true);
     setImageError(false);
-    AssetManager.utils.logAssetLoad('image', resolvedImageSrc, true);
+    StaticAssetManager.utils.logAssetLoad('image', resolvedImageSrc, true);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     console.error('❌ Image failed to load:', resolvedImageSrc, e);
     setImageError(true);
     setImageLoaded(false);
-    AssetManager.utils.logAssetLoad('image', resolvedImageSrc, false);
+    StaticAssetManager.utils.logAssetLoad('image', resolvedImageSrc, false);
   };
 
   return (

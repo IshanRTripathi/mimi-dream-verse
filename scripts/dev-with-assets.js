@@ -18,12 +18,15 @@ function runCommand(command, description) {
 }
 
 function main() {
-  console.log('🚀 Starting development server with asset migration...');
+  console.log('🚀 Starting development server with asset migration and organization...');
   
   // Step 1: Move assets to public folder
   runCommand('node scripts/move-assets.js', 'Moving assets to public folder');
   
-  // Step 2: Start the dev server
+  // Step 2: Organize assets in public folder
+  runCommand('node scripts/organize-public-assets.js', 'Organizing assets in public folder');
+  
+  // Step 3: Start the dev server
   runCommand('npm run dev', 'Starting development server');
 }
 

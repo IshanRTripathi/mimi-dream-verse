@@ -9,8 +9,9 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prebuild": "node scripts/move-assets.js",
-    "predev": "node scripts/move-assets.js",
+    "prebuild": "node scripts/move-assets.js && node scripts/organize-public-assets.js",
+    "predev": "node scripts/move-assets.js && node scripts/organize-public-assets.js",
+    "organize-assets": "node scripts/organize-public-assets.js",
     "build:assets": "node scripts/build-with-assets.js",
     "dev:assets": "node scripts/dev-with-assets.js"
   },

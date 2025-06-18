@@ -1,14 +1,14 @@
 
-# Centralized Asset Migration Scripts
+# Simplified Asset Management System
 
-These scripts automatically move assets from the centralized `src/assets/` structure to the `public/` folder to ensure they're accessible at runtime.
+These scripts manage static assets in a simplified folder structure within the `public/` directory, making them easily accessible at runtime.
 
-## New Centralized Structure
+## New Simplified Structure
 
-All assets are now organized in a single, centralized folder structure:
+Assets are now organized in a clean, type-based directory structure within the public folder:
 
 ```
-src/assets/
+public/
 ├── audio/           # All audio files (.mp3, .wav, .ogg)
 ├── images/          # All image files (.jpg, .jpeg, .png, .gif, .webp)
 └── animations/      # All animation files (.json, .lottie)
@@ -17,15 +17,23 @@ src/assets/
 ## Scripts
 
 ### `move-assets.js`
-Copies all files from the centralized `src/assets/` structure to `public/` while maintaining file organization by type.
+Copies all files from the centralized `src/assets/` structure to their respective subdirectories in `public/`.
 
 **Usage:**
 ```bash
 node scripts/move-assets.js
 ```
 
+### `organize-public-assets.js`
+Organizes existing files in the public directory into the appropriate subdirectories based on file type.
+
+**Usage:**
+```bash
+node scripts/organize-public-assets.js
+```
+
 ### `build-with-assets.js`
-Runs asset migration before building the application.
+Runs asset migration and organization before building the application.
 
 **Usage:**
 ```bash
@@ -33,7 +41,7 @@ node scripts/build-with-assets.js
 ```
 
 ### `dev-with-assets.js`
-Runs asset migration before starting the development server.
+Runs asset migration and organization before starting the development server.
 
 **Usage:**
 ```bash
@@ -42,39 +50,25 @@ node scripts/dev-with-assets.js
 
 ## File Mapping
 
-The script will copy files like this:
-- `src/assets/audio/bgmusic.mp3` → `public/bgmusic.mp3`
-- `src/assets/images/normalasset.jpg` → `public/normalasset.jpg`
-- `src/assets/images/personalisedasset.jpg` → `public/personalisedasset.jpg`
-- `src/assets/animations/mimi-animation.json` → `public/mimi-animation.json`
+The scripts will organize files like this:
+- `src/assets/audio/bgmusic.mp3` → `public/audio/bgmusic.mp3`
+- `src/assets/images/normalasset.jpg` → `public/images/normalasset.jpg`
+- `src/assets/images/personalisedasset.jpg` → `public/images/personalisedasset.jpg`
+- `src/assets/animations/mimi-animation.json` → `public/animations/mimi-animation.json`
 
-## Asset Management
+## Asset Access
 
-All assets are centrally managed through the `AssetManager` utility:
-- Direct imports from the centralized structure
-- Type-safe asset access
-- Centralized configuration for volumes, fallbacks, etc.
-- Consistent logging and error handling
+Assets are now accessed using simple path references:
 
-## Integration with Package.json
+```javascript
+// Audio example
+const audioPath = '/audio/bgmusic.mp3';
 
-To integrate these scripts with your package.json, add these scripts:
+// Image example
+const imagePath = '/images/normalasset.jpg';
 
-```json
-{
-  "scripts": {
-    "prebuild": "node scripts/move-assets.js",
-    "predev": "node scripts/move-assets.js",
-    "build:assets": "node scripts/build-with-assets.js",
-    "dev:assets": "node scripts/dev-with-assets.js"
-  }
-}
+// Animation example
+const animationPath = '/animations/mimi-animation.json';
 ```
 
-## Automatic Execution
-
-If you want assets to be moved automatically:
-1. Use `npm run build:assets` instead of `npm run build`
-2. Use `npm run dev:assets` instead of `npm run dev`
-
-Or add the `prebuild` and `predev` scripts to your package.json to run automatically.
+The new `staticAssetManager.ts` utility provides a clean interface for accessing these assets with proper typing and helper functions.

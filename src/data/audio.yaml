@@ -4,40 +4,30 @@ audio:
   # Background music files
   background_music:
     - name: "Gentle Lullaby"
-      file: "/bgmusic.mp3"
+      file: "/audio/bgmusic.mp3"
       volume: 0.3
       loop: true
     - name: "Peaceful Dreams"
-      file: "/bgmusic.mp3"
+      file: "/audio/bgmusic.mp3"
       volume: 0.3
       loop: true
     - name: "Starlight Melody"
-      file: "/bgmusic.mp3"
+      file: "/audio/bgmusic.mp3"
       volume: 0.3
       loop: true
 
   # Button interaction sounds
   ui_sounds:
-    click: "/bgmusic.mp3"
-    pop: "/bgmusic.mp3"
-    success: "/bgmusic.mp3"
-    hover: "/bgmusic.mp3"
+    click: "/audio/bgmusic.mp3"
+    pop: "/audio/bgmusic.mp3"
+    success: "/audio/bgmusic.mp3"
+    hover: "/audio/bgmusic.mp3"
 
   # Personalized story audio
   story_audio:
-    personalized:
-      mom_voice: "/realistictone.mp3"
-      dad_voice: "/realistictone.mp3"
-    ai_narrator:
-      default: "/normaltone.mp3"
-      alternative: "/normaltone.mp3"
+    personalized: "/audio/realistictone.mp3"
+    ai_narrator: "/audio/normaltone.mp3" 
 
-  # Story background sounds
-  ambient_sounds:
-    forest: "/bgmusic.mp3"
-    ocean: "/bgmusic.mp3"
-    magical: "/bgmusic.mp3"
-    garden: "/bgmusic.mp3"
 
   # Volume levels
   volume_levels:
@@ -45,8 +35,7 @@ audio:
     narration: 0.5  # This applies to both normal and realistic tones (set to 0.5 as required)
     ui_sounds: 0.2
 
-  # Note: All assets are now centrally managed through AssetManager
-  # Physical files are organized in:
-  # - src/assets/audio/ (for audio files)
-  # - src/assets/images/ (for image files) 
-  # - src/assets/animations/ (for animation files)
+  # Note: All assets are now organized in subdirectories within the public folder:
+  # - public/audio/ (for audio files)
+  # - public/images/ (for image files) 
+  # - public/animations/ (for animation files)

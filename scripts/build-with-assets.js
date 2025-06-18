@@ -18,12 +18,15 @@ function runCommand(command, description) {
 }
 
 function main() {
-  console.log('🚀 Starting build process with asset migration...');
+  console.log('🚀 Starting build process with asset migration and organization...');
   
   // Step 1: Move assets to public folder
   runCommand('node scripts/move-assets.js', 'Moving assets to public folder');
   
-  // Step 2: Run the actual build
+  // Step 2: Organize assets in public folder
+  runCommand('node scripts/organize-public-assets.js', 'Organizing assets in public folder');
+  
+  // Step 3: Run the actual build
   runCommand('npm run build', 'Building the application');
   
   console.log('🎉 Build process completed successfully!');

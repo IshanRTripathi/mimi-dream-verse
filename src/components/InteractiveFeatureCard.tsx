@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { AssetManager } from "@/utils/assetManager";
+import { StaticAssetManager } from "@/utils/staticAssetManager";
 
 interface InteractiveFeatureCardProps {
   title: string;
@@ -28,7 +28,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-3xl">
         {/* Primary Image */}
         <motion.img
-          src={AssetManager.images.getByPath(images.primary)}
+          src={StaticAssetManager.images.getByPath(images.primary)}
           alt={`${title} - primary`}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           animate={{ opacity: isHovered ? 0 : 1 }}
@@ -37,7 +37,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
         
         {/* Secondary Image */}
         <motion.img
-          src={AssetManager.images.getByPath(images.secondary)}
+          src={StaticAssetManager.images.getByPath(images.secondary)}
           alt={`${title} - secondary`}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           animate={{ opacity: isHovered ? 1 : 0 }}

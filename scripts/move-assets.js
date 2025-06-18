@@ -11,7 +11,12 @@ const audioSourceDir = path.join(__dirname, '..', 'src', 'assets', 'audio');
 const imageSourceDir = path.join(__dirname, '..', 'src', 'assets', 'images');
 const featureImagesSourceDir = path.join(__dirname, '..', 'src', 'assets', 'featureImages');
 const animationSourceDir = path.join(__dirname, '..', 'src', 'assets', 'animations');
-const targetDir = path.join(__dirname, '..', 'public');
+
+// Updated target directories with subdirectories for better organization
+const publicDir = path.join(__dirname, '..', 'public');
+const audioTargetDir = path.join(publicDir, 'audio');
+const imagesTargetDir = path.join(publicDir, 'images');
+const animationsTargetDir = path.join(publicDir, 'animations');
 
 function ensureDirectoryExists(dirPath) {
   if (!fs.existsSync(dirPath)) {
@@ -53,38 +58,40 @@ function moveAssetsFromDirectory(srcDir, destDir, fileExtensions = []) {
 }
 
 function main() {
-  console.log('🚀 Starting centralized asset migration...');
+  console.log('🚀 Starting centralized asset migration with improved organization...');
   console.log(`📂 Audio source: ${audioSourceDir}`);
   console.log(`📂 Image source: ${imageSourceDir}`);
   console.log(`📂 Feature Images source: ${featureImagesSourceDir}`);
   console.log(`📂 Animation source: ${animationSourceDir}`);
-  console.log(`📂 Target: ${targetDir}`);
   
-  // Ensure target directory exists
-  ensureDirectoryExists(targetDir);
+  // Ensure target directories exist
+  ensureDirectoryExists(publicDir);
+  ensureDirectoryExists(audioTargetDir);
+  ensureDirectoryExists(imagesTargetDir);
+  ensureDirectoryExists(animationsTargetDir);
   
   // Move audio files
   console.log('\n🎵 Moving audio assets...');
-  moveAssetsFromDirectory(audioSourceDir, targetDir, ['.mp3', '.wav', '.ogg']);
+  moveAssetsFromDirectory(audioSourceDir, audioTargetDir, ['.mp3', '.wav', '.ogg']);
   
   // Move image files
   console.log('\n🖼️  Moving image assets...');
-  moveAssetsFromDirectory(imageSourceDir, targetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
+  moveAssetsFromDirectory(imageSourceDir, imagesTargetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
   
   // Move feature image files
   console.log('\n🖼️  Moving feature image assets...');
-  moveAssetsFromDirectory(featureImagesSourceDir, targetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
+  moveAssetsFromDirectory(featureImagesSourceDir, imagesTargetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
   
   // Move animation files
   console.log('\n🎬 Moving animation assets...');
-  moveAssetsFromDirectory(animationSourceDir, targetDir, ['.json', '.lottie']);
+  moveAssetsFromDirectory(animationSourceDir, animationsTargetDir, ['.json', '.lottie']);
   
   console.log('\n✨ Centralized asset migration completed!');
-  console.log('\n📋 Asset organization:');
-  console.log('   • Audio files: src/assets/audio/ → public/');
-  console.log('   • Image files: src/assets/images/ → public/');
-  console.log('   • Feature Image files: src/assets/featureImages/ → public/');
-  console.log('   • Animation files: src/assets/animations/ → public/');
+  console.log('\n📋 New asset organization:');
+  console.log('   • Audio files: src/assets/audio/ → public/audio/');
+  console.log('   • Image files: src/assets/images/ → public/images/');
+  console.log('   • Feature Image files: src/assets/featureImages/ → public/images/');
+  console.log('   • Animation files: src/assets/animations/ → public/animations/');
 }
 
 main();

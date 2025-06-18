@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause } from 'lucide-react';
-import { AssetManager } from '@/utils/assetManager';
+import { StaticAssetManager } from '@/utils/staticAssetManager';
 import { useAudio } from '@/contexts/AudioContext';
 
 interface AudioPlayerProps {
@@ -59,7 +59,7 @@ export const AudioPlayer = ({
       setIsPlaying(false);
       setIsLoading(false);
       onAudioStateChange?.(false);
-      AssetManager.utils.logAssetLoad('audio', 'stopped', true);
+      StaticAssetManager.utils.logAssetLoad('audio', 'stopped', true);
     }
   };
   
@@ -69,7 +69,7 @@ export const AudioPlayer = ({
       currentAudioRef.current.pause();
       setIsPlaying(false);
       onAudioStateChange?.(false);
-      AssetManager.utils.logAssetLoad('audio', 'paused', true);
+      StaticAssetManager.utils.logAssetLoad('audio', 'paused', true);
     }
   };
 
@@ -97,8 +97,8 @@ export const AudioPlayer = ({
     setIsLoading(true);
 
     // Use centralized asset management
-    const audioSrc = AssetManager.audio.getStoryAudio(audioType);
-    AssetManager.utils.logAssetLoad('audio', audioType, true);
+    const audioSrc = StaticAssetManager.audio.getStoryAudio(audioType);
+    StaticAssetManager.utils.logAssetLoad('audio', audioType, true);
     
     try {
       const audio = new Audio();
@@ -125,7 +125,7 @@ export const AudioPlayer = ({
         audio.play().then(() => {
           setIsPlaying(true);
           onAudioStateChange?.(true);
-          AssetManager.utils.logAssetLoad('audio', 'playing', true);
+          StaticAssetManager.utils.logAssetLoad('audio', 'playing', true);
         }).catch(error => {
           console.error(`❌ Audio play failed for ${audioType}:`, error);
           setError('Failed to play audio. Please try again.');
@@ -137,7 +137,7 @@ export const AudioPlayer = ({
       });
 
       audio.addEventListener('ended', () => {
-        AssetManager.utils.logAssetLoad('audio', `${audioType} ended`, true);
+        StaticAssetManager.utils.logAssetLoad('audio', `${audioType} ended`, true);
         setIsPlaying(false);
         audioProgressRef.current = 0;
         currentAudioRef.current = null;
@@ -156,7 +156,7 @@ export const AudioPlayer = ({
       });
 
       // Set audio properties using centralized config
-      audio.volume = AssetManager.audio.volumes.narration;
+      audio.volume = StaticAssetManager.audio.volumes.narration;
       audio.preload = 'auto'; // Change to auto for better performance
       
       // Set the source and start loading
@@ -198,15 +198,13 @@ export const AudioPlayer = ({
       </div>
 
       {error && (
-        <div className="text-center">
-          <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
+        <div className="text-center text-red-500 text-xs mt-2">
+          {error}
         </div>
       )}
 
-      <div className={`rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 text-center ${gradientColors}`}>
-        <p className="text-xs sm:text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
-          "{sampleText}"
-        </p>
+      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 sm:p-4 rounded-xl border border-gray-100 dark:border-gray-700 text-xs sm:text-sm text-gray-600 dark:text-gray-300 italic">
+        "{sampleText}"
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { AssetDisplay } from './AssetDisplay';
 import { AudioPlayer } from './AudioPlayer';
 import { FeaturesList } from './FeaturesList';
-import { AssetManager } from '@/utils/assetManager';
+import { StaticAssetManager } from '@/utils/staticAssetManager';
 import { useEffect } from 'react';
 
 interface TabContentProps {
@@ -20,7 +20,7 @@ export const TabContent = ({ type, shouldStopAudio = false, isActive }: TabConte
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
-    imageSrc: AssetManager.images.features.personalizedAsset,
+    imageSrc: StaticAssetManager.images.features.personalizedAsset,
     alt: 'Personalized story asset',
     label: 'Personalized',
     imageGradient: 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50',
@@ -36,7 +36,7 @@ export const TabContent = ({ type, shouldStopAudio = false, isActive }: TabConte
       { text: 'Custom character appearance', color: 'bg-purple-400' }
     ]
   } : {
-    imageSrc: AssetManager.images.features.normalAsset,
+    imageSrc: StaticAssetManager.images.features.normalAsset,
     alt: 'Normal story asset',
     label: 'Normal',
     imageGradient: 'bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50',

@@ -74,14 +74,8 @@ export interface AudioConfig {
     hover: string;
   };
   story_audio: {
-    personalized: {
-      mom_voice: string;
-      dad_voice: string;
-    };
-    ai_narrator: {
-      default: string;
-      alternative: string;
-    };
+    personalized: string;
+    ai_narrator: string;
   };
   // ambient_sounds removed as it's not used in the application
   volume_levels: {

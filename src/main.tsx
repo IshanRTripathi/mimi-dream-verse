@@ -6,13 +6,16 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AudioProvider } from "@/contexts/AudioContext";
+import { AccessibilityProvider } from "@/contexts/AccessibilityContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <AudioProvider>
-          <App />
+          <AccessibilityProvider>
+            <App />
+          </AccessibilityProvider>
         </AudioProvider>
       </ThemeProvider>
     </BrowserRouter>

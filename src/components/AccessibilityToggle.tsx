@@ -5,54 +5,23 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Accessibility } from 'lucide-react';
+import { useAccessibility } from '@/contexts/AccessibilityContext';
 
 const AccessibilityToggle = () => {
-  const [dyslexiaFont, setDyslexiaFont] = useState(false);
-  const [colorBlindness, setColorBlindness] = useState(false);
-  const [animations, setAnimations] = useState(true);
-  const [fontScale, setFontScale] = useState([100]);
-  const [highContrast, setHighContrast] = useState(false);
+  const { 
+    settings, 
+    toggleDyslexiaFont, 
+    toggleColorBlindness, 
+    toggleAnimations, 
+    setFontScale, 
+    toggleHighContrast 
+  } = useAccessibility();
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleDyslexiaToggle = (checked: boolean) => {
-    setDyslexiaFont(checked);
-    if (checked) {
-      document.documentElement.style.fontFamily = 'Arial, sans-serif';
-    } else {
-      document.documentElement.style.fontFamily = '';
-    }
-  };
-
-  const handleColorBlindnessToggle = (checked: boolean) => {
-    setColorBlindness(checked);
-    if (checked) {
-      document.documentElement.classList.add('colorblind-theme');
-    } else {
-      document.documentElement.classList.remove('colorblind-theme');
-    }
-  };
-
-  const handleAnimationsToggle = (checked: boolean) => {
-    setAnimations(checked);
-    if (!checked) {
-      document.documentElement.classList.add('no-animations');
-    } else {
-      document.documentElement.classList.remove('no-animations');
-    }
-  };
+  const [fontScaleValue, setFontScaleValue] = useState([settings.fontScale]);
 
   const handleFontScaleChange = (value: number[]) => {
-    setFontScale(value);
-    document.documentElement.style.fontSize = `${value[0]}%`;
-  };
-
-  const handleHighContrastToggle = (checked: boolean) => {
-    setHighContrast(checked);
-    if (checked) {
-      document.documentElement.classList.add('high-contrast');
-    } else {
-      document.documentElement.classList.remove('high-contrast');
-    }
+    setFontScaleValue(value);
+    setFontScale(value[0]);
   };
 
   return (
@@ -83,8 +52,8 @@ const AccessibilityToggle = () => {
               Dyslexia Friendly Font
             </label>
             <Switch 
-              checked={dyslexiaFont}
-              onCheckedChange={handleDyslexiaToggle}
+              checked={settings.dyslexiaFont}
+              onCheckedChange={() => toggleDyslexiaFont()}
             />
           </div>
 
@@ -94,8 +63,8 @@ const AccessibilityToggle = () => {
               Color Blindness Theme
             </label>
             <Switch 
-              checked={colorBlindness}
-              onCheckedChange={handleColorBlindnessToggle}
+              checked={settings.colorBlindness}
+              onCheckedChange={() => toggleColorBlindness()}
             />
           </div>
 
@@ -105,18 +74,18 @@ const AccessibilityToggle = () => {
               Enable Animations
             </label>
             <Switch 
-              checked={animations}
-              onCheckedChange={handleAnimationsToggle}
+              checked={settings.animations}
+              onCheckedChange={() => toggleAnimations()}
             />
           </div>
 
           {/* Font Size Scale */}
           <div className="space-y-2">
             <label className="text-sm text-gray-700 dark:text-gray-300">
-              Font Size: {fontScale[0]}%
+              Font Size: {fontScaleValue[0]}%
             </label>
             <Slider
-              value={fontScale}
+              value={fontScaleValue}
               onValueChange={handleFontScaleChange}
               max={150}
               min={75}
@@ -131,8 +100,8 @@ const AccessibilityToggle = () => {
               High Contrast Mode
             </label>
             <Switch 
-              checked={highContrast}
-              onCheckedChange={handleHighContrastToggle}
+              checked={settings.highContrast}
+              onCheckedChange={() => toggleHighContrast()}
             />
           </div>
         </div>

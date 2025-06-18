@@ -15,7 +15,11 @@ const getPublicAssetUrl = (path: string): string => {
   if (!path.startsWith('/')) {
     path = `/${path}`;
   }
-  return path;
+  
+  // In production, we need to use the PUBLIC_URL environment variable if available
+  // This ensures assets are loaded correctly when the app is deployed to a subdirectory
+  const publicUrl = 'https://story-mimi.lovable.app';
+  return `${publicUrl}${path}`;
 };
 
 // Simplified asset manager that references files directly from public directory
@@ -23,16 +27,16 @@ export const StaticAssetManager = {
   // Audio assets
   audio: {
     // Audio files
-    normalTone: '/normaltone.mp3',
-    realisticTone: '/realistictone.mp3',
-    bgMusic: '/bgmusic.mp3',
+    normalTone: '/audio/normaltone.mp3',
+    realisticTone: '/audio/realistictone.mp3',
+    bgMusic: '/audio/bgmusic.mp3',
     
     // Helper functions
     getStoryAudio: (type: AudioType): string => {
       console.log(`Getting story audio for type: ${type}`);
-      return type === 'personalized' ? '/realistictone.mp3' : '/normaltone.mp3';
+      return type === 'personalized' ? '/audio/realistictone.mp3' : '/audio/normaltone.mp3';
     },
-    getBackgroundMusic: (): string => '/bgmusic.mp3',
+    getBackgroundMusic: (): string => '/audio/bgmusic.mp3',
     
     // Volume levels
     volumes: {
@@ -46,20 +50,20 @@ export const StaticAssetManager = {
   images: {
     // Feature images
     features: {
-      normalAsset: '/normalasset.jpg',
-      personalizedAsset: '/personalisedasset.jpg',
+      normalAsset: '/images/normalasset.jpg',
+      personalizedAsset: '/images/personalisedasset.jpg',
     },
     
     // Interactive feature images
     interactive: {
-      accessibility1: '/accessibility1.jpg',
-      accessibility2: '/accessibility2.jpg',
-      values1: '/values1.jpeg',
-      values2: '/values2.jpeg',
-      alive1: '/alive1.jpg',
-      alive2: '/alive2.jpg',
-      imagine1: '/imagine1.jpg',
-      imagine2: '/imagine2.jpg',
+      accessibility1: '/images/accessibility1.jpg',
+      accessibility2: '/images/accessibility2.jpg',
+      values1: '/images/values1.jpeg',
+      values2: '/images/values2.jpeg',
+      alive1: '/images/alive1.jpg',
+      alive2: '/images/alive2.jpg',
+      imagine1: '/images/imagine1.jpg',
+      imagine2: '/images/imagine2.jpg',
     },
     
     // Helper function to get image by path
@@ -72,8 +76,8 @@ export const StaticAssetManager = {
       // Extract just the filename from the path
       const filename = imagePath.split('/').pop();
       if (filename) {
-        // Return path relative to public directory
-        return `/${filename}`;
+        // Return path relative to public directory with images subdirectory
+        return getPublicAssetUrl(`/images/${filename}`);
       }
       
       // Fallback to original path if we can't resolve it
@@ -83,8 +87,8 @@ export const StaticAssetManager = {
 
   // Animation assets
   animations: {
-    mimi: '/mimi-animation.json',
-    arrow: '/arrow-animation.json',
+    mimi: '/animations/mimi-animation.json',
+    arrow: '/animations/arrow-animation.json',
   },
 
   // Asset utility functions

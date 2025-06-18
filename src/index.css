@@ -1,4 +1,7 @@
-
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-regular.css');
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-bold.css');
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-italic.css');
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-bold-italic.css');
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
@@ -136,6 +139,14 @@
 .dark.high-contrast .text-gray-400,
 .dark.high-contrast .text-gray-600 {
   color: #fff !important;
+}
+
+
+:root.dyslexia-font {
+  font-family: 'OpenDyslexicRegular', 'OpenDyslexic', Comic Sans MS, Verdana, sans-serif;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.5;
 }
 
 /* Smooth Animations */

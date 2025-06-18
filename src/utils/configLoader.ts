@@ -83,12 +83,7 @@ export interface AudioConfig {
       alternative: string;
     };
   };
-  ambient_sounds: {
-    forest: string;
-    ocean: string;
-    magical: string;
-    garden: string;
-  };
+  // ambient_sounds removed as it's not used in the application
   volume_levels: {
     background_music: number;
     narration: number;

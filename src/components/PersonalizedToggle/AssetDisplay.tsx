@@ -1,5 +1,6 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { AssetManager } from '@/utils/assetManager';
 
 interface AssetDisplayProps {
   imageSrc: string;
@@ -19,18 +20,32 @@ export const AssetDisplay = ({
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
-  console.log('AssetDisplay rendering with imageSrc:', imageSrc);
+  // Ensure image path is properly resolved
+  const [resolvedImageSrc, setResolvedImageSrc] = useState(imageSrc);
+  
+  useEffect(() => {
+    // Try to resolve the image path if it's not already a full URL
+    if (!imageSrc.startsWith('http') && !imageSrc.startsWith('data:')) {
+      // If the image path doesn't include the public directory prefix, add it
+      if (!imageSrc.startsWith('/')) {
+        setResolvedImageSrc(`/${imageSrc}`);
+      }
+    }
+    console.log('AssetDisplay rendering with imageSrc:', imageSrc, 'resolved to:', resolvedImageSrc);
+  }, [imageSrc]);
   
   const handleImageLoad = () => {
-    console.log('✅ Image loaded successfully:', imageSrc);
+    console.log('✅ Image loaded successfully:', resolvedImageSrc);
     setImageLoaded(true);
     setImageError(false);
+    AssetManager.utils.logAssetLoad('image', resolvedImageSrc, true);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.error('❌ Image failed to load:', imageSrc, e);
+    console.error('❌ Image failed to load:', resolvedImageSrc, e);
     setImageError(true);
     setImageLoaded(false);
+    AssetManager.utils.logAssetLoad('image', resolvedImageSrc, false);
   };
 
   return (
@@ -51,7 +66,7 @@ export const AssetDisplay = ({
               </div>
             )}
             <img 
-              src={imageSrc} 
+              src={resolvedImageSrc} 
               alt={alt}
               className={`w-full h-full object-cover rounded-2xl lg:rounded-3xl transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={handleImageLoad}

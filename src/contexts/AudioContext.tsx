@@ -7,7 +7,6 @@ interface AudioContextType {
   playBackgroundMusic: (trackName?: string) => void;
   stopBackgroundMusic: () => void;
   playStoryAudio: (type: 'personalized' | 'ai_narrator', variant?: string) => void;
-  playAmbientSound: (type: 'forest' | 'ocean' | 'magical' | 'garden') => void;
   setVolume: (volume: number) => void;
   volume: number;
   isBackgroundMusicPlaying: boolean;
@@ -95,18 +94,32 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.volume = volume;
     }
-    if (activeStoryAudioRef.current) {
-      activeStoryAudioRef.current.volume = audioConfig.volume_levels.narration * volume;
-    }
+    // Note: We don't adjust story audio volume here as it's fixed at 0.5
+    // for both normal and realistic tones
   }, [volume]);
 
   const stopAllAudio = () => {
     console.log('🛑 Stopping all story audio...');
     // Stop story audio only, not background music
     if (activeStoryAudioRef.current) {
+      // Store current position for potential resume
+      const currentPosition = activeStoryAudioRef.current.currentTime;
+      const wasPlaying = !activeStoryAudioRef.current.paused;
+      const audioElement = activeStoryAudioRef.current;
+      
+      // Pause the audio
       activeStoryAudioRef.current.pause();
-      activeStoryAudioRef.current.currentTime = 0;
-      activeStoryAudioRef.current = null;
+      
+      // Store the audio element and its state for potential resume
+      if (wasPlaying) {
+        console.log(`Paused story audio at position: ${currentPosition}`);
+        // We're keeping the reference but pausing it
+        // This allows us to resume from the same position later
+      } else {
+        // If it was already paused, we can safely reset it
+        audioElement.currentTime = 0;
+        activeStoryAudioRef.current = null;
+      }
     }
   };
 
@@ -194,7 +207,21 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   };
 
   const playStoryAudio = async (type: 'personalized' | 'ai_narrator', variant?: string) => {
-    // Stop any currently playing story audio
+    console.log(`Playing story audio: ${type} (variant: ${variant || 'default'})`);
+    
+    // If we have an active audio that's just paused, try to resume it
+    if (activeStoryAudioRef.current && !activeStoryAudioRef.current.ended) {
+      try {
+        await activeStoryAudioRef.current.play();
+        console.log('✅ Resumed existing story audio');
+        return;
+      } catch (error) {
+        console.log('⚠️ Could not resume audio, will create new instance:', error);
+        // Continue with creating a new audio instance
+      }
+    }
+    
+    // Stop any currently playing story audio if we're creating a new instance
     stopAllAudio();
 
     try {
@@ -209,12 +236,16 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
           ? audioConfig.story_audio.ai_narrator.alternative
           : audioConfig.story_audio.ai_narrator.default;
       }
+      
+      // Ensure volume level for normal and realistic tone is set to 0.5
+      const audioVolume = 0.5;
 
       console.log('🎵 Playing story audio:', audioPath);
 
       const audio = new Audio();
       audio.src = audioPath;
-      audio.volume = audioConfig.volume_levels.narration * volume;
+      // Use fixed volume of 0.5 for both normal and realistic tones
+      audio.volume = audioVolume;
       audio.preload = 'metadata';
       activeStoryAudioRef.current = audio;
       
@@ -240,19 +271,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }
   };
 
-  const playAmbientSound = async (type: 'forest' | 'ocean' | 'magical' | 'garden') => {
-    try {
-      const audioPath = audioConfig.ambient_sounds[type];
-      const audio = new Audio(audioPath);
-      audio.volume = volume * 0.3; // Ambient sounds are quieter
-      audio.loop = true;
-      
-      await audio.play();
-      console.log(`🌿 Ambient sound playing: ${type}`);
-    } catch (error) {
-      console.log(`⚠️ Ambient sound play prevented (${type}):`, error);
-    }
-  };
+  // Ambient sound functionality removed as it's not used in the application
 
   const setVolume = (newVolume: number) => {
     const clampedVolume = Math.max(0, Math.min(1, newVolume));
@@ -266,7 +285,6 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
       playBackgroundMusic,
       stopBackgroundMusic,
       playStoryAudio,
-      playAmbientSound,
       setVolume, 
       volume,
       isBackgroundMusicPlaying,

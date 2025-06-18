@@ -31,6 +31,7 @@ export const AssetManager = {
     bgMusic,
     // Audio configuration
     getStoryAudio: (type: 'normal' | 'personalized') => {
+      console.log(`Getting story audio for type: ${type}`);
       return type === 'personalized' ? realisticTone : normalTone;
     },
     getBackgroundMusic: () => bgMusic,
@@ -39,6 +40,12 @@ export const AssetManager = {
       backgroundMusic: 0.3,
       narration: 0.5,
       uiSounds: 0.2,
+    },
+    // Audio playback state tracking
+    currentlyPlaying: {
+      normal: false,
+      personalized: false,
+      background: false
     }
   },
 
@@ -60,7 +67,8 @@ export const AssetManager = {
     },
     // Helper function to get image by path
     getByPath: (imagePath: string): string => {
-      const imageMap: Record<string, string> = {
+      // Map source paths to imported assets
+      const sourcePathMap: Record<string, string> = {
         '/src/assets/images/accessibility1.jpg': accessibility1,
         '/src/assets/images/accessibility2.jpg': accessibility2,
         '/src/assets/images/values1.jpeg': values1,
@@ -70,7 +78,22 @@ export const AssetManager = {
         '/src/assets/images/imagine1.jpg': imagine1,
         '/src/assets/images/imagine2.jpg': imagine2,
       };
-      return imageMap[imagePath] || imagePath;
+      
+      // If the path is in our map, return the imported asset
+      if (sourcePathMap[imagePath]) {
+        return sourcePathMap[imagePath];
+      }
+      
+      // Otherwise, try to resolve the path relative to the public directory
+      // Extract just the filename from the path
+      const filename = imagePath.split('/').pop();
+      if (filename) {
+        // Return path relative to public directory
+        return `/${filename}`;
+      }
+      
+      // Fallback to original path if we can't resolve it
+      return imagePath;
     }
   },
 

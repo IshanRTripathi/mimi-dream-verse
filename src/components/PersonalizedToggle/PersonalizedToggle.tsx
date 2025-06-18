@@ -1,24 +1,28 @@
 
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TabContent } from './TabContent';
+import { useAudio } from '@/contexts/AudioContext';
 
-const PersonalizedToggle = () => {
-  console.log('PersonalizedToggle component rendering');
-  const [activeTab, setActiveTab] = useState('normal');
+export default function PersonalizedToggle() {
+  const [activeTab, setActiveTab] = useState<string>('normal');
   const [shouldStopAudio, setShouldStopAudio] = useState(false);
+  const { stopAllAudio } = useAudio();
 
   const handleTabChange = (value: string) => {
-    console.log('🔄 Tab switching from', activeTab, 'to', value);
+    if (value === activeTab) return;
     
-    // Trigger audio stop for current tab
+    console.log(`Changing tab from ${activeTab} to ${value}`);
+    
+    // First, signal to stop any playing audio
     setShouldStopAudio(true);
     
-    // Reset the stop flag after a short delay and switch tab
+    // Short delay to allow audio to stop before changing tabs
     setTimeout(() => {
-      setShouldStopAudio(false);
       setActiveTab(value);
-    }, 100);
+      // Reset the stop audio flag after changing tabs
+      setShouldStopAudio(false);
+    }, 200); // Slightly longer delay for better audio transition
   };
 
   return (
@@ -47,6 +51,7 @@ const PersonalizedToggle = () => {
           <TabContent 
             type="normal" 
             shouldStopAudio={activeTab !== 'normal' || shouldStopAudio}
+            isActive={activeTab === 'normal'}
           />
         </TabsContent>
 
@@ -54,11 +59,10 @@ const PersonalizedToggle = () => {
           <TabContent 
             type="personalized" 
             shouldStopAudio={activeTab !== 'personalized' || shouldStopAudio}
+            isActive={activeTab === 'personalized'}
           />
         </TabsContent>
       </Tabs>
     </div>
   );
 };
-
-export default PersonalizedToggle;

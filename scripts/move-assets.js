@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 // Updated source directories for centralized structure
 const audioSourceDir = path.join(__dirname, '..', 'src', 'assets', 'audio');
 const imageSourceDir = path.join(__dirname, '..', 'src', 'assets', 'images');
+const featureImagesSourceDir = path.join(__dirname, '..', 'src', 'assets', 'featureImages');
 const animationSourceDir = path.join(__dirname, '..', 'src', 'assets', 'animations');
 const targetDir = path.join(__dirname, '..', 'public');
 
@@ -55,6 +56,7 @@ function main() {
   console.log('🚀 Starting centralized asset migration...');
   console.log(`📂 Audio source: ${audioSourceDir}`);
   console.log(`📂 Image source: ${imageSourceDir}`);
+  console.log(`📂 Feature Images source: ${featureImagesSourceDir}`);
   console.log(`📂 Animation source: ${animationSourceDir}`);
   console.log(`📂 Target: ${targetDir}`);
   
@@ -69,6 +71,10 @@ function main() {
   console.log('\n🖼️  Moving image assets...');
   moveAssetsFromDirectory(imageSourceDir, targetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
   
+  // Move feature image files
+  console.log('\n🖼️  Moving feature image assets...');
+  moveAssetsFromDirectory(featureImagesSourceDir, targetDir, ['.jpg', '.jpeg', '.png', '.gif', '.webp']);
+  
   // Move animation files
   console.log('\n🎬 Moving animation assets...');
   moveAssetsFromDirectory(animationSourceDir, targetDir, ['.json', '.lottie']);
@@ -77,6 +83,7 @@ function main() {
   console.log('\n📋 Asset organization:');
   console.log('   • Audio files: src/assets/audio/ → public/');
   console.log('   • Image files: src/assets/images/ → public/');
+  console.log('   • Feature Image files: src/assets/featureImages/ → public/');
   console.log('   • Animation files: src/assets/animations/ → public/');
 }
 

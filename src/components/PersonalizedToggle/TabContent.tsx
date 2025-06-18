@@ -2,14 +2,21 @@ import { AssetDisplay } from './AssetDisplay';
 import { AudioPlayer } from './AudioPlayer';
 import { FeaturesList } from './FeaturesList';
 import { AssetManager } from '@/utils/assetManager';
+import { useEffect } from 'react';
 
 interface TabContentProps {
   type: 'normal' | 'personalized';
   shouldStopAudio?: boolean;
+  isActive: boolean;
 }
 
-export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) => {
-  console.log('TabContent rendering with type:', type, 'shouldStopAudio:', shouldStopAudio);
+export const TabContent = ({ type, shouldStopAudio = false, isActive }: TabContentProps) => {
+  console.log('TabContent rendering with type:', type, 'shouldStopAudio:', shouldStopAudio, 'isActive:', isActive);
+  
+  // Log when tab content becomes active/inactive
+  useEffect(() => {
+    console.log(`TabContent ${type} is now ${isActive ? 'active' : 'inactive'}`);
+  }, [isActive, type]);
   const isPersonalized = type === 'personalized';
   
   const config = isPersonalized ? {
@@ -67,6 +74,7 @@ export const TabContent = ({ type, shouldStopAudio = false }: TabContentProps) =
           gradientColors={config.audioGradient}
           buttonGradient={config.buttonGradient}
           shouldStop={shouldStopAudio}
+          sceneActive={isActive}
         />
         <FeaturesList features={config.features} />
       </div>

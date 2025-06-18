@@ -254,6 +254,10 @@
   display: inline-block;
 }
 
+#lovable-badge {
+  display: none !important;
+}
+
 .story-link::after {
   content: '';
   position: absolute;

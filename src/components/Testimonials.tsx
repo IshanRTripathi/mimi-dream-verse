@@ -97,7 +97,7 @@ const Testimonials = () => {
           ))}
         </div>
 
-        <div className="text-center">
+        <div className="text-center overflow-x-hidden">
           <div className="inline-flex items-center gap-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg">
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">10,000+</div>

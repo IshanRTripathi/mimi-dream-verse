@@ -5,6 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import ThemeToggle from './ThemeToggle';
 import AccessibilityToggle from './AccessibilityToggle';
 import BackgroundMusic from './BackgroundMusic';
+import { useLocation } from 'react-router-dom';
 
 interface ControlPanelProps {
   className?: string;
@@ -12,6 +13,8 @@ interface ControlPanelProps {
 
 const ControlPanel = ({ className = "" }: ControlPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isCreateStoryPage = location.pathname === '/create-story';
 
   return (
     <div className={`fixed bottom-4 right-4 z-50 ${className}`}>
@@ -50,18 +53,20 @@ const ControlPanel = ({ className = "" }: ControlPanelProps) => {
               </div>
             </div>
             
-            {/* Background Music Section */}
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300">
-                Background Music
-              </h4>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  Toggle music on/off
-                </span>
-                <BackgroundMusic showVolumeControl={false} />
+            {/* Background Music Section - Hidden on Create Story page */}
+            {!isCreateStoryPage && (
+              <div className="space-y-2">
+                <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300">
+                  Background Music
+                </h4>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Toggle music on/off
+                  </span>
+                  <BackgroundMusic showVolumeControl={false} />
+                </div>
               </div>
-            </div>
+            )}
             
             {/* Accessibility Section */}
             <div className="space-y-2">

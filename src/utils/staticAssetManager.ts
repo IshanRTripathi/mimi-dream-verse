@@ -18,7 +18,7 @@ const getPublicAssetUrl = (path: string): string => {
   
   // In production, we need to use the PUBLIC_URL environment variable if available
   // This ensures assets are loaded correctly when the app is deployed to a subdirectory
-  const publicUrl = 'https://story-mimi.lovable.app';
+  const publicUrl = import.meta.env.PROD ? '' : '';
   return `${publicUrl}${path}`;
 };
 

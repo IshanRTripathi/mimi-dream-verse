@@ -36,6 +36,8 @@ function moveFileToTypeDirectory(file, sourceDir, destDir) {
     if (fs.statSync(sourcePath).isFile()) {
       // Copy the file to the destination
       fs.copyFileSync(sourcePath, destPath);
+      // Delete the original file after copying
+      fs.unlinkSync(sourcePath);
       console.log(`✅ Moved: ${path.relative(process.cwd(), sourcePath)} → ${path.relative(process.cwd(), destPath)}`);
     }
   } catch (error) {

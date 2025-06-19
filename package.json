@@ -13,7 +13,11 @@
     "predev": "node scripts/move-assets.js && node scripts/organize-public-assets.js",
     "organize-assets": "node scripts/organize-public-assets.js",
     "build:assets": "node scripts/build-with-assets.js",
-    "dev:assets": "node scripts/dev-with-assets.js"
+    "dev:assets": "node scripts/dev-with-assets.js",
+    "setup:monitor": "node scripts/setup-monitor-agent.js",
+    "monitor": "node scripts/dev-log-monitor-agent.js",
+    "dev:monitor": "npm run dev & npm run monitor",
+    "auto-fix": "node scripts/auto-fix-agent.js"
   },
   "dependencies": {
     "@11labs/react": "^0.1.4",

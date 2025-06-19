@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, ArrowRight, Play, Pause, Mic, MicOff, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
-import BackgroundMusic from "@/components/BackgroundMusic";
 import ConversationalAgent from "@/components/ConversationalAgent";
 
 // Default Lottie animation data (you can replace this with actual JSON file)

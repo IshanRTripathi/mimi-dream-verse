@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { loadAudioConfig } from '@/utils/configLoader';
 
 interface AudioContextType {
   playSound: (soundType: 'pop' | 'click' | 'success' | 'hover') => void;
   playBackgroundMusic: (trackName?: string) => void;
   stopBackgroundMusic: () => void;
+  pauseBackgroundMusic: () => void;
+  resumeBackgroundMusic: () => void;
   playStoryAudio: (type: 'personalized' | 'ai_narrator', variant?: string) => void;
   setVolume: (volume: number) => void;
   volume: number;
@@ -30,6 +33,8 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
   const audioConfig = loadAudioConfig();
   const [volume, setVolumeState] = useState(audioConfig.volume_levels.background_music);
   const [isBackgroundMusicPlaying, setIsBackgroundMusicPlaying] = useState(false);
+  const location = useLocation();
+  const wasPlayingBeforePauseRef = useRef(false);
 
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
@@ -98,7 +103,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     if (audio) {
       try {
         audio.currentTime = 0;
-        await audio.play();
+        // await audio.play();
       } catch (err) {
         console.warn(`⚠️ Cannot play UI sound (${soundType}):`, err);
       }
@@ -165,6 +170,28 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }
   };
 
+  const pauseBackgroundMusic = () => {
+    if (backgroundMusicRef.current && !backgroundMusicRef.current.paused) {
+      wasPlayingBeforePauseRef.current = true;
+      backgroundMusicRef.current.pause();
+      setIsBackgroundMusicPlaying(false);
+      console.log('⏸️ Background music paused');
+    } else {
+      wasPlayingBeforePauseRef.current = false;
+    }
+  };
+
+  const resumeBackgroundMusic = () => {
+    if (backgroundMusicRef.current && wasPlayingBeforePauseRef.current) {
+      backgroundMusicRef.current.play().then(() => {
+        setIsBackgroundMusicPlaying(true);
+        console.log('▶️ Background music resumed');
+      }).catch(err => {
+        console.warn('⚠️ Could not resume background music:', err);
+      });
+    }
+  };
+
   const playStoryAudio = async (type: 'personalized' | 'ai_narrator', variant?: string) => {
     console.log(`▶️ Story audio type: ${type} (variant: ${variant || 'default'})`);
 
@@ -212,11 +239,24 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
     }
   };
 
+  // Monitor route changes to pause/resume background music
+  useEffect(() => {
+    const isCreateStoryPage = location.pathname === '/create-story';
+    
+    if (isCreateStoryPage) {
+      pauseBackgroundMusic();
+    } else if (wasPlayingBeforePauseRef.current) {
+      resumeBackgroundMusic();
+    }
+  }, [location.pathname]);
+
   return (
     <AudioContext.Provider value={{
       playSound,
       playBackgroundMusic,
       stopBackgroundMusic,
+      pauseBackgroundMusic,
+      resumeBackgroundMusic,
       playStoryAudio,
       setVolume,
       volume,

@@ -101,8 +101,9 @@ export const loadHowItWorksSteps = (): StepConfig[] => {
 };
 
 export const loadTestimonials = (): TestimonialConfig[] => {
-  const data = yaml.load(testimonialsYaml) as { testimonials: TestimonialConfig[] };
-  return data.testimonials;
+  // const data = yaml.load(testimonialsYaml) as { testimonials: TestimonialConfig[] };
+  // return data.testimonials;
+  return []
 };
 
 export const loadWaitlistConfig = (): WaitlistConfig => {

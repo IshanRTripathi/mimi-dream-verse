@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SlideData {
-  step: string;
   title: string;
   description: string;
   icon: string;
@@ -59,9 +58,6 @@ const AnimatedSlideshow = ({ slides }: AnimatedSlideshowProps) => {
               <div className="flex flex-col md:flex-row h-full">
                 {/* Content Side */}
                 <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${slide.color} flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg`}>
-                    {slide.step}
-                  </div>
                   <div className="text-4xl md:text-6xl mb-4">{slide.icon}</div>
                   <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-white leading-tight">
                     {slide.title}
@@ -78,7 +74,7 @@ const AnimatedSlideshow = ({ slides }: AnimatedSlideshowProps) => {
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
                       <img 
                         src={slide.imagePlaceholder}
-                        alt={`Step ${slide.step}: ${slide.title}`}
+                        alt={`${slide.title}`}
                         className="relative w-full h-full object-cover rounded-2xl shadow-xl"
                       />
                     </div>
@@ -108,21 +104,6 @@ const AnimatedSlideshow = ({ slides }: AnimatedSlideshowProps) => {
         </Button>
       </div>
 
-      {/* Dots Indicator */}
-      <div className="flex justify-center mt-8 space-x-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-gradient-to-r from-purple-600 to-pink-600 scale-125"
-                : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-            }`}
-          />
-        ))}
-      </div>
-
       {/* Step Numbers */}
       <div className="flex justify-center mt-6 space-x-4">
         {slides.map((slide, index) => (
@@ -135,7 +116,6 @@ const AnimatedSlideshow = ({ slides }: AnimatedSlideshowProps) => {
                 : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
             }`}
           >
-            Step {slide.step}
           </button>
         ))}
       </div>

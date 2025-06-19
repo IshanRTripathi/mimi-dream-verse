@@ -51,7 +51,7 @@ features:
 
 interactive_features:
   - title: "Accessibility First"
-    description: "Stories designed with dyslexia-friendly fonts and color-blind accessible themes for every child."
+    description: "Dyslexia-friendly fonts and color-blind accessible themes for every child."
     images:
       primary: "/images/accessibility1.jpg"
       secondary: "/images/accessibility2.jpg"

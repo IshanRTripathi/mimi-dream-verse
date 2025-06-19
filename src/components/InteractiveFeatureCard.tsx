@@ -25,7 +25,7 @@ const InteractiveFeatureCard = ({ title, description, images, theme }: Interacti
       className="group bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 flex-shrink-0 w-72 sm:w-80 md:w-72 lg:w-80 overflow-hidden hover:scale-105"
     >
       {/* Image Container - Full width, 16:10 aspect ratio for better proportions */}
-      <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-3xl">
+      <div className="relative w-full aspect-[3/3] overflow-hidden rounded-t-3xl">
         {/* Primary Image */}
         <motion.img
           src={StaticAssetManager.images.getByPath(images.primary)}

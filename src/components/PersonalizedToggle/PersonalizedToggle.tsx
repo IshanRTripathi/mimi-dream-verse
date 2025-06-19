@@ -28,7 +28,7 @@ export default function PersonalizedToggle() {
   return (
     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 shadow-xl border border-purple-100 dark:border-gray-700 w-full max-w-4xl mx-auto">
       <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-center text-gray-800 dark:text-gray-200">
-        🎭 Personalized Visual & Audio Assets
+        Personalized Images and Narration ⏬
       </h3>
       
       <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">

@@ -150,7 +150,7 @@ const WaitlistModal = ({ isOpen, onClose }: WaitlistModalProps) => {
             </label>
             <Input
               type="email"
-              placeholder="your.email@example.com"
+              placeholder="your.email@gmail.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);

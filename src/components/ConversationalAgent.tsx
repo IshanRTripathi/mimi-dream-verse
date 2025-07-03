@@ -110,7 +110,7 @@ const ConversationalAgent = ({ onStoryRequest }: ConversationalAgentProps) => {
       
       // Start conversation with proper agent ID
       const sessionId = await conversation.startSession({ 
-        agentId: "agent_01jy5rtdqtec3vtc4xtjbqkjrv"
+        agentId: "agent_01jxcw7n30fpgs884gbbbd88ke"
       });
       
       setConversationId(sessionId);

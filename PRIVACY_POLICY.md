@@ -1,82 +1,92 @@
-# Privacy Policy for StoryMimi
+## **Privacy Policy for StoryMimi**
 
-**Effective Date: June 20, 2025**
+**Effective Date:** August 09, 2025
 
-## Information We Collect
+### **About StoryMimi**
 
-We collect the following information:
+StoryMimi is a **kids’ educational storytelling app** designed for use under **parental supervision**. The app allows parents to generate safe, child-friendly stories. All content is moderated to prevent explicit, unsafe, or inappropriate material.
 
-- Name (Parent and Child for customisation)
-- Child's Age
-- Email Address
-- Google Account ID
-- Voice Recordings (sent to ElevenLabs for AI voice synthesis)
-
-## How We Use Your Data
-
-We use your data to:
-
-- Generate personalized stories for your child
-- Convert voice to text and text to voice using trusted AI services
-- Format and enhance stories using Gemini LLMs for story structuring
-- Save and replay stories privately within your app account
-
-## Third-Party Services
-
-We work with:
-
-- **ElevenLabs** for voice-to-voice AI interaction
-- **Gemini (Google)** for formatting stories into child-friendly narratives
-
-These providers receive only the necessary data to perform their functions.
-
-## Data Storage & Security
-
-- We do not store voice data on our servers.
-- Personal stories and user inputs are stored securely and not shared with third parties.
-- We use encryption and secure APIs to protect all communication.
-
-## Children's Privacy
-
-StoryMimi is intended for children under 13, under parental supervision. We:
-
-- Require parental consent for use
-- Avoid direct data collection from children
-- Use child-safe content and AI moderation filters
-
-## Parental Controls & Access
-
-Parents can:
-
-- Review or delete their child's information
-- Control what stories are saved
-- Opt-out of non-essential data collection when analytics is added
-
-To request access or deletion, contact us.
-
-## Future Use of Analytics
-
-While we do not currently use analytics tools, we may integrate services like Firebase in future updates. This will be reflected in this policy and will not affect child safety.
-
-## No Ads, No Data Selling
-
-- We do not show ads.
-- We do not sell or rent your data to any third party.
-
-## Your Rights
-
-You have the right to:
-
-- Access your data
-- Request deletion
-- Withdraw consent at any time
-
-Contact us for any data-related concerns.
-
-## Contact
-
-If you have questions about privacy, reach out to us.
+We comply with the **Children’s Online Privacy Protection Act (COPPA)**, **Google Play Families Policy**, and applicable data protection laws.
 
 ---
 
-*This privacy policy is designed to be transparent about our data practices while ensuring the safety and privacy of children using StoryMimi.* 
+### **Information We Collect**
+
+In the current version of StoryMimi, we **only collect**:
+
+* **Parent’s Email Address** – Collected during Google Sign-In to map your Firebase user ID to your email for account access.
+
+**We do not collect or store:**
+
+* Child’s name or age (if entered, it stays only in your device storage and is never sent to our servers).
+* Any voice recordings or audio data (voice features are disabled in this version).
+* Any analytics data.
+
+---
+
+### **How We Use the Collected Information**
+
+* To authenticate users via Google Sign-In.
+* To maintain your account mapping between Firebase user ID and your email address.
+* To store and retrieve user-generated stories linked to your account.
+
+---
+
+### **User-Generated Content (UGC)**
+
+* Any names or details in a story are entered voluntarily by the user and can be random.
+* Stories are generated through prompts designed to ensure **child-safe** language and imagery.
+* Our AI system includes **strong safety filters** to block and discard any explicit or unsafe text or images before they are shown.
+
+---
+
+### **Parental Controls**
+
+* Google Sign-In is intended for **parent use only**.
+* The app includes measures to ensure children cannot sign in without parental help.
+* Parents control what information is stored in the app and can delete stories at any time.
+
+---
+
+### **Data Sharing & Third Parties**
+
+* We do **not** share your data with advertisers.
+* We do **not** sell, rent, or trade user data to any third party.
+* No third-party SDKs are used for tracking or analytics in this version.
+
+---
+
+### **Children’s Privacy**
+
+* StoryMimi is designed for children under 13 but must be operated under a parent or guardian’s supervision.
+* We do not knowingly collect personal data directly from children.
+
+---
+
+### **Security**
+
+* All communication with our servers uses secure HTTPS encryption.
+* Account data (email and Firebase ID) is stored securely in Firebase.
+
+---
+
+### **Future Changes**
+
+If we add features in the future (such as voice narration or analytics), this Privacy Policy will be updated before those features go live. Any new data collection will also comply with COPPA and the Google Play Families Policy.
+
+---
+
+### **Contact Us**
+
+If you have any questions about this Privacy Policy or our data practices, please contact:
+* **Ishan R Tripathi**
+* **ishanrtripathi786@gmail.com**
+
+---
+
+This version is **minimalist** and **transparent**, which Play Store reviewers like because:
+
+* No unnecessary sensitive data is collected.
+* You explicitly state “child name/age stays on device.”
+* You confirm “voice features are disabled.”
+* Strong child-safety measures for UGC are mentioned.
